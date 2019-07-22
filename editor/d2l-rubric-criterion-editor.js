@@ -223,6 +223,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 
 			#browseOutcomesButton{
 				margin-bottom: 5px;
+				margin-left: 5px;
 			}
 
 			#closeButton{
