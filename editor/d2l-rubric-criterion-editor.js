@@ -98,6 +98,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 			#tag{
 				margin-left: 10px;
 				margin-top: 6px;
+				margin-bottom: 6px;
 			}
 
 			#outcomeText{
