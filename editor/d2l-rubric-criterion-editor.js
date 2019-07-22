@@ -102,7 +102,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 
 			#outcomeText{
 				margin-left: 16px;
-				margin-top: 10px;
+				margin-top: 13px;
 				margin-bottom: 3px;
 			}
 
