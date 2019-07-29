@@ -278,8 +278,8 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 							</div>
 						</template>
 					</div>
-					<div class="cell criterion-feedback-header">[[localize('initialFeedback')]]</div>
-					<div class="criterion-feedback">
+					<div class="cell criterion-feedback-header" hidden$="[[isHolistic]]">[[localize('initialFeedback')]]</div>
+					<div class="criterion-feedback" hidden$="[[isHolistic]]">
 						<template is="dom-repeat" as="criterionCell" items="[[_getCriterionCells(entity)]]">
 							<div class="cell">
 								<d2l-rubric-feedback-editor key-link-rels="[[_getCellKeyRels()]]" href="[[_getSelfLink(criterionCell)]]" token="[[token]]" aria-label-langterm="criterionFeedbackAriaLabel" criterion-name="[[entity.properties.name]]" rich-text-enabled="[[richTextEnabled]]">
