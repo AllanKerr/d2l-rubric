@@ -84,7 +84,6 @@ Polymer({
 				e.detail.content : e.target.value || '';
 		}
 		this.debounce('input', function() {
-			console.log(value);
 			this.fire('change', { value: value });
 		}.bind(this), 500);
 	}
