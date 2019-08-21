@@ -261,7 +261,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 		<div style="display:flex; flex-direction:column;">
 			<div style="display:flex">
 				<div class="cell col-first criterion-name" hidden$="[[isHolistic]]">
-					<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" value="[[entity.properties.name]]" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-change="_saveName">
+					<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" value="[[entity.properties.name]]" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-change="_saveName" on-input="_saveName">
 					</d2l-input-textarea>
 					<d2l-button-subtle id= "browseOutcomesButton" hidden$="[[_hideBrowseOutcomesButton]]" type="button" on-tap= "_showBrowseOutcomes" text="[[outcomesTitle]]"></d2l-button-subtle>
 					<template is="dom-if" if="[[_nameInvalid]]">
