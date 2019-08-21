@@ -251,7 +251,6 @@ const $_documentContainer = html `
 				<d2l-input-text
 					id="rubric-name"
 					value="[[_rubricName]]"
-					on-change="_saveName"
 					on-input="_saveName"
 					aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
 					aria-label$="[[localize('name')]]"
@@ -690,19 +689,22 @@ Polymer({
 	},
 	_saveName: function(e) {
 		var action = this.entity.getActionByName('update-name');
-		if (action) {
-			if (this._nameRequired && !e.target.value.trim()) {
-				this.handleValidationError('name-bubble', '_nameInvalid', 'nameIsRequired');
-			} else {
-				this.toggleBubble('_nameInvalid', false, 'name-bubble');
-				var fields = [{ 'name': 'name', 'value': e.target.value }];
-				this.performSirenAction(action, fields).then(function() {
-					this.fire('d2l-rubric-name-saved');
-				}.bind(this)).catch(function(err) {
-					this.handleValidationError('name-bubble', '_nameInvalid', 'nameSaveFailed', err);
-				}.bind(this));
+		var value = e.target.value;
+		this.debounce('input', function() {
+			if (action) {
+				if (this._nameRequired && !value.trim()) {
+					this.handleValidationError('name-bubble', '_nameInvalid', 'nameIsRequired');
+				} else {
+					this.toggleBubble('_nameInvalid', false, 'name-bubble');
+					var fields = [{ 'name': 'name', 'value': value }];
+					this.performSirenAction(action, fields).then(function() {
+						this.fire('d2l-rubric-name-saved');
+					}.bind(this)).catch(function(err) {
+						this.handleValidationError('name-bubble', '_nameInvalid', 'nameSaveFailed', err);
+					}.bind(this));
+				}
 			}
-		}
+		}.bind(this), 500);
 	},
 	_onEntitySave: function(e) {
 		this.$$('#rubric-header').onEntitySave(e);

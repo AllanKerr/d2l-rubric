@@ -21,10 +21,10 @@ Polymer({
 
 		</style>
 		<template is="dom-if" if="[[!richTextEnabled]]">
-			<d2l-input-textarea id="textEditor" hidden$="[[richTextEnabled]]" aria-invalid="[[ariaInvalid]]" aria-label$="[[ariaLabel]]" disabled="[[disabled]]" value="[[value]]" on-change="_onInputChange" on-input="_duringInputChange"></d2l-input-textarea>
+			<d2l-input-textarea id="textEditor" hidden$="[[richTextEnabled]]" aria-invalid="[[ariaInvalid]]" aria-label$="[[ariaLabel]]" disabled="[[disabled]]" value="[[value]]" on-input="_duringInputChange"></d2l-input-textarea>
 		</template>
 		<template is="dom-if" if="[[richTextEnabled]]">
-			<d2l-rubric-html-editor id="htmlEditor" token="[[token]]" hidden$="[[!richTextEnabled]]" aria-label$="[[ariaLabel]]" invalid="[[_stringIsTrue(ariaInvalid)]]" placeholder="[[placeholder]]" value="[[value]]" key="[[key]]" min-rows="[[minRows]]" max-rows="[[maxRows]]" on-change="_onInputChange" on-input="_duringInputChange"></d2l-rubric-html-editor>
+			<d2l-rubric-html-editor id="htmlEditor" token="[[token]]" hidden$="[[!richTextEnabled]]" aria-label$="[[ariaLabel]]" invalid="[[_stringIsTrue(ariaInvalid)]]" placeholder="[[placeholder]]" value="[[value]]" key="[[key]]" min-rows="[[minRows]]" max-rows="[[maxRows]]" on-input="_duringInputChange"></d2l-rubric-html-editor>
 		</template>
 `,
 
@@ -74,13 +74,6 @@ Polymer({
 		return string && string === 'true';
 	},
 
-	_onInputChange: function(e) {
-		e.stopPropagation();
-		var value = (e.detail && e.detail.hasOwnProperty('content')) ?
-			e.detail.content : e.target.value || '';
-		this.fire('change', { value: value });
-	},
-
 	_duringInputChange: function(e) {
 		e.stopPropagation();
 		var value;
@@ -90,6 +83,9 @@ Polymer({
 			value = (e.detail && e.detail.hasOwnProperty('content')) ?
 				e.detail.content : e.target.value || '';
 		}
-		this.fire('change', { value: value });
+		this.debounce('input', function() {
+			console.log(value);
+			this.fire('change', { value: value });
+		}.bind(this), 500);
 	}
 });

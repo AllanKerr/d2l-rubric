@@ -261,7 +261,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 		<div style="display:flex; flex-direction:column;">
 			<div style="display:flex">
 				<div class="cell col-first criterion-name" hidden$="[[isHolistic]]">
-					<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" value="[[entity.properties.name]]" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-change="_saveName" on-input="_saveName">
+					<d2l-input-textarea id="name" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('criterionNameAriaLabel')]]" disabled="[[!_canEdit]]" value="[[entity.properties.name]]" placeholder="[[_getNamePlaceholder(localize, displayNamePlaceholder)]]" on-input="_saveName">
 					</d2l-input-textarea>
 					<d2l-button-subtle id= "browseOutcomesButton" hidden$="[[_hideBrowseOutcomesButton]]" type="button" on-tap= "_showBrowseOutcomes" text="[[outcomesTitle]]"></d2l-button-subtle>
 					<template is="dom-if" if="[[_nameInvalid]]">
@@ -465,20 +465,23 @@ Polymer({
 
 	_saveName: function(e) {
 		var action = this.entity.getActionByName('update');
-		if (action) {
-			if (this._nameRequired && !e.target.value.trim()) {
-				this.handleValidationError('criterion-name-bubble', '_nameInvalid', 'nameIsRequired');
-				return;
-			} else {
-				this.toggleBubble('_nameInvalid', false, 'criterion-name-bubble');
+		var value = e.target.value;
+		this.debounce('input', function() {
+			if (action) {
+				if (this._nameRequired && !value.trim()) {
+					this.handleValidationError('criterion-name-bubble', '_nameInvalid', 'nameIsRequired');
+					return;
+				} else {
+					this.toggleBubble('_nameInvalid', false, 'criterion-name-bubble');
+				}
+				var fields = [{ 'name': 'name', 'value': value }];
+				this.performSirenAction(action, fields).then(function() {
+					this.fire('d2l-rubric-criterion-saved');
+				}.bind(this)).catch(function(err) {
+					this.handleValidationError('criterion-name-bubble', '_nameInvalid', 'nameSaveFailed', err);
+				}.bind(this));
 			}
-			var fields = [{ 'name': 'name', 'value': e.target.value }];
-			this.performSirenAction(action, fields).then(function() {
-				this.fire('d2l-rubric-criterion-saved');
-			}.bind(this)).catch(function(err) {
-				this.handleValidationError('criterion-name-bubble', '_nameInvalid', 'nameSaveFailed', err);
-			}.bind(this));
-		}
+		}.bind(this), 500);
 	},
 
 	_saveOutOf: function(e) {
