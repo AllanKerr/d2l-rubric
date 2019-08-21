@@ -530,7 +530,8 @@ Polymer({
 		'd2l-siren-entity-save-error': '_onEntitySave',
 		'd2l-siren-entity-save-end': '_onEntitySave'
 	},
-	_computeCanShare(entity) {
+
+	_computeCanShare: function(entity) {
 		return entity && entity.hasLinkByRel('https://organizations.api.brightspace.com/rels/orgunit-availability-set');
 	},
 	ready: function() {
@@ -551,7 +552,7 @@ Polymer({
 				}
 			});
 		}
-		
+
 		var elem = dom(this.root).querySelector('#description-html-content');
 		if (elem && elem.shadowRoot) {
 			elem.shadowRoot.querySelectorAll('*').forEach(el => {

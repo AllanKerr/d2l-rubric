@@ -80,7 +80,7 @@ Polymer({
 			e.detail.content : e.target.value || '';
 		this.fire('change', { value: value });
 	},
-	
+
 	_duringInputChange: function(e) {
 		e.stopPropagation();
 		var value;
