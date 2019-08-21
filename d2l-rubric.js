@@ -1,5 +1,5 @@
 /**
-`d2l-rubric`
+`d2l-rubric` test
 Polymer Web-Component to display rubrics
 
 @demo demo/index.html
