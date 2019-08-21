@@ -200,9 +200,6 @@ const $_documentContainer = html `
 				margin-top: 8px;
 				margin-bottom: 8px;
 			}
-			#description-html-container > s-html::shadow > * { // eslint-disable-line
-				margin: 0px;
-			}
 			#rubric-description-container {
 				margin-top: 2.3rem;
 			}
@@ -313,7 +310,7 @@ const $_documentContainer = html `
 							<label for="rubric-description">[[localize('descriptionReadOnlyMode')]]</label>
 							<template is="dom-if" if="[[richTextEnabled]]">
 								<div id="description-html-container">
-									<s-html html$="[[_getReadOnlyDescription(_rubricDescription, 1)]]"></s-html>
+									<s-html id="description-html-content" html$="[[_getReadOnlyDescription(_rubricDescription, 1)]]"></s-html>
 								</div>
 							</template>
 							<template is="dom-if" if="[[!richTextEnabled]]">
@@ -552,6 +549,13 @@ Polymer({
 					event.stopPropagation();
 					event.preventDefault();
 				}
+			});
+		}
+		
+		var elem = dom(this.root).querySelector('#description-html-content');
+		if (elem && elem.shadowRoot) {
+			elem.shadowRoot.querySelectorAll('*').forEach(el => {
+				el.style.margin = 0;
 			});
 		}
 	},
