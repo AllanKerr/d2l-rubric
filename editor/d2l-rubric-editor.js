@@ -255,6 +255,7 @@ const $_documentContainer = html `
 					id="rubric-name"
 					value="[[_rubricName]]"
 					on-change="_saveName"
+					on-input="_saveName"
 					aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
 					aria-label$="[[localize('name')]]"
 					disabled="[[!_canEditName]]"
