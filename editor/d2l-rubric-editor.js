@@ -200,9 +200,6 @@ const $_documentContainer = html `
 				margin-top: 8px;
 				margin-bottom: 8px;
 			}
-			#description-html-container > s-html::shadow > * {
-				margin: 0px;
-			}
 			#rubric-description-container {
 				margin-top: 2.3rem;
 			}
