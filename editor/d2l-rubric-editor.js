@@ -200,7 +200,7 @@ const $_documentContainer = html `
 				margin-top: 8px;
 				margin-bottom: 8px;
 			}
-			#description-html-container > s-html::shadow > * {
+			#description-html-container > s-html::shadow > * { // eslint-disable-line
 				margin: 0px;
 			}
 			#rubric-description-container {
