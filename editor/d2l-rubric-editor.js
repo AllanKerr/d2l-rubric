@@ -529,7 +529,7 @@ Polymer({
 		'd2l-siren-entity-save-error': '_onEntitySave',
 		'd2l-siren-entity-save-end': '_onEntitySave'
 	},
-	_computeCanShare(entity) {
+	_computeCanShare: function(entity) {
 		return entity && entity.hasLinkByRel('https://organizations.api.brightspace.com/rels/orgunit-availability-set');
 	},
 	ready: function() {
