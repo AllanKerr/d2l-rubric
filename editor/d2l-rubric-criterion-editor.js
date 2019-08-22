@@ -298,7 +298,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criterion-ed
 							</div>
 						</template>
 						<template is="dom-if" if="[[_outOfIsEditable]]">
-							/ <d2l-input-text id="out-of-textbox" on-change="_saveOutOf" value="[[_outOf]]" aria-invalid="[[isAriaInvalid(_outOfInvalid)]]" aria-label$="[[localize('criterionOutOf', 'name', entity.properties.name, 'value', _outOf)]]" prevent-submit="">
+							/ <d2l-input-text id="out-of-textbox" on-change="_saveOutOf" on-input="_saveOutOfOnInput" value="[[_outOf]]" aria-invalid="[[isAriaInvalid(_outOfInvalid)]]" aria-label$="[[localize('criterionOutOf', 'name', entity.properties.name, 'value', _outOf)]]" prevent-submit="">
 							</d2l-input-text>
 							<template is="dom-if" if="[[_outOfInvalid]]">
 								<d2l-tooltip id="out-of-bubble" class="is-error" for="out-of-textbox" position="bottom">
@@ -518,6 +518,27 @@ Polymer({
 				this.handleValidationError('out-of-bubble', '_outOfInvalid', 'pointsSaveFailed', err);
 			}.bind(this));
 		}
+	},
+
+	_saveOutOfOnInput: function(e) {
+		var action = this.entity.getActionByName('update-outof');
+		var value = e.target.value;
+		this.debounce('input', function() {
+			if (action) {
+				if (!value.trim()) {
+					this.handleValidationError('out-of-bubble', '_outOfInvalid', 'pointsAreRequired');
+					return;
+				} else {
+					this.toggleBubble('_outOfInvalid', false, 'out-of-bubble');
+				}
+				var fields = [{'name': 'outOf', 'value': value}];
+				this.performSirenAction(action, fields).then(function() {
+					this.fire('d2l-rubric-criterion-saved');
+				}.bind(this)).catch(function(err) {
+					this.handleValidationError('out-of-bubble', '_outOfInvalid', 'pointsSaveFailed', err);
+				}.bind(this));
+			}
+		}.bind(this), 500);
 	},
 
 	_canEditCriterion: function(entity) {
