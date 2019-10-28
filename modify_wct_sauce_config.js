@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 var fs = require('fs');
 
 var json_contents = {
