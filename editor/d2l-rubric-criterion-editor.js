@@ -414,17 +414,17 @@ Polymer({
 			type: Number,
 			value: 0
 		},
-		_hideBrowseOutcomesButton:{
+		_hideBrowseOutcomesButton: {
 			type: Boolean,
 			computed: '_canHideBrowseOutcomesButton(_isFlagOn, isHolistic, _isAlignmentTagListEmpty, _isOutcomeEmpty, outcomesToolIntegrationEnabled)',
 		},
-		_hideOutcomes:{
+		_hideOutcomes: {
 			type: Boolean,
 			value: true,
 			computed: '_canHideOutcomes(isHolistic, _isAlignmentTagListEmpty)',
 		},
-		_isAlignmentTagListEmpty:{
-			type:Boolean,
+		_isAlignmentTagListEmpty: {
+			type: Boolean,
 		},
 		_isOutcomeEmpty: {
 			type: Boolean,
@@ -623,7 +623,7 @@ Polymer({
 					} else {
 						this.toggleBubble('_outOfInvalid', false, 'out-of-bubble');
 					}
-					var fields = [{'name': 'outOf', 'value': value}];
+					var fields = [{ 'name': 'outOf', 'value': value }];
 					this._pendingOutOfSaves++;
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-criterion-saved');

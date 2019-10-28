@@ -163,7 +163,7 @@ Polymer({
 		if (!useShadow) {
 			this.dispatchEvent(new CustomEvent(
 				'focus',
-				{bubbles: true, composed: true}
+				{ bubbles: true, composed: true }
 			));
 		}
 	},
@@ -173,7 +173,7 @@ Polymer({
 		if (!useShadow) {
 			this.dispatchEvent(new CustomEvent(
 				'blur',
-				{bubbles: true, composed: true}
+				{ bubbles: true, composed: true }
 			));
 		}
 	}

@@ -361,7 +361,7 @@ Polymer({
 	},
 
 	_overallLevelChanged: function(levelName) {
-		this.fire('d2l-rubric-overall-level-changed', {name: levelName});
+		this.fire('d2l-rubric-overall-level-changed', { name: levelName });
 	},
 
 	_handleTabIndex: function() {

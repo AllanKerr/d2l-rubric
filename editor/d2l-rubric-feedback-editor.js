@@ -155,7 +155,7 @@ Polymer({
 		var action = this._getFeedbackAction(this.entity);
 		if (action) {
 			this.toggleBubble('_feedbackInvalid', false, 'feedback-bubble');
-			var fields = [{'name':'feedback', 'value':e.detail.value}];
+			var fields = [{ 'name': 'feedback', 'value': e.detail.value }];
 			this._pendingFeedbackSaves++;
 			this.performSirenAction(action, fields).then(function() {
 				this.fire('d2l-rubric-feedback-saved');

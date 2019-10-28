@@ -275,7 +275,7 @@ Polymer({
 					this.handleValidationError('level-name-bubble', '_nameInvalid', 'nameIsRequired');
 				} else {
 					this.toggleBubble('_nameInvalid', false, 'level-name-bubble');
-					var fields = [{'name':'name', 'value':e.target.value}];
+					var fields = [{ 'name': 'name', 'value': e.target.value }];
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-level-saved');
 					}.bind(this)).catch(function(err) {
@@ -298,7 +298,7 @@ Polymer({
 					}
 				} else {
 					this.toggleBubble('_pointsInvalid', false, 'points-bubble');
-					var fields = [{'name':'points', 'value':e.target.value}];
+					var fields = [{ 'name': 'points', 'value': e.target.value }];
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-level-points-saved');
 					}.bind(this)).catch(function(err) {
@@ -324,7 +324,7 @@ Polymer({
 						this.handleValidationError('level-name-bubble', '_nameInvalid', 'nameIsRequired');
 					} else {
 						this.toggleBubble('_nameInvalid', false, 'level-name-bubble');
-						var fields = [{'name': 'name', 'value': value}];
+						var fields = [{ 'name': 'name', 'value': value }];
 						this._pendingNameSaves++;
 						this.performSirenAction(action, fields).then(function() {
 							this.fire('d2l-rubric-level-saved');
@@ -354,7 +354,7 @@ Polymer({
 						}
 					} else {
 						this.toggleBubble('_pointsInvalid', false, 'points-bubble');
-						var fields = [{'name': 'points', 'value': value}];
+						var fields = [{ 'name': 'points', 'value': value }];
 						this._pendingPointsSaves++;
 						this.performSirenAction(action, fields).then(function() {
 							this.fire('d2l-rubric-level-points-saved');

@@ -31,7 +31,7 @@ import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 
-const $_documentContainer = html `
+const $_documentContainer = html`
 <dom-module id="d2l-rubric-editor">
 	<template strip-whitespace="">
 		<style include="d2l-rubric-editor-cell-styles">
@@ -862,7 +862,7 @@ Polymer({
 		this.disableMenu(menuButton);
 
 		var action = this.entity.getActionByName('update-status');
-		var fields = [{'name':'status', 'value':menuItem.value}];
+		var fields = [{ 'name': 'status', 'value': menuItem.value }];
 		this.performSirenAction(action, fields).then(function() {
 			this._rubricStatusText = this.localize('rubricStatus', 'status', menuItem.text);
 			this._rubricStatus = menuItem.value;

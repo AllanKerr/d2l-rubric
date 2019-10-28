@@ -16,7 +16,7 @@ class RubricCompetenciesIcon extends PolymerElement {
 					white-space: pre;
 				}
 			</style>
-			
+
 			<img
 				id="icon"
 				src="[[_getIconData('competency')]]"

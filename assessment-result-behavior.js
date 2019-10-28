@@ -163,11 +163,11 @@ D2L.PolymerBehaviors.Rubric.AssessmentResultBehaviorImpl = {
 	},
 
 	getAssessedLevelHref: function(criterionEntity, assessmentResult) {
-		return this._getItem(criterionEntity, assessmentResult, function(x) {return x.level.href;});
+		return this._getItem(criterionEntity, assessmentResult, function(x) { return x.level.href; });
 	},
 
 	getAssessedScore: function(criterionEntity, assessmentResult) {
-		return this._getItem(criterionEntity, assessmentResult, function(x) {return x.score;});
+		return this._getItem(criterionEntity, assessmentResult, function(x) { return x.score; });
 	},
 
 	getAssessmentFeedback: function(criterionEntity, assessmentResult, html) {

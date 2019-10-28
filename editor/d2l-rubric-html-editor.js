@@ -83,22 +83,22 @@ Polymer({
 			}
 
 		</style>
-		<d2l-html-editor 
-			editor-id="[[_uniqueId]]" 
-			inline="1" 
-			auto-focus="[[autoFocus]]" 
-			auto-focus-end="" 
-			min-rows="1" 
-			max-rows="1000" 
-			app-root="[[_appRoot]]" 
-			fullpage-enabled="0" 
-			toolbar="[[_toolbar]]" 
-			plugins="[[_plugins]]" 
+		<d2l-html-editor
+			editor-id="[[_uniqueId]]"
+			inline="1"
+			auto-focus="[[autoFocus]]"
+			auto-focus-end=""
+			min-rows="1"
+			max-rows="1000"
+			app-root="[[_appRoot]]"
+			fullpage-enabled="0"
+			toolbar="[[_toolbar]]"
+			plugins="[[_plugins]]"
 			object-resizing="[[objectResizing]]">
 
 			<div id$="toolbar-shortcut-[[_uniqueId]]" hidden=""></div>
 			<div class="d2l-richtext-editor-container" id="[[_uniqueId]]" role="textbox" placeholder$="[[placeholder]]" aria-label$="[[ariaLabel]]"></div>
-			
+
 		</d2l-html-editor>
 `,
 

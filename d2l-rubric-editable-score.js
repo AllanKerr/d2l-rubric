@@ -366,9 +366,9 @@ Polymer({
 			outOf = entity.properties.outOf;
 		}
 		if (score && outOf) {
-			this.fire('d2l-rubric-total-score-changed', {score:score, outOf: outOf.toString()});
+			this.fire('d2l-rubric-total-score-changed', { score: score, outOf: outOf.toString() });
 		} else if (score) {
-			this.fire('d2l-rubric-total-score-changed', {score:score});
+			this.fire('d2l-rubric-total-score-changed', { score: score });
 		}
 	},
 

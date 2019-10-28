@@ -269,7 +269,7 @@ Polymer({
 		var action = this._getDescriptionAction(this.entity);
 		if (action) {
 			this.toggleBubble('_descriptionInvalid', false, 'description-bubble');
-			var fields = [{'name':'description', 'value':e.detail.value}];
+			var fields = [{ 'name': 'description', 'value': e.detail.value }];
 			this._pendingDescriptionSaves++;
 			this.performSirenAction(action, fields).then(function() {
 				this.fire('d2l-rubric-description-saved');
@@ -343,10 +343,10 @@ Polymer({
 				if (action) {
 					if (this._pointsRequired && !value.trim()) {
 						this.toggleBubble('_pointsInvalid', true, 'cell-points-bubble', this.localize('pointsAreRequired'));
-						this.fire('iron-announce', {text: this.localize('pointsAreRequired')}, {bubbles: true});
+						this.fire('iron-announce', { text: this.localize('pointsAreRequired') }, { bubbles: true });
 					} else {
 						this.toggleBubble('_pointsInvalid', false, 'cell-points-bubble');
-						var fields = [{'name': 'points', 'value': value}];
+						var fields = [{ 'name': 'points', 'value': value }];
 						this._pendingPointsSaves++;
 						this.performSirenAction(action, fields).then(function() {
 							this.fire('d2l-rubric-criterion-cell-points-saved');

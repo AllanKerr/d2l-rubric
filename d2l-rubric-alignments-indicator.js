@@ -53,7 +53,7 @@ class RubricAlignmentsIndicator extends mixinBehaviors([
 	:host {
 		display: inline-block;
 	}
-	
+
 	d2l-tooltip {
 		margin-left: 8px;
 		font-size: 14px;

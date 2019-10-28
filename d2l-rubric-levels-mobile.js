@@ -228,9 +228,9 @@ Polymer({
 			value: null
 		},
 
-		assessedLevelHref:{
+		assessedLevelHref: {
 			type: String,
-			value:null
+			value: null
 		},
 
 		readOnly: {

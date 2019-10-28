@@ -265,7 +265,7 @@ Polymer({
 					this.toggleBubble('_nameInvalid', true, 'group-name-bubble', this.localize('nameIsRequired'));
 				} else {
 					this.toggleBubble('_nameInvalid', false, 'group-name-bubble');
-					var fields = [{'name': 'name', 'value':e.target.value}];
+					var fields = [{ 'name': 'name', 'value': e.target.value }];
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-group-name-saved');
 					}.bind(this)).catch(function(err) {
@@ -288,7 +288,7 @@ Polymer({
 						this.toggleBubble('_nameInvalid', true, 'group-name-bubble', this.localize('nameIsRequired'));
 					} else {
 						this.toggleBubble('_nameInvalid', false, 'group-name-bubble');
-						var fields = [{'name': 'name', 'value': value}];
+						var fields = [{ 'name': 'name', 'value': value }];
 						this._pendingGroupNameSaves++;
 						this.performSirenAction(action, fields).then(function() {
 							this.fire('d2l-rubric-group-name-saved');

@@ -250,7 +250,7 @@ Polymer({
 					this.handleValidationError('range-start-bubble', '_rangeStartInvalid', 'rangeStartRequired');
 				} else {
 					this.toggleBubble('_rangeStartInvalid', false, 'range-start-bubble');
-					var fields = [{'name':'rangeStart', 'value':e.target.value}];
+					var fields = [{ 'name': 'rangeStart', 'value': e.target.value }];
 					this.performSirenAction(action, fields).then(function() {
 						this.fire('d2l-rubric-overall-level-range-start-saved');
 					}.bind(this)).catch(function(err) {
@@ -272,7 +272,7 @@ Polymer({
 						this.handleValidationError('overall-level-name-bubble', '_nameInvalid', 'nameIsRequired');
 					} else {
 						this.toggleBubble('_nameInvalid', false, 'overall-level-name-bubble');
-						var fields = [{'name': 'name', 'value': value}];
+						var fields = [{ 'name': 'name', 'value': value }];
 						this._pendingNameSaves++;
 						this.performSirenAction(action, fields).then(function() {
 							this.fire('d2l-rubric-overall-level-saved');
@@ -298,7 +298,7 @@ Polymer({
 						this.handleValidationError('range-start-bubble', '_rangeStartInvalid', 'rangeStartRequired');
 					} else {
 						this.toggleBubble('_rangeStartInvalid', false, 'range-start-bubble');
-						var fields = [{'name': 'rangeStart', 'value': value}];
+						var fields = [{ 'name': 'rangeStart', 'value': value }];
 						this._pendingRangeStartSaves++;
 						this.performSirenAction(action, fields).then(function() {
 							this.fire('d2l-rubric-overall-level-range-start-saved');

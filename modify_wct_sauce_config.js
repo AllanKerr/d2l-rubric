@@ -28,7 +28,7 @@ var json_contents = {
 	}
 };
 
-var platform_array =  [
+var platform_array = [
 	{
 		'browserName': 'chrome',
 		'platform': 'OS X 10.13',
@@ -67,7 +67,7 @@ var platform_array =  [
 ];
 
 //add two random platforms to the json
-platform_array.sort(function() {return 0.5 - Math.random(); });
+platform_array.sort(function() { return 0.5 - Math.random(); });
 json_contents.plugins.sauce['browsers'] = [platform_array[0]];
 json_contents.plugins.sauce['browsers'].push(platform_array[1]);
 

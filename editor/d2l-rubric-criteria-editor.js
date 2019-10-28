@@ -424,8 +424,8 @@ Polymer({
 			// This manually updates '_criteriaEntities' by splicing the criterion from oldIndex and appending it at newIndex.
 			this.splice('_criteriaEntities', newIndex, 0, this.splice('_criteriaEntities', oldIndex, 1)[0]);
 			var fields = [
-				{'name': 'oldIndex', 'value': oldIndex},
-				{'name': 'newIndex', 'value': newIndex}
+				{ 'name': 'oldIndex', 'value': oldIndex },
+				{ 'name': 'newIndex', 'value': newIndex }
 			];
 			return this.performSirenAction(action, fields).then(function() {
 				this.fire('iron-announce',

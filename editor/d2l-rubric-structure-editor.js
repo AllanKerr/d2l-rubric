@@ -311,7 +311,7 @@ Polymer({
 					.getFieldByName('scoring-method').value || [];
 
 				//Only re-populate the menu if _canConvertScoring was previously null/undefined or false
-				if (!this._canConvertScoring  || this._refreshScoring) {
+				if (!this._canConvertScoring || this._refreshScoring) {
 					var selected = this.populateDropdownMenuOptions('scoring-menu', options);
 					if (selected) {
 						this._scoringMethod = selected.value;
@@ -406,7 +406,7 @@ Polymer({
 		var performAction = function() {
 			this.disableMenu(menuButton);
 			var action = this.entity.getActionByName('update-type');
-			var fields = [{'name':'rubricType', 'value':menuItem.value}];
+			var fields = [{ 'name': 'rubricType', 'value': menuItem.value }];
 			this._refreshScoring = true;
 			this.performSirenAction(action, fields).then(function() {
 				this._rubricTypeText = this.localize('rubricType', 'rubricType', menuItem.text);
@@ -448,7 +448,7 @@ Polymer({
 
 		this.disableMenu(menuButton);
 		var action = this.entity.getActionByName('update-scoring');
-		var fields = [{'name':'scoringMethod', 'value':menuItem.value}];
+		var fields = [{ 'name': 'scoringMethod', 'value': menuItem.value }];
 		this.performSirenAction(action, fields).then(function() {
 			this._scoringText = this.localize('scoring', 'method', menuItem.text);
 			this._scoringMethod = menuItem.value;

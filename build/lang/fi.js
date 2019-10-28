@@ -12,7 +12,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFiBehavior = {
 	fi: {
 		'addCriteriaGroup': 'Add Criteria Group',
 		'addCriterion': 'Add Criterion',
-		'addFeedback':'Add Feedback',
+		'addFeedback': 'Add Feedback',
 		'addLevel': 'Add Level',
 		'addLevelPrepend': 'Add new level before {name}',
 		'addLevelAppend': 'Add new level after {name}',
