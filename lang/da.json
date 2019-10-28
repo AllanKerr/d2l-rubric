@@ -63,6 +63,7 @@
    "levelPoints" : "Niveaupunkter",
    "levelPrepended" : "Et nyt niveau blev tilføjet før {name}",
    "lockedAlertText" : "Denne rubrik kan ikke redigeres, da den allerede er blevet brugt til at vurdere elevens arbejde",
+   "makeRubricAvailableHeader" : "Make rubric available to",
    "moveCriterionDown" : "Flyt kriterium {position} ned",
    "moveCriterionUp" : "Flyt kriterium {position} op",
    "name" : "Navn",

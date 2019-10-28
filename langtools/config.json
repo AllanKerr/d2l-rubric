@@ -1,21 +1,24 @@
 {
-    "buildDir": "build/lang",
-    "buildTemplateFile": "langtools/build.template",
-    "copySourceLang": "en",
-    "langDir": "lang",
-    "langNames": [
-        "ar",
-        "de",
-        "en",
-        "es",
-        "fr",
-        "ja",
-        "ko",
-        "nl",
-        "pt",
-        "sv",
-        "tr",
-        "zh-tw",
-        "zh"
-    ]
+  "buildDir": "build/lang",
+  "buildTemplateFile": "langtools/build.template",
+  "copySourceLang": "en",
+  "langDir": "lang",
+  "langNames": [
+    "ar",
+    "da",
+    "de",
+    "en",
+    "es",
+    "fi",
+    "fr",
+    "fr-fr",
+    "ja",
+    "ko",
+    "nl",
+    "pt",
+    "sv",
+    "tr",
+    "zh-tw",
+    "zh"
+  ]
 }

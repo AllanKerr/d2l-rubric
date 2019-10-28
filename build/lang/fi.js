@@ -5,8 +5,8 @@ window.D2L.PolymerBehaviors.Rubric = window.D2L.PolymerBehaviors.Rubric || {};
 window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior = window.D2L.PolymerBehaviors.Rubric.LocalizeBehavior || {};
 
 /*
-* Fi lang terms
-* @polymerBehavior D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFiBehavior
+ * Fi lang terms
+ * @polymerBehavior D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFiBehavior
  */
 D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFiBehavior = {
 	fi: {
@@ -77,7 +77,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFiBehavior = {
 		'pointsAreRequired': 'Point value is required',
 		'pointsMinimum': '{number} {number, plural, one {point} other {points}} minimum',
 		'pointsSaveFailed': 'Saving points failed',
-		'percentage': '\{number\} %',
+		'percentage': '{number} %',
 		'preview': 'Preview',
 		'initialFeedback': 'Initial Feedback',
 		'refreshText': 'refresh the page',
@@ -107,6 +107,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFiBehavior = {
 		'total': 'Total',
 		'totalScoreLabel': 'Rubric Total Score',
 		'totalScoreAriaLabel': 'The rubric is out of a total score of {value} points.',
+		'makeRubricAvailableHeader': 'Make rubric available to',
 		'moveCriterionUp': 'Move criterion {position} up',
 		'moveCriterionDown': 'Move criterion {position} down',
 		'criterionMoved': '{name} is now criterion {position}',

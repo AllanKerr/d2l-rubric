@@ -63,6 +63,7 @@
    "levelPoints" : "Points du niveau",
    "levelPrepended" : "Un niveau a été ajouté avant {name}",
    "lockedAlertText" : "Cette grille d’évaluation ne peut pas être modifiée, car elle a déjà été utilisée pour évaluer le travail de l’apprenant.",
+   "makeRubricAvailableHeader" : "Make rubric available to",
    "moveCriterionDown" : "Déplacer le critère {position} vers le bas",
    "moveCriterionUp" : "Déplacer le critère {position} vers le haut",
    "name" : "Nom",
