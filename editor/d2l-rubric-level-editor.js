@@ -69,15 +69,38 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-level-editor">
 			}
 		</style>
 
-		<d2l-input-text id="level-name" value="{{_levelName}}" on-blur="_saveName" on-input="_saveNameOnInput" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('_levelName')]]" disabled="[[!_canEditName]]" prevent-submit="">
+		<d2l-input-text
+			id="level-name"
+			value="{{_levelName}}"
+			on-blur="_saveName"
+			on-input="_saveNameOnInput"
+			aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
+			aria-label$="[[localize('_levelName')]]"
+			disabled="[[!_canEditName]]"
+			prevent-submit="">
 		</d2l-input-text>
 		<div class="operations" nopoints$="[[!_showPoints]]">
 			<div class="points" hidden="[[!_showPoints]]" alt-percent-format$="[[_showAltPercentFormat(percentageFormatAlternate,_usesPercentage)]]">
-				<d2l-input-text id="level-points" value="{{_levelPoints}}" on-blur="_savePoints" on-input="_savePointsOnInput" aria-invalid="[[isAriaInvalid(_pointsInvalid)]]" aria-label$="[[localize('_levelPoints')]]" disabled="[[!_canEditPoints]]" size="1" prevent-submit="">
+				<d2l-input-text
+					id="level-points"
+					value="{{_levelPoints}}"
+					on-blur="_savePoints"
+					on-input="_savePointsOnInput"
+					aria-invalid="[[isAriaInvalid(_pointsInvalid)]]"
+					aria-label$="[[localize('_levelPoints')]]"
+					disabled="[[!_canEditPoints]]"
+					size="1"
+					prevent-submit="">
 				</d2l-input-text>
 				<div>[[_getPointsUnitText(entity)]]</div>
 			</div>
-			<d2l-button-icon id="remove" icon="d2l-tier1:delete" text="[[localize('removeLevel', 'name', _levelName)]]" on-click="_handleDeleteLevel" hidden="[[!_canDelete]]" type="button">
+			<d2l-button-icon
+				id="remove"
+				icon="d2l-tier1:delete"
+				text="[[localize('removeLevel', 'name', _levelName)]]"
+				on-click="_handleDeleteLevel"
+				hidden="[[!_canDelete]]"
+				type="button">
 			</d2l-button-icon>
 		</div>
 		<template is="dom-if" if="[[_nameInvalid]]">

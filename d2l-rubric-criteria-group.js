@@ -31,7 +31,7 @@ import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 import './d2l-rubric-competencies-icon.js';
 const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-group">
+$_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 	<template strip-whitespace="">
 		<style include="d2l-table-style">
 			:host {
@@ -140,25 +140,25 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 				border-left-color: var(--d2l-color-celestine);
 				border-width: 2px;
 			}
-			
+
 			d2l-button-subtle {
 				margin-left: -13px;
 				margin-bottom: -2px;
 				padding: 1px 1px 1px 1px;
 				align-self: flex-start;
 			}
-			
+
 			d2l-button-subtle:hover {
 				padding: 0;
 				border-radius: 0.3rem;
 				border: 1px solid var(--d2l-color-celestine);
 			}
-			
+
 			d2l-rubric-alignments-indicator {
 				float: right;
 				margin-left: 8px;
 			}
-			
+
 			d2l-rubric-competencies-icon {
 				float: right;
 				margin-top: 3px;
@@ -205,8 +205,8 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 							<d2l-td class="criteria" role="rowheader">
 								<div class="criteria-row-header-container">
 									<div>
-										<d2l-rubric-alignments-indicator 
-											href="[[_getActivityLink(criterion)]]" 
+										<d2l-rubric-alignments-indicator
+											href="[[_getActivityLink(criterion)]]"
 											token="[[token]]"
 											outcomes-title-text="[[_getOutcomesTitleText()]]"
 										></d2l-rubric-alignments-indicator>
@@ -221,32 +221,82 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 											</span>
 										</div>
 									</div>
-									<d2l-button-subtle aria-hidden="true" on-focusin="_handleVisibleFeedbackFocusin" id="addFeedback[[_getRowIndex(criterionNum)]]" tabindex="-1" hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback)]]" text="[[localize('addFeedback')]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]"></d2l-button-subtle>
+									<d2l-button-subtle
+										aria-hidden="true"
+										on-focusin="_handleVisibleFeedbackFocusin"
+										id="addFeedback[[_getRowIndex(criterionNum)]]"
+										tabindex="-1"
+										hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback)]]"
+										text="[[localize('addFeedback')]]"
+										on-click="_handleAddFeedback"
+										data-criterion$="[[criterionNum]]">
+									</d2l-button-subtle>
 								</div>
 							</d2l-td>
 						</template>
 						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell" index-as="cellNum">
-							<d2l-td class$="[[_getCriteriaClassName(criterionCell, assessmentResult, noBottomCells, criterionNum, _criteriaEntities, cellNum)]]" on-click="handleTap" data-href$="[[_getSelfLink(criterionCell)]]">
-								<d2l-rubric-criterion-cell href="[[_getSelfLink(criterionCell)]]" token="[[token]]" assessment-href="[[assessmentHref]]">
+							<d2l-td
+								class$="[[_getCriteriaClassName(criterionCell, assessmentResult, noBottomCells, criterionNum, _criteriaEntities, cellNum)]]"
+								on-click="handleTap"
+								data-href$="[[_getSelfLink(criterionCell)]]">
+								<d2l-rubric-criterion-cell
+									href="[[_getSelfLink(criterionCell)]]"
+									token="[[token]]"
+									assessment-href="[[assessmentHref]]">
 								</d2l-rubric-criterion-cell>
 								<d2l-offscreen>
-									<input hidden="[[_isStaticView()]]" on-keypress="_handleUnselect" name="[[criterionNum]]" type="radio" checked="[[_isSelected(criterionCell, assessmentResult)]]">
+									<input
+										hidden="[[_isStaticView()]]"
+										on-keypress="_handleUnselect"
+										name="[[criterionNum]]"
+										type="radio"
+										checked="[[_isSelected(criterionCell, assessmentResult)]]">
 								</d2l-offscreen>
 							</d2l-td>
 						</template>
 						<template is="dom-if" if="[[_hasOutOf(entity)]]">
 							<d2l-td class$="[[_getOutOfClassName(criterion, assessmentResult)]]">
-								<d2l-rubric-editable-score id="score-inner[[criterionNum]]"  tabindex$="[[_handleTabIndex()]]" on-click="_handleOverrideScore" on-keypress="_handleScoreKeypress" class="score-wrapper" criterion-href="[[_getSelfLink(criterion)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" editing-score="{{editingScore}}" criterion-num="[[criterionNum]]" parent-cell="[[editableScoreContainer]]">
+								<d2l-rubric-editable-score
+									id="score-inner[[criterionNum]]"
+									tabindex$="[[_handleTabIndex()]]"
+									on-click="_handleOverrideScore"
+									on-keypress="_handleScoreKeypress"
+									class="score-wrapper"
+									criterion-href="[[_getSelfLink(criterion)]]"
+									assessment-href="[[assessmentHref]]"
+									token="[[token]]"
+									read-only="[[readOnly]]"
+									editing-score="{{editingScore}}"
+									criterion-num="[[criterionNum]]"
+									parent-cell="[[editableScoreContainer]]">
 								</d2l-rubric-editable-score>
 									<d2l-offscreen>
-										<d2l-button-subtle aria-label$="[[localize('addFeedback')]]" id="invisible-addFeedback[[_getRowIndex(criterionNum)]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]" hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback)]]" on-focusin="_handleInvisibleFeedbackFocusin" on-focusout="_handleInvisibleFeedbackFocusout">
-									</d2l-offscreen>	
+										<d2l-button-subtle
+											aria-label$="[[localize('addFeedback')]]"
+											id="invisible-addFeedback[[_getRowIndex(criterionNum)]]"
+											on-click="_handleAddFeedback"
+											data-criterion$="[[criterionNum]]"
+											hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback)]]"
+											on-focusin="_handleInvisibleFeedbackFocusin"
+											on-focusout="_handleInvisibleFeedbackFocusout">
+										</d2l-button-subtle>
+									</d2l-offscreen>
 							</d2l-td>
 						</template>
 					</d2l-tr>
 					<template is="dom-if" if="[[_displayFeedback(_feedbackDisplay, criterionNum, _addingFeedback, _savingFeedback)]]" restamp="true">
 						<d2l-tspan id="feedback[[criterionNum]]" role="cell" focused-styling$="[[!_isStaticView()]]">
-							<d2l-rubric-feedback id="feedback-inner[[criterionNum]]" class="feedback-wrapper" criterion-href="[[_getSelfLink(criterion)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" data-criterion$="[[criterionNum]]" on-save-feedback="_handleSaveFeedback" on-save-feedback-finished="_handleSaveFinished" on-close-feedback="_closeFeedback">
+							<d2l-rubric-feedback
+								id="feedback-inner[[criterionNum]]"
+								class="feedback-wrapper"
+								criterion-href="[[_getSelfLink(criterion)]]"
+								assessment-href="[[assessmentHref]]"
+								token="[[token]]"
+								read-only="[[readOnly]]"
+								data-criterion$="[[criterionNum]]"
+								on-save-feedback="_handleSaveFeedback"
+								on-save-feedback-finished="_handleSaveFinished"
+								on-close-feedback="_closeFeedback">
 							</d2l-rubric-feedback>
 						</d2l-tspan>
 					</template>
@@ -255,7 +305,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 		</d2l-table>
 	</template>
 
-	
+
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);

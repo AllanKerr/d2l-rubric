@@ -133,8 +133,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				></d2l-rubric-competencies-icon>
 			</template>
 			<template is="dom-if" if="[[!isHolistic]]" restamp>
-				<d2l-rubric-alignments-indicator 
-					href="[[_getActivityLink(_entity)]]" 
+				<d2l-rubric-alignments-indicator
+					href="[[_getActivityLink(_entity)]]"
 					token="[[token]]"
 					outcomes-title-text="[[_getOutcomesTitleText()]]"
 					mobile
@@ -142,7 +142,19 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 			</template>
 			<span>[[_name]]</span>
 		</div>
-		<d2l-rubric-levels-mobile href="[[levelsHref]]" assessment-href="[[assessmentHref]]" token="[[token]]" selected="{{_selected}}" level-entities="{{_levelEntities}}" total="{{_total}}" out-of="[[_outOf]]" score="[[_score]]" assessed-level-href="[[_assessedLevelHref]]" read-only="[[readOnly]]" criterion-cells="[[_criterionCells]]" criterion-href="[[_getSelfLink(entity)]]">
+		<d2l-rubric-levels-mobile
+			href="[[levelsHref]]"
+			assessment-href="[[assessmentHref]]"
+			token="[[token]]"
+			selected="{{_selected}}"
+			level-entities="{{_levelEntities}}"
+			total="{{_total}}"
+			out-of="[[_outOf]]"
+			score="[[_score]]"
+			assessed-level-href="[[_assessedLevelHref]]"
+			read-only="[[readOnly]]"
+			criterion-cells="[[_criterionCells]]"
+			criterion-href="[[_getSelfLink(entity)]]">
 		</d2l-rubric-levels-mobile>
 
 		<div id="description" class="criterion-description-container">
@@ -150,7 +162,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				<d2l-button-icon aria-label$="[[localize('selectNextLevel')]]" id="left-chevron" icon="d2l-tier1:chevron-left"></d2l-button-icon>
 			</div>
 			<template is="dom-repeat" items="[[_criterionCells]]" as="criterionCell" indexas="index">
-				<div id="level-description-panel[[index]]" class="criterion-middle" aria-labelledby$="level-tab[[index]]" role="tabpanel" hidden="[[!_isLevelSelected(index, _selected)]]">
+				<div
+					id="level-description-panel[[index]]"
+					class="criterion-middle"
+					aria-labelledby$="level-tab[[index]]"
+					role="tabpanel"
+					hidden="[[!_isLevelSelected(index, _selected)]]">
 					<div class$="[[_getLevelNameClass(_levelEntities, _selected, _assessedLevelHref)]]">
 						<div class="level-text"> [[_getSelectedLevelText(_selected, _levelEntities)]] </div>
 						<d2l-icon hidden="[[!_showLevelBullet()]]" class$="[[_getLevelBulletClass(_levelEntities, _selected, _assessedLevelHref)]]" icon="d2l-tier1:bullet"></d2l-icon>
@@ -166,7 +183,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 			</div>
 		</div>
 	</template>
-	
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);

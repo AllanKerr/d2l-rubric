@@ -13,7 +13,7 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-levels-editor">
+$_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-levels-editor">
 	<template strip-whitespace="">
 		<style include="d2l-rubric-editor-cell-styles">
 			:host {
@@ -165,7 +165,13 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-leve
 		<d2l-scroll-wrapper id="scroll-wrapper" start-icon="d2l-tier1:chevron-left" end-icon="d2l-tier1:chevron-right" show-actions="" check-scroll-delta-value="1">
 			<div id="level-header" class="editor-section">
 				<div class="gutter-left">
-					<d2l-button-icon on-click="_handlePrependOverallLevel" on-focus="_onPrependFocus" icon="d2l-tier2:add" text="[[localize('addOverallLevelPrepend', 'name', '')]]" disabled="[[!_canPrepend]]" type="button">
+					<d2l-button-icon
+						on-click="_handlePrependOverallLevel"
+						on-focus="_onPrependFocus"
+						icon="d2l-tier2:add"
+						text="[[localize('addOverallLevelPrepend', 'name', '')]]"
+						disabled="[[!_canPrepend]]"
+						type="button">
 					</d2l-button-icon>
 				</div>
 				<div class="col-center" id="level-header-center-section">
@@ -176,7 +182,13 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-leve
 					</template>
 				</div>
 				<div class="gutter-right">
-					<d2l-button-icon on-click="_handleAppendOverallLevel" on-focus="_onAppendFocus" icon="d2l-tier2:add" text="[[localize('addOverallLevelAppend', 'name', '')]]" disabled="[[!_canAppend]]" type="button">
+					<d2l-button-icon
+						on-click="_handleAppendOverallLevel"
+						on-focus="_onAppendFocus"
+						icon="d2l-tier2:add"
+						text="[[localize('addOverallLevelAppend', 'name', '')]]"
+						disabled="[[!_canAppend]]"
+						type="button">
 					</d2l-button-icon>
 				</div>
 			</div>
@@ -185,7 +197,14 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-leve
 				<div class="col-center" id="description-center-section">
 					<template is="dom-repeat" items="[[_overallLevels]]" as="overallLevel" rendered-item-count="{{levelCount}}">
 						<div class="cell">
-							<d2l-rubric-description-editor href="[[_getSelfLink(overallLevel)]]" token="[[token]]" aria-label-langterm="overallDescriptionAriaLabel" rich-text-enabled="[[richTextEnabled]]" first-and-corner$="[[_isFirstAndCorner(index, levelCount)]]" last-and-corner$="[[_isLastAndCorner(index, levelCount)]]"></d2l-rubric-description-editor>
+							<d2l-rubric-description-editor
+								href="[[_getSelfLink(overallLevel)]]"
+								token="[[token]]"
+								aria-label-langterm="overallDescriptionAriaLabel"
+								rich-text-enabled="[[richTextEnabled]]"
+								first-and-corner$="[[_isFirstAndCorner(index, levelCount)]]"
+								last-and-corner$="[[_isLastAndCorner(index, levelCount)]]">
+							</d2l-rubric-description-editor>
 						</div>
 					</template>
 				</div>

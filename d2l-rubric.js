@@ -23,7 +23,7 @@ import './rubric-siren-entity.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric">
+$_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 	<template strip-whitespace="">
 		<style>
 			:host {
@@ -199,22 +199,51 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric">
 		<d2l-rubric-loading hidden$="[[_hideLoading(_showContent,_hasAlerts)]]"></d2l-rubric-loading>
 		<div hidden$="[[_hideLoading(_showContent,_hasAlerts)]]" class="out-of-loader"></div>
 		<div hidden$="[[_hideOutOf(_showContent,_hasAlerts)]]">
-			<d2l-rubric-criteria-groups href="[[_getHref(_criteriaGroups)]]" assessment-href="[[assessmentHref]]" token="[[token]]" rubric-type="[[rubricType]]" read-only="[[readOnly]]" telemetry-data="[[_telemetryData]]"></d2l-rubric-criteria-groups>
+			<d2l-rubric-criteria-groups
+				href="[[_getHref(_criteriaGroups)]]"
+				assessment-href="[[assessmentHref]]"
+				token="[[token]]"
+				rubric-type="[[rubricType]]"
+				read-only="[[readOnly]]"
+				telemetry-data="[[_telemetryData]]">
+			</d2l-rubric-criteria-groups>
 			<div class="out-of-container" hidden="[[!_hasOutOf(entity)]]">
 				<div class="out-of-text" role="group" aria-labelledby="total-grouping-label">
 					<d2l-offscreen id="total-grouping-label">[[localize('totalScoreLabel')]]</d2l-offscreen>
 					<div class="left total">[[localize('total')]]</div>
 					<div class="out-of-score-container">
-						<d2l-button-subtle class="clear-override-button" icon="d2l-tier1:close-small" text="[[localize('clearOverride')]]" on-click="clearTotalScoreOverride" hidden$="[[!_showClearTotalScoreButton(assessmentEntity)]]">
+						<d2l-button-subtle
+							class="clear-override-button"
+							icon="d2l-tier1:close-small"
+							text="[[localize('clearOverride')]]"
+							on-click="clearTotalScoreOverride"
+							hidden$="[[!_showClearTotalScoreButton(assessmentEntity)]]">
 						</d2l-button-subtle>
-						<d2l-rubric-editable-score id="total-score-inner" class$="[[_getOutOfClassName(assessmentEntity, editingScore)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" editing-score="{{editingScore}}" total-score="[[_score]]" entity="[[entity]]" on-click="_handleOverrideScore" on-keypress="_handleScoreKeypress" tabindex$="[[_handleTabIndex()]]">
+						<d2l-rubric-editable-score
+							id="total-score-inner"
+							class$="[[_getOutOfClassName(assessmentEntity, editingScore)]]"
+							assessment-href="[[assessmentHref]]"
+							token="[[token]]"
+							read-only="[[readOnly]]"
+							editing-score="{{editingScore}}"
+							total-score="[[_score]]"
+							entity="[[entity]]"
+							on-click="_handleOverrideScore"
+							on-keypress="_handleScoreKeypress"
+							tabindex$="[[_handleTabIndex()]]">
 						</d2l-rubric-editable-score>
 					</div>
 				</div>
 			</div>
 		</div>
 		<template is="dom-if" if="[[_hasOverallScore(entity, overallScoreFlag)]]">
-			<d2l-rubric-overall-score read-only="[[readOnly]]" href="[[_getOverallLevels(entity)]]" assessment-href="[[assessmentHref]]" token="[[token]]" has-out-of="[[_hasOutOf(entity)]]"></d2l-rubric-overall-score>
+			<d2l-rubric-overall-score
+				read-only="[[readOnly]]"
+				href="[[_getOverallLevels(entity)]]"
+				assessment-href="[[assessmentHref]]"
+				token="[[token]]"
+				has-out-of="[[_hasOutOf(entity)]]">
+			</d2l-rubric-overall-score>
 		</template>
 		<div hidden$="[[!_hasOverallFeedback(_feedback)]]">
 			<div class="overall-feedback-header"><h2>[[localize('overallFeedback')]]</h2></div>

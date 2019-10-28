@@ -65,17 +65,17 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 			}
 			.clear-override-button-mobile {
 				display: none;
-			} 
+			}
 			.override-label {
 				display: none;
-			} 
+			}
 			@media screen and (max-width: 614px) {
 				.clear-override-button-mobile {
 					display: inline-flex;
 					padding: 6px 0;
 				}
 				.override-label {
-					margin-left: 12px;	
+					margin-left: 12px;
 					padding: 6px 0;
 					display: inline-flex;
 					font-size: 15px;
@@ -100,15 +100,29 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 		<div id="editable-container">
 			<div class$="[[_getContainerClassName(criterionHref)]]" hidden="[[!_isEditingScore(criterionNum, editingScore)]]">
 				<template is="dom-if" if="[[!totalScore]]">
-					<d2l-button-subtle class="clear-override-button-mobile" id="clear-button" text="[[localize('clearOverride')]]" on-click="_clearCriterionOverride" hidden$="[[!scoreOverridden]]">
+					<d2l-button-subtle
+						class="clear-override-button-mobile"
+						id="clear-button"
+						text="[[localize('clearOverride')]]"
+						on-click="_clearCriterionOverride"
+						hidden$="[[!scoreOverridden]]">
 					</d2l-button-subtle>
 					<div class="override-label" hidden$="[[scoreOverridden]]">[[localize('overrideLabel')]]</div>
 				</template>
 				<div class="editing-component">
-					<d2l-input-text id="text-area" value="[[getScore(entity, assessmentResult, totalScore)]]" type="number" step="any" min="0" max="100000" on-blur="_blurHandler" on-keypress="_handleKey" prevent-submit="">
+					<d2l-input-text
+						id="text-area"
+						value="[[getScore(entity, assessmentResult, totalScore)]]"
+						type="number"
+						step="any"
+						min="0"
+						max="100000"
+						on-blur="_blurHandler"
+						on-keypress="_handleKey"
+						prevent-submit="">
 					</d2l-input-text>
 					<div id="out-of" class="right">[[_localizeOutOf(entity)]]</div>
-				</div>	
+				</div>
 			</div>
 			<template is="dom-if" if="[[!_isEditingScore(criterionNum, editingScore)]]">
 				<div class$="[[_getOutOfClassName(scoreOverridden)]]" id="out-of-container">
@@ -117,7 +131,14 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 				</div>
 			</template>
 		</div>
-		<d2l-tooltip aria-hidden="true" id="override-tooltip" hidden="[[_handleTooltip(scoreOverridden,criterionNum, editingScore)]]" for="editable-container" position="top">[[_localizeStarLabel(totalScore)]]</d2l-tooltip>
+		<d2l-tooltip
+			aria-hidden="true"
+			id="override-tooltip"
+			hidden="[[_handleTooltip(scoreOverridden,criterionNum, editingScore)]]"
+			for="editable-container"
+			position="top">
+			[[_localizeStarLabel(totalScore)]]
+		</d2l-tooltip>
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);

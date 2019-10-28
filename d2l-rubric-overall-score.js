@@ -122,12 +122,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 				--d2l-scroll-wrapper-border-color: var(--d2l-color-mica);
 				--d2l-scroll-wrapper-background-color: var(--d2l-color-regolith);
 			}
-			
+
 			d2l-rubric-competencies-icon {
 				margin-top: 1px;
 				margin-left: 10px;
 			}
-			
+
 			d2l-rubric-competencies-icon[mobile] {
 				float: right;
 				margin-left: 2px;
@@ -156,7 +156,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 		<d2l-offscreen id="overall-grouping-label">[[localize('overallScore')]]</d2l-offscreen>
 		<div class="overall-levels" data-mobile$="[[!_largeScreen]]">
 			<template is="dom-repeat" items="[[_levels]]" as="level">
-				<div class="overall-level" data-achieved$="[[_isAchieved(level, _version)]]" data-clickable$="[[_isClickable(level, _version)]]" on-click="_levelClicked" on-keypress="_handleKeypress" tabindex$="[[_handleTabIndex()]]">
+				<div class="overall-level"
+					data-achieved$="[[_isAchieved(level, _version)]]"
+					data-clickable$="[[_isClickable(level, _version)]]"
+					on-click="_levelClicked"
+					on-keypress="_handleKeypress"
+					tabindex$="[[_handleTabIndex()]]">
 					<h4>
 						<span>[[level.properties.name]]</span>
 						<span hidden="[[!_showClearOverrideButton(level, _version)]]">&nbsp;*</span>
@@ -181,7 +186,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 	</d2l-scroll-wrapper>
 	</template>
 
-	
+
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);

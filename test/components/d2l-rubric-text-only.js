@@ -1,6 +1,5 @@
-/* global suite, test, fixture, expect, suiteSetup, suiteTeardown, sinon */
-
 'use strict';
+
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 
 suite('<d2l-rubric-text-only>', function() {

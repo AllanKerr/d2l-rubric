@@ -28,7 +28,7 @@ import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-structure-editor">
+$_documentContainer.innerHTML = `<dom-module id="d2l-rubric-structure-editor">
 	<template strip-whitespace="">
 		<style include="d2l-rubric-editor-cell-styles">
 			:host {
@@ -129,17 +129,37 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-structure-ed
 						</d2l-dropdown-menu>
 					</d2l-dropdown-button-subtle>
 
-					<d2l-button-subtle hidden$="[[!_present(_reverseLevels)]]" on-click="_handleReverseLevels" icon="d2l-tier1:reverse-order" text="[[localize('reverseLevelOrder')]]" type="button">
+					<d2l-button-subtle
+						hidden$="[[!_present(_reverseLevels)]]"
+						on-click="_handleReverseLevels"
+						icon="d2l-tier1:reverse-order"
+						text="[[localize('reverseLevelOrder')]]"
+						type="button">
 					</d2l-button-subtle>
 				</div>
 			</div>
 			<div class="gutter-right" holistic$="[[_isHolistic]]"></div>
 		</div>
 		<div id="rubric-structure-editor-container" hidden="">
-			<d2l-rubric-criteria-groups-editor href="[[_getHref(_criteriaGroups)]]" token="[[token]]" total-score="[[_totalScore]]" is-holistic="[[_isHolistic]]" percentage-format-alternate="[[percentageFormatAlternate]]" rich-text-enabled="[[richTextEnabled]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]" updating-levels="{{_updatingLevels}}">
+			<d2l-rubric-criteria-groups-editor
+				href="[[_getHref(_criteriaGroups)]]"
+				token="[[token]]"
+				total-score="[[_totalScore]]"
+				is-holistic="[[_isHolistic]]"
+				percentage-format-alternate="[[percentageFormatAlternate]]"
+				rich-text-enabled="[[richTextEnabled]]"
+				outcomes-title="[[outcomesTitle]]"
+				browse-outcomes-text="[[browseOutcomesText]]"
+				outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]"
+				updating-levels="{{_updatingLevels}}">
 			</d2l-rubric-criteria-groups-editor>
 			<div id="overall-score" hidden$="[[!_present(_overallLevels)]]">
-				<d2l-rubric-overall-levels-editor href="[[_getHref(_overallLevels)]]" token="[[token]]" rich-text-enabled="[[richTextEnabled]]" updating-levels="[[_updatingLevels]]"></d2l-rubric-overall-levels-editor>
+				<d2l-rubric-overall-levels-editor
+					href="[[_getHref(_overallLevels)]]"
+					token="[[token]]"
+					rich-text-enabled="[[richTextEnabled]]"
+					updating-levels="[[_updatingLevels]]">
+				</d2l-rubric-overall-levels-editor>
 			</div>
 		</div>
 	</template>

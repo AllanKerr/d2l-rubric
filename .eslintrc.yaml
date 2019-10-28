@@ -3,6 +3,7 @@ extends:
 rules:
   object-shorthand: [2, "never"]
   no-useless-escape: 0
+  no-prototype-builtins: 0
 globals:
   fastdom: false
 env:

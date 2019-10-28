@@ -269,7 +269,15 @@ const $_documentContainer = html `
 			</template>
 		</div>
 		<template is="dom-if" if="[[!_isLocked]]">
-			<d2l-rubric-structure-editor is-single-page-rubric="[[isSinglePageRubric]]" rich-text-enabled="[[richTextEnabled]]" percentage-format-alternate="[[percentageFormatAlternate]]" href="[[href]]" token="[[token]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]">
+			<d2l-rubric-structure-editor
+				is-single-page-rubric="[[isSinglePageRubric]]"
+				rich-text-enabled="[[richTextEnabled]]"
+				percentage-format-alternate="[[percentageFormatAlternate]]"
+				href="[[href]]"
+				token="[[token]]"
+				outcomes-title="[[outcomesTitle]]"
+				browse-outcomes-text="[[browseOutcomesText]]"
+				outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]">
 			</d2l-rubric-structure-editor>
 		</template>
 		<template is="dom-if" if="[[_isLocked]]">
@@ -285,7 +293,12 @@ const $_documentContainer = html `
 					</div>
 					<div id="hide-score-container">
 						<label id="hide-score-checkbox-label" for="hide-score-checkbox">[[localize('hideScoreHeader')]]</label>
-						<d2l-input-checkbox id="hide-score-checkbox" disabled="[[!_canHideScore]]" on-change="_toggleHideScore" checked$="[[_scoreIsHidden]]" aria-invalid="[[isAriaInvalid(_setScoreVisibilityFailed)]]">
+						<d2l-input-checkbox
+							id="hide-score-checkbox"
+							disabled="[[!_canHideScore]]"
+							on-change="_toggleHideScore"
+							checked$="[[_scoreIsHidden]]"
+							aria-invalid="[[isAriaInvalid(_setScoreVisibilityFailed)]]">
 							[[localize('hideScore')]]
 						</d2l-input-checkbox>
 						<template is="dom-if" if="[[_setScoreVisibilityFailed]]">
@@ -298,7 +311,17 @@ const $_documentContainer = html `
 						<template is="dom-if" if="[[!_isLocked]]">
 							<label for="rubric-description">[[localize('description')]]</label>
 							<div class="d2l-body-compact">[[localize('descriptionInfo')]]</div>
-							<d2l-rubric-text-editor id="rubric-description" key="[[_getSelfLink(entity)]]" token="[[token]]" aria-invalid="[[isAriaInvalid(_descriptionInvalid)]]" aria-label$="[[localize('description')]]" disabled="[[!_canEditDescription]]" value="{{_rubricDescription}}" input-changing="{{_descriptionChanging}}" on-text-changed="_saveDescription" rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
+							<d2l-rubric-text-editor
+								id="rubric-description"
+								key="[[_getSelfLink(entity)]]"
+								token="[[token]]"
+								aria-invalid="[[isAriaInvalid(_descriptionInvalid)]]"
+								aria-label$="[[localize('description')]]"
+								disabled="[[!_canEditDescription]]"
+								value="{{_rubricDescription}}"
+								input-changing="{{_descriptionChanging}}"
+								on-text-changed="_saveDescription"
+								rich-text-enabled="[[_richTextAndEditEnabled(richTextEnabled,_canEditDescription)]]">
 							</d2l-rubric-text-editor>
 							<template is="dom-if" if="[[_descriptionInvalid]]">
 								<d2l-tooltip id="rubric-description-bubble" class="is-error" for="rubric-description" position="bottom">
@@ -327,7 +350,12 @@ const $_documentContainer = html `
 							<legend class="d2l-body-compact">[[localize('newAssociationLabel')]]</legend>
 							<div id="associations-options" aria-invalid$="[[isAriaInvalid(_associationsInvalid)]]">
 								<template is="dom-repeat" items="[[_associations]]" as="assn">
-									<d2l-input-checkbox class="association" checked$="[[_isAssociationChecked(assn)]]" disabled="[[!_canUpdateAssociation(assn)]]" value="[[index]]" on-change="_handleAssociations">
+									<d2l-input-checkbox
+										class="association"
+										checked$="[[_isAssociationChecked(assn)]]"
+										disabled="[[!_canUpdateAssociation(assn)]]"
+										value="[[index]]"
+										on-change="_handleAssociations">
 										[[assn.title]]
 									</d2l-input-checkbox>
 								</template>

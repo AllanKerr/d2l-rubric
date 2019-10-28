@@ -10,13 +10,9 @@ import './d2l-rubric-error-handling-behavior.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-level-editor">
+$_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-level-editor">
 	<template strip-whitespace="">
 		<style>
-			:host {
-
-			}
-
 			* {
 				box-sizing: border-box;
 			}
@@ -56,15 +52,38 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-overall-leve
 			}
 		</style>
 
-		<d2l-input-text id="overall-level-name" value="{{_overallLevelName}}" on-blur="_saveName" on-input="_saveNameOnInput" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('overallLevelName')]]" disabled="[[!_canEditName]]" prevent-submit="">
+		<d2l-input-text
+			id="overall-level-name"
+			value="{{_overallLevelName}}"
+			on-blur="_saveName"
+			on-input="_saveNameOnInput"
+			aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
+			aria-label$="[[localize('overallLevelName')]]"
+			disabled="[[!_canEditName]]"
+			prevent-submit="">
 		</d2l-input-text>
 		<div class="operations" text-only$="[[!_hasRangeStart]]">
 			<div class="points" hidden="[[!_hasRangeStart]]">
-				<d2l-input-text id="range-start" value="{{_rangeStart}}" on-blur="_saveRangeStart" on-input="_saveRangeStartOnInput" aria-invalid="[[isAriaInvalid(_rangeStartInvalid)]]" aria-label$="[[localize('overallLevelRangeStart')]]" disabled="[[!_canEditRangeStart]]" size="1" prevent-submit="">
+				<d2l-input-text
+					id="range-start"
+					value="{{_rangeStart}}"
+					on-blur="_saveRangeStart"
+					on-input="_saveRangeStartOnInput"
+					aria-invalid="[[isAriaInvalid(_rangeStartInvalid)]]"
+					aria-label$="[[localize('overallLevelRangeStart')]]"
+					disabled="[[!_canEditRangeStart]]"
+					size="1"
+					prevent-submit="">
 				</d2l-input-text>
 				<div>[[localize('rangeStartOrMore')]]</div>
 			</div>
-			<d2l-button-icon id="remove" icon="d2l-tier1:delete" text="[[localize('removeOverallLevel', 'name', entity.properties.name)]]" on-click="_handleDeleteLevel" hidden="[[!_canDelete]]" type="button">
+			<d2l-button-icon
+				id="remove"
+				icon="d2l-tier1:delete"
+				text="[[localize('removeOverallLevel', 'name', entity.properties.name)]]"
+				on-click="_handleDeleteLevel"
+				hidden="[[!_canDelete]]"
+				type="button">
 			</d2l-button-icon>
 		</div>
 		<template is="dom-if" if="[[_nameInvalid]]">

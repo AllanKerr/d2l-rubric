@@ -1,5 +1,3 @@
-/* global suite, test, fixture, expect, setup, teardown, suiteSetup, suiteTeardown, flush, sinon */
-
 'use strict';
 
 suite('<d2l-rubric-criteria-editor>', function() {

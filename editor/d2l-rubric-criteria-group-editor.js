@@ -14,7 +14,7 @@ import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-group-editor">
+$_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-editor">
 	<template strip-whitespace="">
 		<style include="d2l-rubric-editor-cell-styles">
 			:host {
@@ -78,8 +78,25 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 		<d2l-scroll-wrapper id="scroll-wrapper" start-icon="d2l-tier1:chevron-left" end-icon="d2l-tier1:chevron-right" show-actions="" check-scroll-delta-value="1">
 			<div class="criteria-group" role="region" aria-label$="[[localize('groupRegion', 'name', _groupName)]]">
 				<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
-				<d2l-rubric-levels-editor href="[[_levelsHref]]" token="[[token]]" has-out-of="[[_hasOutOf(entity)]]" is-holistic="[[isHolistic]]" percentage-format-alternate="[[percentageFormatAlternate]]" on-d2l-siren-entity-changed="_notifyResize" updating-levels="{{updatingLevels}}">
-					<d2l-input-text id="group-name" slot="group-name-slot" value="{{_groupName}}" hidden="[[!showGroupName]]" disabled="[[!_canEditGroupName(entity)]]" on-blur="_saveName" on-input="_saveNameOnInput" aria-invalid="[[isAriaInvalid(_nameInvalid)]]" aria-label$="[[localize('groupName')]]" prevent-submit="">
+				<d2l-rubric-levels-editor
+					href="[[_levelsHref]]"
+					token="[[token]]"
+					has-out-of="[[_hasOutOf(entity)]]"
+					is-holistic="[[isHolistic]]"
+					percentage-format-alternate="[[percentageFormatAlternate]]"
+					on-d2l-siren-entity-changed="_notifyResize"
+					updating-levels="{{updatingLevels}}">
+					<d2l-input-text
+						id="group-name"
+						slot="group-name-slot"
+						value="{{_groupName}}"
+						hidden="[[!showGroupName]]"
+						disabled="[[!_canEditGroupName(entity)]]"
+						on-blur="_saveName"
+						on-input="_saveNameOnInput"
+						aria-invalid="[[isAriaInvalid(_nameInvalid)]]"
+						aria-label$="[[localize('groupName')]]"
+						prevent-submit="">
 					</d2l-input-text>
 				</d2l-rubric-levels-editor>
 				<template is="dom-if" if="[[_nameInvalid]]">
@@ -95,7 +112,15 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 				the size of the editor
 				-->
 				<div class="stretch-child">
-					<d2l-rubric-criteria-editor href="[[_criteriaCollectionHref]]" token="[[token]]" rich-text-enabled="[[richTextEnabled]]" is-holistic="[[isHolistic]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]" updating-levels="[[updatingLevels]]">
+					<d2l-rubric-criteria-editor
+						href="[[_criteriaCollectionHref]]"
+						token="[[token]]"
+						rich-text-enabled="[[richTextEnabled]]"
+						is-holistic="[[isHolistic]]"
+						outcomes-title="[[outcomesTitle]]"
+						browse-outcomes-text="[[browseOutcomesText]]"
+						outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]"
+						updating-levels="[[updatingLevels]]">
 					</d2l-rubric-criteria-editor>
 				</div>
 			</div>

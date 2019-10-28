@@ -9,7 +9,7 @@ import '@polymer/iron-media-query/iron-media-query.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-groups">
+$_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups">
 	<template strip-whitespace="">
 		<style>
 			:host {
@@ -25,19 +25,32 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 		<iron-media-query query="(min-width: 615px)" query-matches="{{_largeScreen}}"></iron-media-query>
 		<template is="dom-if" if="[[_largeScreen]]">
 			<template is="dom-repeat" items="[[_groups]]">
-				<d2l-rubric-criteria-group hidden$="[[!_showContent]]" href="[[_getSelfLink(item)]]" assessment-href="[[assessmentHref]]" token="[[token]]" rubric-type="[[rubricType]]" read-only="[[readOnly]]" telemetry-data="[[telemetryData]]">
+				<d2l-rubric-criteria-group
+					hidden$="[[!_showContent]]"
+					href="[[_getSelfLink(item)]]"
+					assessment-href="[[assessmentHref]]"
+					token="[[token]]"
+					rubric-type="[[rubricType]]"
+					read-only="[[readOnly]]"
+					telemetry-data="[[telemetryData]]">
 				</d2l-rubric-criteria-group>
 			</template>
 		</template>
 		<template is="dom-if" if="[[!_largeScreen]]">
 			<template is="dom-repeat" items="[[_groups]]">
-				<d2l-rubric-criteria-group-mobile hidden$="[[!_showContent]]" href="[[_getSelfLink(item)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" telemetry-data="[[telemetryData]]">
+				<d2l-rubric-criteria-group-mobile
+					hidden$="[[!_showContent]]"
+					href="[[_getSelfLink(item)]]"
+					assessment-href="[[assessmentHref]]"
+					token="[[token]]"
+					read-only="[[readOnly]]"
+					telemetry-data="[[telemetryData]]">
 				</d2l-rubric-criteria-group-mobile>
 			</template>
 		</template>
 	</template>
 
-	
+
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);

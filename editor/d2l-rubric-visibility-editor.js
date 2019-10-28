@@ -44,13 +44,37 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-visibility-editor">
 		</style>
 		<label class="heading">[[localize('rubricVisibility')]]</label>
 		<label class="d2l-input-radio-label">
-			<input type="radio" id="AlwaysVisible" on-focus="_handleFocus" on-blur="_handleBlur" value="AlwaysVisible" name="visibility" on-change="_changeVisibility">[[localize('rubricVisibilityAlways')]]
+			<input
+				type="radio"
+				id="AlwaysVisible"
+				on-focus="_handleFocus"
+				on-blur="_handleBlur"
+				value="AlwaysVisible"
+				name="visibility"
+				on-change="_changeVisibility">
+				[[localize('rubricVisibilityAlways')]]
 		</label>
 		<label class="d2l-input-radio-label">
-			<input type="radio" id="NeverVisible" on-focus="_handleFocus" on-blur="_handleBlur" value="NeverVisible" name="visibility" on-change="_changeVisibility">[[localize('rubricVisibilityNever')]]
+			<input
+				type="radio"
+				id="NeverVisible"
+				on-focus="_handleFocus"
+				on-blur="_handleBlur"
+				value="NeverVisible"
+				name="visibility"
+				on-change="_changeVisibility">
+				[[localize('rubricVisibilityNever')]]
 		</label>
 		<label class="d2l-input-radio-label">
-			<input type="radio" id="VisibleOnceFeedbackPosted" on-focus="_handleFocus" on-blur="_handleBlur" value="VisibleOnceFeedbackPosted" name="visibility" on-change="_changeVisibility">[[localize('rubricVisibilityOnceFeedbackPosted')]]
+			<input
+				type="radio"
+				id="VisibleOnceFeedbackPosted"
+				on-focus="_handleFocus"
+				on-blur="_handleBlur"
+				value="VisibleOnceFeedbackPosted"
+				name="visibility"
+				on-change="_changeVisibility">
+				[[localize('rubricVisibilityOnceFeedbackPosted')]]
 		</label>
 		<template is="dom-if" if="[[_visibilityInvalid]]">
 			<d2l-tooltip id="visibility-bubble" class="is-error" position="bottom">[[_visibilityInvalidError]]</d2l-tooltip>

@@ -1,5 +1,3 @@
-/* global suite, test, fixture, expect, suiteSetup, suiteTeardown, sinon */
-
 'use strict';
 
 suite('Preview Mode', function() {

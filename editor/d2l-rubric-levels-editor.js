@@ -13,7 +13,7 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-levels-editor">
+$_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-editor">
 	<template strip-whitespace="">
 		<style include="d2l-rubric-editor-cell-styles">
 			:host {
@@ -107,19 +107,36 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-levels-edito
 		<div class="gutter-left"></div>
 		<div class="cell col-first" is-holistic$="[[isHolistic]]">
 			<slot name="group-name-slot"></slot>
-			<d2l-button-icon on-click="_handlePrependLevel" on-focus="_onPrependFocus" icon="d2l-tier2:add" text="[[localize('addLevelPrepend', 'name', '')]]" disabled="[[!_canPrepend]]" type="button">
+			<d2l-button-icon
+				on-click="_handlePrependLevel"
+				on-focus="_onPrependFocus"
+				icon="d2l-tier2:add"
+				text="[[localize('addLevelPrepend', 'name', '')]]"
+				disabled="[[!_canPrepend]]"
+				type="button">
 			</d2l-button-icon>
 		</div>
 		<div id="levels-section" style="display: inherit; flex: 1 1 auto;">
 			<template is="dom-repeat" items="[[_levels]]" as="level">
 				<div class="cell" is-holistic$="[[isHolistic]]">
-					<d2l-rubric-level-editor href="[[_getSelfLink(level)]]" token="[[token]]" has-out-of="[[hasOutOf]]" percentage-format-alternate="[[percentageFormatAlternate]]" updating-levels="{{updatingLevels}}">
+					<d2l-rubric-level-editor
+						href="[[_getSelfLink(level)]]"
+						token="[[token]]"
+						has-out-of="[[hasOutOf]]"
+						percentage-format-alternate="[[percentageFormatAlternate]]"
+						updating-levels="{{updatingLevels}}">
 					</d2l-rubric-level-editor>
 				</div>
 			</template>
 		</div>
 		<div class="cell col-last" text-only$="[[!hasOutOf]]" is-holistic$="[[isHolistic]]">
-			<d2l-button-icon on-click="_handleAppendLevel" on-focus="_onAppendFocus" icon="d2l-tier2:add" text="[[localize('addLevelAppend', 'name', '')]]" disabled="[[!_canAppend]]" type="button">
+			<d2l-button-icon
+				on-click="_handleAppendLevel"
+				on-focus="_onAppendFocus"
+				icon="d2l-tier2:add"
+				text="[[localize('addLevelAppend', 'name', '')]]"
+				disabled="[[!_canAppend]]"
+				type="button">
 			</d2l-button-icon>
 		</div>
 		<div class="gutter-right"></div>
