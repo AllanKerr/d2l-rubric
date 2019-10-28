@@ -1,6 +1,6 @@
 {
   "buildDir": "build/lang",
-  "buildTemplateFile": "langtools/build.template",
+  "buildTemplateFile": "tools/localization/build.template",
   "copySourceLang": "en",
   "langDir": "lang",
   "langNames": [

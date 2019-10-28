@@ -136,5 +136,5 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangFrFrBehavior = {
 		'total': 'Total',
 		'totalScoreLabel': 'Rubric Total Score',
 		'totalScoreAriaLabel': 'La grille d’évaluation affiche une note sur un total de {value} points.'
-}
+	}
 };
