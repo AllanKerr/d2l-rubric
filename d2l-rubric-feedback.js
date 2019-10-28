@@ -155,6 +155,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 						on-focusin="_handleInvisibleFocusin"
 						on-focusout="_handleInvisibleFocusout"
 						on-click="_clearFeedback">
+					</d2l-button-subtle>
 				</d2l-offscreen>
 			</div>
 			<div hidden="[[_hasReadonlyFeedback(criterionEntity, assessmentResult)]]">
