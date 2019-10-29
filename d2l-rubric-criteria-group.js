@@ -31,7 +31,7 @@ import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 import './d2l-rubric-competencies-icon.js';
 const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-group">
+$_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 	<template strip-whitespace="">
 		<style include="d2l-table-style">
 			:host {

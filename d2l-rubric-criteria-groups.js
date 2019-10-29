@@ -23,15 +23,30 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups">
 		<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
 
 		<iron-media-query query="(min-width: 615px)" query-matches="{{_largeScreen}}"></iron-media-query>
-		<template is="dom-if" if="[[_largeScreen]]">
+		<template is="dom-if" if="[[isLargeScreen(_largeScreen)]]" restamp>
 			<template is="dom-repeat" items="[[_groups]]">
-				<d2l-rubric-criteria-group hidden$="[[!_showContent]]" href="[[_getSelfLink(item)]]" assessment-href="[[assessmentHref]]" token="[[token]]" rubric-type="[[rubricType]]" read-only="[[readOnly]]" telemetry-data="[[telemetryData]]">
+				<d2l-rubric-criteria-group
+					href="[[_getSelfLink(item)]]"
+					assessment-href="[[assessmentHref]]"
+					token="[[token]]"
+					rubric-type="[[rubricType]]"
+					read-only="[[readOnly]]"
+					hidden$="[[!_showContent]]"
+					telemetry-data="[[telemetryData]]">
 				</d2l-rubric-criteria-group>
 			</template>
+			<slot name="total-score"></slot>
 		</template>
-		<template is="dom-if" if="[[!_largeScreen]]">
+		<template is="dom-if" if="[[!isLargeScreen(_largeScreen)]]" restamp>
+			<slot name="total-score"></slot>
 			<template is="dom-repeat" items="[[_groups]]">
-				<d2l-rubric-criteria-group-mobile hidden$="[[!_showContent]]" href="[[_getSelfLink(item)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" telemetry-data="[[telemetryData]]">
+				<d2l-rubric-criteria-group-mobile
+					href="[[_getSelfLink(item)]]"
+					assessment-href="[[assessmentHref]]"
+					token="[[token]]"
+					read-only="[[readOnly]]"
+					hidden$="[[!_showContent]]"
+					telemetry-data="[[telemetryData]]">
 				</d2l-rubric-criteria-group-mobile>
 			</template>
 		</template>
@@ -87,5 +102,9 @@ Polymer({
 
 	_getSelfLink: function(entity) {
 		return entity && (entity.getLinkByRel('self') || {}).href || '';
+	},
+
+	isLargeScreen(largeScreen) {
+		return !!largeScreen;
 	}
 });

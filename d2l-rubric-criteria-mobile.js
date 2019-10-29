@@ -40,11 +40,32 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-mobile">
 		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
 		<hr class="line">
 		<template is="dom-repeat" items="[[_criteria]]" as="criterion" index-as="criterionNum">
-			<d2l-rubric-criterion-mobile href="[[_getSelfLink(criterion)]]" levels-href="[[levelsHref]]" assessment-href="[[assessmentHref]]" token="[[token]]" is-holistic="[[isHolistic]]" is-numeric="[[isNumeric]]" read-only="[[readOnly]]">
+			<d2l-rubric-criterion-mobile
+				href="[[_getSelfLink(criterion)]]"
+				levels-href="[[levelsHref]]"
+				assessment-href="[[assessmentHref]]"
+				token="[[token]]"
+				is-holistic="[[isHolistic]]"
+				is-numeric="[[isNumeric]]"
+				read-only="[[readOnly]]">
 			</d2l-rubric-criterion-mobile>
-			<d2l-button-subtle class="add-feedback-button" hidden="[[!_showAddFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" text="[[localize('addFeedback')]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]"></d2l-button-subtle>
-			<template is="dom-if" if="[[_displayFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]">
-				<d2l-rubric-feedback id="feedback[[criterionNum]]" criterion-href="[[_getSelfLink(criterion)]]" assessment-href="[[assessmentHref]]" token="[[token]]" adding-feedback="[[_cellAddingFeedback(criterionNum, _addingFeedback)]]" on-save-feedback-start="_handleSaveStart" on-save-feedback-finished="_handleSaveFinished" on-close-feedback="_closeFeedback">
+			<d2l-button-subtle
+				class="add-feedback-button"
+				hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]"
+				text="[[localize('addFeedback')]]"
+				on-click="_handleAddFeedback"
+				data-criterion$="[[criterionNum]]">
+			</d2l-button-subtle>
+			<template is="dom-if" if="[[_displayFeedback(_feedbackDisplay, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]">
+				<d2l-rubric-feedback
+					id="feedback[[criterionNum]]"
+					criterion-href="[[_getSelfLink(criterion)]]"
+					assessment-href="[[assessmentHref]]"
+					token="[[token]]"
+					adding-feedback="[[_cellAddingFeedback(criterionNum, _addingFeedback)]]"
+					on-save-feedback="_handleSaveFeedback"
+					on-save-feedback-finished="_handleSaveFinished"
+					on-close-feedback="_closeFeedback">
 				</d2l-rubric-feedback>
 			</template>
 			<hr class="line">
