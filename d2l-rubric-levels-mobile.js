@@ -17,7 +17,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 			:host{
 				display:block;
 			}
-			:host([overridden-styling]) .out-of {	
+			:host([overridden-styling]) .out-of {
 				background-color: var(--d2l-color-celestine-plus-2);
 			}
 			.levels-container {
@@ -37,7 +37,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				color: var(--d2l-color-galena);
 				outline: none;
 				flex: 1;
-				height: 32px;
+				height: 20px;
+				align-self: center;
 			}
 			.level:hover {
 				cursor: pointer;
@@ -46,6 +47,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 			.level.selected {
 				background-color: var(--d2l-color-gypsum);
 				border: solid 1px var(--d2l-color-galena);
+				height: 32px;
+				border-radius: 6px;
 			}
 			.level.assessed {
 				background-color: var(--d2l-color-celestine-plus-2);
@@ -148,21 +151,41 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 		<div class="levels-container">
 			<div class="levels" role="tablist" hidden$="[[_isEditingScore(editingScore, scoreInvalid)]]">
 				<template is="dom-repeat" items="[[levelEntities]]">
-					<div id="level-tab[[index]]" class$="[[_getLevelClassName(index, selected, item, assessedLevelHref)]]" on-click="handleTap" data-index="[[index]]" role="tab" on-keydown="_onKeyDown" tabindex="0" aria-selected$="[[_isSelected(index, selected)]]" aria-controls$="level-description-panel[[index]]" aria-label$="[[_getLevelLabelName(item, assessedLevelHref)]]" data-cell-href$="[[_getCriterionCellHref(criterionCells, index)]]">
+					<div
+						id="level-tab[[index]]"
+						class$="[[_getLevelClassName(index, selected, item, assessedLevelHref)]]"
+						on-click="handleTap"
+						data-index="[[index]]"
+						role="tab"
+						on-keydown="_onKeyDown"
+						tabindex="0"
+						aria-selected$="[[_isSelected(index, selected)]]"
+						aria-controls$="level-description-panel[[index]]"
+						aria-label$="[[_getLevelLabelName(item, assessedLevelHref)]]"
+						data-cell-href$="[[_getCriterionCellHref(criterionCells, index)]]">
 						<d2l-icon hidden$="[[!_isAssessedLevel(item, assessedLevelHref)]]" class="check-icon" icon="d2l-tier1:check"></d2l-icon>
-						<div hidden$="[[_isAssessedLevel(item, assessedLevelHref)]]" class$="[[_getLevelTextClassName(index, selected)]]">
-							[[item.properties.name]]
-						</div>
+						<div hidden$="[[_isAssessedLevel(item, assessedLevelHref)]]" class$="[[_getLevelTextClassName(index, selected)]]">	</div>
 					</div>
 				</template>
 			</div>
-			<div hidden$="[[!_hasOutOf(outOf)]]" class$="[[_getOutOfClassName(editingScore, scoreInvalid)]]" tabindex="0" on-keypress="_handleOverrideScoreKeypress">
-				<d2l-rubric-editable-score id="score-inner" class$="[[_getScoreWrapperClassName(criterionHref, editingScore, scoreInvalid)]]" criterion-href="[[criterionHref]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" editing-score="{{editingScore}}" score-invalid="{{scoreInvalid}}" overridden-styling="{{overriddenStyling}}" on-click="_handleOverrideScore">
+
+			<div hidden$="[[!_hasOutOf(outOf)]]" class$="[[_getOutOfClassName(editingScore)]]" tabindex="0" on-keypress="_handleOverrideScoreKeypress">
+				<d2l-rubric-editable-score
+					id="score-inner"
+					class$="[[_getScoreWrapperClassName(criterionHref, editingScore)]]"
+					criterion-href="[[criterionHref]]"
+					assessment-href="[[assessmentHref]]"
+					token="[[token]]"
+					read-only="[[readOnly]]"
+					editing-score="{{editingScore}}"
+					score-invalid="{{scoreInvalid}}"
+					overridden-styling="{{overriddenStyling}}"
+					on-click="_handleOverrideScore">
 				</d2l-rubric-editable-score>
 			</div>
 		</div>
 	</template>
-	
+
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);

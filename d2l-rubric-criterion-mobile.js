@@ -91,13 +91,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				margin-left: 22px;
 				margin-right: -7px;
 			}
-			d2l-button-icon {
-				height: 100%;
-				position: absolute;
-				top: 50%;
-				transform: translate(-50%, -50%);
-				--d2l-button-icon-min-height: 100%;
-			}
 			#left-chevron {
 				left: 85%;
 			}
@@ -122,6 +115,22 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				margin-right: 5px;
 				float: right;
 			}
+			.levels-row {
+				display: flex;
+			}
+			.level-iterator {
+				flex-grow: 0;
+				flex-shrink: 0;
+				width: 32px;
+				margin: 8px;
+				align-self: center;
+			}
+			.level-iterator:hover {
+				outline: 1px solid blue;
+			}
+			d2l-rubric-levels-mobile {
+				flex-grow: 1;
+			}
 		</style>
 		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
 		<div class="criterion-name">
@@ -133,8 +142,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				></d2l-rubric-competencies-icon>
 			</template>
 			<template is="dom-if" if="[[!isHolistic]]" restamp>
-				<d2l-rubric-alignments-indicator 
-					href="[[_getActivityLink(_entity)]]" 
+				<d2l-rubric-alignments-indicator
+					href="[[_getActivityLink(_entity)]]"
 					token="[[token]]"
 					outcomes-title-text="[[_getOutcomesTitleText()]]"
 					mobile
@@ -142,13 +151,40 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 			</template>
 			<span>[[_name]]</span>
 		</div>
-		<d2l-rubric-levels-mobile href="[[levelsHref]]" assessment-href="[[assessmentHref]]" token="[[token]]" selected="{{_selected}}" level-entities="{{_levelEntities}}" total="{{_total}}" out-of="[[_outOf]]" score="[[_score]]" assessed-level-href="[[_assessedLevelHref]]" read-only="[[readOnly]]" criterion-cells="[[_criterionCells]]" criterion-href="[[_getSelfLink(entity)]]">
-		</d2l-rubric-levels-mobile>
+		<div class="levels-row">
+			<d2l-icon
+				role="button"
+				class="level-iterator"
+				aria-label$="[[localize('selectNextLevel')]]"
+				id="left-chevron"
+				icon="d2l-tier1:chevron-left"
+				on-click="_handleTapLeft">
+			</d2l-icon>
+			<d2l-rubric-levels-mobile
+				href="[[levelsHref]]"
+				assessment-href="[[assessmentHref]]"
+				token="[[token]]"
+				selected="{{_selected}}"
+				level-entities="{{_levelEntities}}"
+				total="{{_total}}"
+				out-of="[[_outOf]]"
+				score="[[_score]]"
+				assessed-level-href="[[_assessedLevelHref]]"
+				read-only="[[readOnly]]"
+				criterion-cells="[[_criterionCells]]"
+				criterion-href="[[_getSelfLink(entity)]]">
+			</d2l-rubric-levels-mobile>
+			<d2l-icon
+				role="button"
+				class="level-iterator"
+				aria-label$="[[localize('selectPreviousLevel')]]"
+				id="right-chevron"
+				icon="d2l-tier1:chevron-right"
+				on-click="_handleTapRight">
+			</d2l-icon>
+		</div>
 
 		<div id="description" class="criterion-description-container">
-			<div class="criterion-prev-container" hidden="[[_hideLeftChevron(_selected)]]" on-click="_handleTapLeft">
-				<d2l-button-icon aria-label$="[[localize('selectNextLevel')]]" id="left-chevron" icon="d2l-tier1:chevron-left"></d2l-button-icon>
-			</div>
 			<template is="dom-repeat" items="[[_criterionCells]]" as="criterionCell" indexas="index">
 				<div id="level-description-panel[[index]]" class="criterion-middle" aria-labelledby$="level-tab[[index]]" role="tabpanel" hidden="[[!_isLevelSelected(index, _selected)]]">
 					<div class$="[[_getLevelNameClass(_levelEntities, _selected, _assessedLevelHref)]]">
@@ -161,12 +197,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 					</div>
 				</div>
 			</template>
-			<div class="criterion-next-container" hidden="[[_hideRightChevron(_selected)]]" on-click="_handleTapRight">
-				<d2l-button-icon aria-label$="[[localize('selectPreviousLevel')]]" id="right-chevron" icon="d2l-tier1:chevron-right"></d2l-button-icon>
-			</div>
 		</div>
 	</template>
-	
+
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);

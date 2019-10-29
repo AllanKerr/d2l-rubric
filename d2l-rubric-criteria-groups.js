@@ -9,7 +9,7 @@ import '@polymer/iron-media-query/iron-media-query.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-groups">
+$_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups">
 	<template strip-whitespace="">
 		<style>
 			:host {
@@ -37,7 +37,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 		</template>
 	</template>
 
-	
+
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);
