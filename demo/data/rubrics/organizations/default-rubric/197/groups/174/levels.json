@@ -4,9 +4,41 @@
         "levels"
     ],
     "properties": {
-        "total": 4
+        "total": 5
     },
     "entities": [
+          {
+            "class": [
+                "level"
+            ],
+            "rel": [
+                "https://rubrics.api.brightspace.com/rels/level"
+            ],
+            "properties": {
+                "name": "Level 5 - Holy Moly",
+                "points": 5.0
+            },
+            "links": [
+                {
+                    "rel": [
+                        "self"
+                    ],
+                    "href": "data/rubrics/organizations/default-rubric/197/groups/174/levels/1460.json"
+                },
+                {
+                    "rel": [
+                        "up"
+                    ],
+                    "href": "data/rubrics/organizations/default-rubric/197/groups/174/levels.json"
+                },
+                {
+                    "rel": [
+                        "next"
+                    ],
+                    "href": "data/rubrics/organizations/default-rubric/197/groups/174/levels/1461.json"
+                }
+            ]
+        },
         {
             "class": [
                 "level"
@@ -15,7 +47,7 @@
                 "https://rubrics.api.brightspace.com/rels/level"
             ],
             "properties": {
-                "name": "Level 4",
+                "name": "Level 4 - Exceeds Expectations",
                 "points": 4.0
             },
             "links": [
@@ -47,7 +79,7 @@
                 "https://rubrics.api.brightspace.com/rels/level"
             ],
             "properties": {
-                "name": "Level 3",
+                "name": "Level 3 - Above Expectations",
                 "points": 3.0
             },
             "links": [
@@ -85,7 +117,7 @@
                 "https://rubrics.api.brightspace.com/rels/level"
             ],
             "properties": {
-                "name": "Level 2",
+                "name": "Level 2 - Meets Expectations",
                 "points": 2.0
             },
             "links": [
@@ -123,7 +155,7 @@
                 "https://rubrics.api.brightspace.com/rels/level"
             ],
             "properties": {
-                "name": "Level 1",
+                "name": "Level 1 - Below Expectations",
                 "points": 1.0
             },
             "links": [

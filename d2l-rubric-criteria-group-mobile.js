@@ -22,7 +22,14 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-mobil
 		<h3>
 			[[_name]]
 		</h3>
-		<d2l-rubric-criteria-mobile href="[[_criteriaHref]]" levels-href="[[_levelsHref]]" assessment-href="[[assessmentHref]]" token="[[token]]" is-holistic="[[_isHolistic]]" is-numeric="[[_isNumeric]]" read-only="[[readOnly]]">
+		<d2l-rubric-criteria-mobile
+			href="[[_criteriaHref]]"
+			levels-href="[[_levelsHref]]"
+			assessment-href="[[assessmentHref]]"
+			token="[[token]]"
+			is-holistic="[[_isHolistic]]"
+			is-numeric="[[_isNumeric]]"
+			read-only="[[readOnly]]">
 		</d2l-rubric-criteria-mobile>
 	</template>
 
