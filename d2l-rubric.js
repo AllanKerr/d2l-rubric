@@ -7,6 +7,7 @@ Polymer Web-Component to display rubrics
 import '@polymer/polymer/polymer-legacy.js';
 
 import 'd2l-fetch/d2l-fetch.js';
+import './d2l-rubric-adapter.js';
 import './d2l-rubric-criteria-groups.js';
 import './d2l-rubric-loading.js';
 import './d2l-rubric-overall-score.js';
@@ -17,12 +18,8 @@ import './assessment-result-behavior.js';
 import './d2l-rubric-entity-behavior.js';
 import 'd2l-alert/d2l-alert.js';
 import 's-html/s-html.js';
-import 'd2l-accordion/d2l-accordion.js';
-import 'd2l-accordion/d2l-accordion-collapse.js';
 import 'd2l-save-status/d2l-save-status.js';
 import 'd2l-button/d2l-button-subtle.js';
-import 'd2l-icons/d2l-icon.js';
-import 'd2l-icons/tier1-icons.js';
 import './rubric-siren-entity.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
@@ -191,87 +188,77 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 			}
 
 		</style>
-		<iron-media-query query="(max-width: 614px)" query-matches="{{_isMobile}}"></iron-media-query>
 		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
-		<div id="editor-save-status-container" hidden="[[readOnly]]">
-			<d2l-save-status aria-hidden="true" id="rubric-save-status" class="right"></d2l-save-status>
-		</div>
-		<template is="dom-repeat" items="[[_alerts]]">
-			<d2l-alert type="[[item.alertType]]" button-text="[[localize('refreshText')]]">
-				[[item.alertMessage]]
-			</d2l-alert>
-		</template>
-		<slot></slot>
-		<d2l-rubric-loading hidden$="[[_hideLoading(_showContent,_hasAlerts)]]"></d2l-rubric-loading>
-		<div hidden$="[[_hideLoading(_showContent,_hasAlerts)]]" class="out-of-loader"></div>
-		<d2l-accordion flex>
-			<d2l-accordion-collapse flex>
-				<template is="dom-if" if="[[isMobile(_isMobile)]]">
-					<div slot="header">
-						<d2l-icon icon="[[_getRubricIcon(assessmentEntity)]]"></d2l-icon>
-						<span>
-							[[entity.properties.name]]
-						</span>
-					</div>
-				</template>
-				<div hidden$="[[_hideOutOf(_showContent,_hasAlerts)]]">
-					<d2l-rubric-criteria-groups
-						href="[[_getHref(_criteriaGroups)]]"
-						assessment-href="[[assessmentHref]]"
-						token="[[token]]"
-						rubric-type="[[rubricType]]"
-						read-only="[[readOnly]]"
-						telemetry-data="[[_telemetryData]]">
-						<div slot="total-score">
-							<div class="out-of-container" hidden="[[!_hasOutOf(entity)]]">
-							<div class="out-of-text" role="group" aria-labelledby="total-grouping-label">
-								<d2l-offscreen id="total-grouping-label">[[localize('totalScoreLabel')]]</d2l-offscreen>
-								<div class="left total">[[localize('total')]]</div>
-								<div class="out-of-score-container">
-									<d2l-button-subtle
-										class="clear-override-button"
-										icon="d2l-tier1:close-small"
-										text="[[localize('clearOverride')]]"
-										on-click="clearTotalScoreOverride"
-										hidden$="[[!_showClearTotalScoreButton(assessmentEntity)]]">
-									</d2l-button-subtle>
-									<d2l-rubric-editable-score
-										id="total-score-inner"
-										class$="[[_getOutOfClassName(assessmentEntity, editingScore)]]"
-										assessment-href="[[assessmentHref]]"
-										token="[[token]]"
-										read-only="[[readOnly]]"
-										editing-score="{{editingScore}}"
-										total-score="[[_score]]"
-										entity="[[entity]]"
-										on-click="_handleOverrideScore"
-										on-keypress="_handleScoreKeypress"
-										tabindex$="[[_handleTabIndex()]]">
-									</d2l-rubric-editable-score>
-								</div>
+		<d2l-rubric-adapter
+			rubric-name="[[_getRubricName(entity)]]"
+			assessment-entity="[[assessmentEntity]]"
+			has-alerts="[[_hasAlerts]]">
+			<template is="dom-repeat" items="[[_alerts]]">
+				<d2l-alert slot="alerts" type="[[item.alertType]]" button-text="[[localize('refreshText')]]">
+					[[item.alertMessage]]
+				</d2l-alert>
+			</template>
+			<div id="editor-save-status-container" hidden="[[readOnly]]">
+				<d2l-save-status aria-hidden="true" id="rubric-save-status" class="right"></d2l-save-status>
+			</div>
+			<slot></slot>
+			<d2l-rubric-loading hidden$="[[_hideLoading(_showContent,_hasAlerts)]]"></d2l-rubric-loading>
+			<div hidden$="[[_hideLoading(_showContent,_hasAlerts)]]" class="out-of-loader"></div>
+			<div hidden$="[[_hideOutOf(_showContent,_hasAlerts)]]">
+				<d2l-rubric-criteria-groups
+					href="[[_getHref(_criteriaGroups)]]"
+					assessment-href="[[assessmentHref]]"
+					token="[[token]]"
+					rubric-type="[[rubricType]]"
+					read-only="[[readOnly]]"
+					telemetry-data="[[_telemetryData]]">
+					<div slot="total-score">
+						<div class="out-of-container" hidden="[[!_hasOutOf(entity)]]">
+						<div class="out-of-text" role="group" aria-labelledby="total-grouping-label">
+							<d2l-offscreen id="total-grouping-label">[[localize('totalScoreLabel')]]</d2l-offscreen>
+							<div class="left total">[[localize('total')]]</div>
+							<div class="out-of-score-container">
+								<d2l-button-subtle
+									class="clear-override-button"
+									icon="d2l-tier1:close-small"
+									text="[[localize('clearOverride')]]"
+									on-click="clearTotalScoreOverride"
+									hidden$="[[!_showClearTotalScoreButton(assessmentEntity)]]">
+								</d2l-button-subtle>
+								<d2l-rubric-editable-score
+									id="total-score-inner"
+									class$="[[_getOutOfClassName(assessmentEntity, editingScore)]]"
+									assessment-href="[[assessmentHref]]"
+									token="[[token]]"
+									read-only="[[readOnly]]"
+									editing-score="{{editingScore}}"
+									total-score="[[_score]]"
+									entity="[[entity]]"
+									on-click="_handleOverrideScore"
+									on-keypress="_handleScoreKeypress"
+									tabindex$="[[_handleTabIndex()]]">
+								</d2l-rubric-editable-score>
 							</div>
 						</div>
-					</d2l-rubric-criteria-groups>
-				</div>
-				<template is="dom-if" if="[[_hasOverallScore(entity, overallScoreFlag)]]">
-					<d2l-rubric-overall-score
-						read-only="[[readOnly]]"
-						href="[[_getOverallLevels(entity)]]"
-						assessment-href="[[assessmentHref]]"
-						token="[[token]]"
-						has-out-of="[[_hasOutOf(entity)]]">
-					</d2l-rubric-overall-score>
-				</template>
-				<div hidden$="[[!_hasOverallFeedback(_feedback)]]">
-					<div class="overall-feedback-header"><h2>[[localize('overallFeedback')]]</h2></div>
-					<img class="quotation-mark-icon" src="[[_quoteImage]]" height="22" width="22">
-					<s-html class="overall-feedback-text" html$="[[_feedback]]"></s-html>
-				</div>
-			</d2l-accordion-collapse>
-		</d2l-accordion>
+					</div>
+				</d2l-rubric-criteria-groups>
+			</div>
+			<template is="dom-if" if="[[_hasOverallScore(entity, overallScoreFlag)]]">
+				<d2l-rubric-overall-score
+					read-only="[[readOnly]]"
+					href="[[_getOverallLevels(entity)]]"
+					assessment-href="[[assessmentHref]]"
+					token="[[token]]"
+					has-out-of="[[_hasOutOf(entity)]]">
+				</d2l-rubric-overall-score>
+			</template>
+			<div hidden$="[[!_hasOverallFeedback(_feedback)]]">
+				<div class="overall-feedback-header"><h2>[[localize('overallFeedback')]]</h2></div>
+				<img class="quotation-mark-icon" src="[[_quoteImage]]" height="22" width="22">
+				<s-html class="overall-feedback-text" html$="[[_feedback]]"></s-html>
+			</div>
+		</d2l-rubric-adapter>
 	</template>
-
-
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);
@@ -335,8 +322,7 @@ Polymer({
 		_quoteImage: {
 			type: String,
 			value: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIiIGhlaWdodD0iMjIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPg0KICA8ZGVmcz4NCiAgICA8cGF0aCBpZD0iYSIgZD0iTTAgMGgyNHYyNEgweiIvPg0KICA8L2RlZnM+DQogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xIC0xKSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4NCiAgICA8bWFzayBpZD0iYiIgZmlsbD0iI2ZmZiI+DQogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNhIi8+DQogICAgPC9tYXNrPg0KICAgIDxwYXRoIGQ9Ik02IDIyLjY2N0E0LjY2NyA0LjY2NyAwIDAgMCAxMC42NjcgMThjMC0xLjIyNy0uNTU5LTIuNS0xLjMzNC0zLjMzM0M4LjQ4MSAxMy43NSA3LjM1IDEzLjMzMyA2IDEzLjMzM2MtLjQxMSAwIDEuMzMzLTYuNjY2IDMtOSAxLjY2Ny0yLjMzMyAxLjMzMy0zIC4zMzMtM0M4IDEuMzMzIDUuMjUzIDQuNTg2IDQgNy4yNTUgMS43NzMgMTIgMS4zMzMgMTUuMzkyIDEuMzMzIDE4QTQuNjY3IDQuNjY3IDAgMCAwIDYgMjIuNjY3ek0xOCAyMi42NjdBNC42NjcgNC42NjcgMCAwIDAgMjIuNjY3IDE4YzAtMS4yMjctLjU1OS0yLjUtMS4zMzQtMy4zMzMtLjg1Mi0uOTE3LTEuOTgzLTEuMzM0LTMuMzMzLTEuMzM0LS40MTEgMCAxLjMzMy02LjY2NiAzLTkgMS42NjctMi4zMzMgMS4zMzMtMyAuMzMzLTMtMS4zMzMgMC00LjA4IDMuMjUzLTUuMzMzIDUuOTIyQzEzLjc3MyAxMiAxMy4zMzMgMTUuMzkyIDEzLjMzMyAxOEE0LjY2NyA0LjY2NyAwIDAgMCAxOCAyMi42Njd6IiBmaWxsPSIjRDNEOUUzIiBtYXNrPSJ1cmwoI2IpIi8+DQogIDwvZz4NCjwvc3ZnPg=='
-		},
-		_isMobile: Boolean
+		}
 	},
 
 	behaviors: [
@@ -535,17 +521,7 @@ Polymer({
 		return 0;
 	},
 
-	isMobile(mobile) {
-		return !!mobile;
-	},
-
-	_getRubricIcon(assessmentEntity) {
-		const icon = assessmentEntity && assessmentEntity.hasClass('completed')
-			? 'd2l-tier1:rubric-graded'
-			: 'd2l-tier1:rubric';
-
-		console.log(icon);
-
-		return icon;
+	_getRubricName(rubricEntity) {
+		return rubricEntity && rubricEntity.properties && rubricEntity.properties.name;
 	}
 });
