@@ -192,7 +192,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 		<d2l-rubric-adapter
 			rubric-name="[[_getRubricName(entity)]]"
 			assessment-entity="[[assessmentEntity]]"
-			has-alerts="[[_hasAlerts]]">
+			has-alerts="[[_hasAlerts]]"
+			total-score=[[_]]>
 			<template is="dom-repeat" items="[[_alerts]]">
 				<d2l-alert slot="alerts" type="[[item.alertType]]" button-text="[[localize('refreshText')]]">
 					[[item.alertMessage]]
@@ -521,7 +522,7 @@ Polymer({
 		return 0;
 	},
 
-	_getRubricName(rubricEntity) {
+	_getRubricName: function(rubricEntity) {
 		return rubricEntity && rubricEntity.properties && rubricEntity.properties.name;
 	}
 });

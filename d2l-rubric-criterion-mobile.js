@@ -76,6 +76,14 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				flex-grow: 1;
 				flex-shrink: 1;
 			}
+
+			@media (max-width: 614px) {
+				.criterion-middle {
+					margin-left: 48px;
+					margin-right: 48px;
+				}
+			}
+
 			.criterion-prev-container,
 			.criterion-next-container {
 				position: relative;

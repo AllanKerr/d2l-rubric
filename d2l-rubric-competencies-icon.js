@@ -1,5 +1,5 @@
 import '@polymer/polymer/polymer-legacy.js';
-import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
+import { PolymerElement, html } from '@polymer/polymer';
 import 'd2l-tooltip/d2l-tooltip.js';
 import Icons from './icons.js';
 
@@ -16,7 +16,7 @@ class RubricCompetenciesIcon extends PolymerElement {
 					white-space: pre;
 				}
 			</style>
-			
+
 			<img
 				id="icon"
 				src="[[_getIconData('competency')]]"

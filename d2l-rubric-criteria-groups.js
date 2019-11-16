@@ -36,6 +36,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups">
 				</d2l-rubric-criteria-group>
 			</template>
 			<slot name="total-score"></slot>
+			<slot></slot>
 		</template>
 		<template is="dom-if" if="[[!isLargeScreen(_largeScreen)]]" restamp>
 			<slot name="total-score"></slot>
@@ -48,6 +49,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups">
 					hidden$="[[!_showContent]]"
 					telemetry-data="[[telemetryData]]">
 				</d2l-rubric-criteria-group-mobile>
+				<slot></slot>
 			</template>
 		</template>
 	</template>
@@ -104,7 +106,7 @@ Polymer({
 		return entity && (entity.getLinkByRel('self') || {}).href || '';
 	},
 
-	isLargeScreen(largeScreen) {
+	isLargeScreen: function(largeScreen) {
 		return !!largeScreen;
 	}
 });

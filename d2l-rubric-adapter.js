@@ -3,7 +3,7 @@ import '@polymer/iron-media-query/iron-media-query.js';
 import 'd2l-accordion/d2l-accordion.js';
 import 'd2l-accordion/d2l-accordion-collapse.js';
 import 'd2l-icons/d2l-icon.js';
-import 'd2l-icons/tier1-icons.js';
+import 'd2l-icons/tier3-icons.js';
 
 /**
  * An adapter for the Rubrics component to get platform-specific ordering of components without
@@ -23,6 +23,13 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 
 	static get template() {
 		return html`
+			<style>
+				.rubric-header-icon,
+				.rubric-header-title {
+					color: var(--d2l-color-celestine);
+				}
+			</style>
+
 			<iron-media-query query="(max-width: 614px)" query-matches="{{_isMobile}}"></iron-media-query>
 			<slot name="alerts"></slot>
 			<template is="dom-if" if="[[!_hasAlerts(hasAlerts)]]">
@@ -30,8 +37,11 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 					<d2l-accordion flex>
 						<d2l-accordion-collapse flex>
 							<div slot="header">
-								<d2l-icon icon="[[_getRubricIcon(assessmentEntity)]]"></d2l-icon>
-								<span>[[rubricName]]</span>
+								<d2l-icon
+									class="rubric-header-icon"
+									icon="[[_getRubricIcon(assessmentEntity)]]">
+								</d2l-icon>
+								<span class="rubric-header-title">[[rubricName]]</span>
 							</div>
 							<slot></slot>
 						</d2l-accordion-collapse>
@@ -54,8 +64,8 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 
 	_getRubricIcon(assessmentEntity) {
 		const icon = assessmentEntity && assessmentEntity.hasClass('completed')
-			? 'd2l-tier1:rubric-graded'
-			: 'd2l-tier1:rubric';
+			? 'd2l-tier3:rubric-graded'
+			: 'd2l-tier3:rubric';
 
 		return icon;
 	}
