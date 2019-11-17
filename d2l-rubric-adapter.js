@@ -28,6 +28,21 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 				.rubric-header-title {
 					color: var(--d2l-color-celestine);
 				}
+
+				.rubric-header-title {
+					font-size: 0.8rem;
+					text-align: bottom;
+				}
+
+				.rubric-header-title-container {
+					display: inline-flex;
+					flex-direction: column;
+					vertical-align: middle;
+				}
+
+				.rubric-header-out-of-container {
+					height: 0.8rem;
+				}
 			</style>
 
 			<iron-media-query query="(max-width: 614px)" query-matches="{{_isMobile}}"></iron-media-query>
@@ -41,7 +56,10 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 									class="rubric-header-icon"
 									icon="[[_getRubricIcon(assessmentEntity)]]">
 								</d2l-icon>
-								<span class="rubric-header-title">[[rubricName]]</span>
+								<span class=rubric-header-title-container>
+									<div class="rubric-header-title">[[rubricName]]</div>
+									<div class="rubric-header-out-of-container"></div>
+								</span>
 							</div>
 							<slot></slot>
 						</d2l-accordion-collapse>

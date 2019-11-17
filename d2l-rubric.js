@@ -4,7 +4,8 @@ Polymer Web-Component to display rubrics
 
 @demo demo/index.html
 */
-import '@polymer/polymer/polymer-legacy.js';
+import { Polymer } from '@polymer/polymer/polymer-legacy.js';
+import '@polymer/iron-media-query/iron-media-query.js';
 
 import 'd2l-fetch/d2l-fetch.js';
 import './d2l-rubric-adapter.js';
@@ -21,7 +22,6 @@ import 's-html/s-html.js';
 import 'd2l-save-status/d2l-save-status.js';
 import 'd2l-button/d2l-button-subtle.js';
 import './rubric-siren-entity.js';
-import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
 $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
@@ -71,6 +71,15 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 					margin: 2.33em 0;
 				};
 			}
+
+			@media (max-width: 614px) {
+				:host {
+					padding: 12px;
+					border: 1px solid gray;
+					border-radius: 6px;
+				}
+			}
+
 			.score-wrapper {
 				pointer-events: none;
 				padding-top: 0.5rem;
@@ -184,10 +193,11 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 
 			/* Fix for Polymer 2 */
 			[hidden] {
-				display: none;
+				display: none !important;
 			}
 
 		</style>
+		<iron-media-query query="(max-width: 614px)" query-matches="{{_isMobile}}"></iron-media-query>
 		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
 		<d2l-rubric-adapter
 			rubric-name="[[_getRubricName(entity)]]"
@@ -202,7 +212,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 			<div id="editor-save-status-container" hidden="[[readOnly]]">
 				<d2l-save-status aria-hidden="true" id="rubric-save-status" class="right"></d2l-save-status>
 			</div>
-			<slot></slot>
+			<slot hidden$=[[_isMobileDevice(_isMobile)]]></slot>
 			<d2l-rubric-loading hidden$="[[_hideLoading(_showContent,_hasAlerts)]]"></d2l-rubric-loading>
 			<div hidden$="[[_hideLoading(_showContent,_hasAlerts)]]" class="out-of-loader"></div>
 			<div hidden$="[[_hideOutOf(_showContent,_hasAlerts)]]">
@@ -320,6 +330,7 @@ Polymer({
 			type: Boolean,
 			value: false
 		},
+		_isMobile: Boolean,
 		_quoteImage: {
 			type: String,
 			value: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIiIGhlaWdodD0iMjIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPg0KICA8ZGVmcz4NCiAgICA8cGF0aCBpZD0iYSIgZD0iTTAgMGgyNHYyNEgweiIvPg0KICA8L2RlZnM+DQogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xIC0xKSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4NCiAgICA8bWFzayBpZD0iYiIgZmlsbD0iI2ZmZiI+DQogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNhIi8+DQogICAgPC9tYXNrPg0KICAgIDxwYXRoIGQ9Ik02IDIyLjY2N0E0LjY2NyA0LjY2NyAwIDAgMCAxMC42NjcgMThjMC0xLjIyNy0uNTU5LTIuNS0xLjMzNC0zLjMzM0M4LjQ4MSAxMy43NSA3LjM1IDEzLjMzMyA2IDEzLjMzM2MtLjQxMSAwIDEuMzMzLTYuNjY2IDMtOSAxLjY2Ny0yLjMzMyAxLjMzMy0zIC4zMzMtM0M4IDEuMzMzIDUuMjUzIDQuNTg2IDQgNy4yNTUgMS43NzMgMTIgMS4zMzMgMTUuMzkyIDEuMzMzIDE4QTQuNjY3IDQuNjY3IDAgMCAwIDYgMjIuNjY3ek0xOCAyMi42NjdBNC42NjcgNC42NjcgMCAwIDAgMjIuNjY3IDE4YzAtMS4yMjctLjU1OS0yLjUtMS4zMzQtMy4zMzMtLjg1Mi0uOTE3LTEuOTgzLTEuMzM0LTMuMzMzLTEuMzM0LS40MTEgMCAxLjMzMy02LjY2NiAzLTkgMS42NjctMi4zMzMgMS4zMzMtMyAuMzMzLTMtMS4zMzMgMC00LjA4IDMuMjUzLTUuMzMzIDUuOTIyQzEzLjc3MyAxMiAxMy4zMzMgMTUuMzkyIDEzLjMzMyAxOEE0LjY2NyA0LjY2NyAwIDAgMCAxOCAyMi42Njd6IiBmaWxsPSIjRDNEOUUzIiBtYXNrPSJ1cmwoI2IpIi8+DQogIDwvZz4NCjwvc3ZnPg=='
@@ -524,5 +535,9 @@ Polymer({
 
 	_getRubricName: function(rubricEntity) {
 		return rubricEntity && rubricEntity.properties && rubricEntity.properties.name;
+	},
+
+	_isMobileDevice: function(isMobile) {
+		return !!isMobile;
 	}
 });

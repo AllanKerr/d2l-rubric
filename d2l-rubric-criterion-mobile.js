@@ -99,9 +99,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				margin-left: 22px;
 				margin-right: -7px;
 			}
-			#left-chevron {
-				left: 85%;
-			}
 			.level-name {
 				display: flex;
 			}

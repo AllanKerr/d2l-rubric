@@ -21,7 +21,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				background-color: var(--d2l-color-celestine-plus-2);
 			}
 			.levels-container {
-				display: inline-flex;
+				display: flex;
 				width: 100%;
 			}
 			.levels {
