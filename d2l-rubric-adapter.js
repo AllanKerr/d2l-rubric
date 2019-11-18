@@ -12,6 +12,7 @@ import 'd2l-icons/tier3-icons.js';
 window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends PolymerElement {
 	static get properties() {
 		return {
+			compact: Boolean,
 			hasAlerts: Boolean,
 			rubricName: String,
 			_isMobile: {
@@ -48,7 +49,7 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 			<iron-media-query query="(max-width: 614px)" query-matches="{{_isMobile}}"></iron-media-query>
 			<slot name="alerts"></slot>
 			<template is="dom-if" if="[[!_hasAlerts(hasAlerts)]]">
-				<template is="dom-if" if="[[isMobile(_isMobile)]]" restamp>
+				<template is="dom-if" if="[[_showCompactView(_isMobile, compact)]]" restamp>
 					<d2l-accordion flex>
 						<d2l-accordion-collapse flex>
 							<div slot="header">
@@ -65,15 +66,15 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 						</d2l-accordion-collapse>
 					</d2l-accordion>
 				</template>
-				<template is="dom-if" if="[[!isMobile(_isMobile)]]" restamp>
+				<template is="dom-if" if="[[!_showCompactView(_isMobile, compact)]]" restamp>
 					<slot></slot>
 				</template>
 			</template>
 		`;
 	}
 
-	isMobile(mobile) {
-		return !!mobile;
+	_showCompactView(mobile, compact) {
+		return compact || !!mobile;
 	}
 
 	_hasAlerts(hasAlerts) {

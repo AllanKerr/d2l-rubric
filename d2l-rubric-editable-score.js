@@ -23,16 +23,17 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 					border-radius: 0.3rem;
 					background-color: var(--d2l-color-celestine-plus-2);
 			}
-			@media screen and (min-width: 615px) {
-				:host(:not([editor-styling])) {
-					padding: 0.5rem 0.5rem 0.5rem 0.6rem;
-				}
-				:host(:focus:not([editor-styling])),
-				:host(:hover:not([editor-styling])) {
-					padding: calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.6rem - 1px);
-					border-radius: 0.3rem;
-					border: 1px solid var(--d2l-color-celestine);
-				}
+			:host(.compact:not([editor-styling])),
+			:host([compact]:not([editor-styling])) {
+				padding: 0.5rem 0.5rem 0.5rem 0.6rem;
+			}
+			:host(.compact:focus:not([editor-styling])),
+			:host([compact]:focus:not([editor-styling])),
+			:host(.compact:hover:not([editor-styling])),
+			:host([compact]:hover:not([editor-styling])) {
+				padding: calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.6rem - 1px);
+				border-radius: 0.3rem;
+				border: 1px solid var(--d2l-color-celestine);
 			}
 			.total-score-container {
 				display: flex;
@@ -71,11 +72,13 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 				display: none;
 			}
 			@media screen and (max-width: 614px) {
-				.clear-override-button-mobile {
+				:host(.compact) .clear-override-button-mobile,
+				:host([compact]) .clear-override-button-mobile {
 					display: inline-flex;
 					padding: 6px 0;
 				}
-				.override-label {
+				:host(.compact) .override-label,
+				:host([compact]) .override-label {
 					margin-left: 12px;
 					padding: 6px 0;
 					display: inline-flex;
@@ -129,11 +132,20 @@ Polymer({
 	is: 'd2l-rubric-editable-score',
 
 	properties: {
+		compact: {
+			type: Boolean,
+			value: false,
+			reflectToAttribute: true
+		},
 		criterionHref: String,
 
 		/* Entity could be a criterionEntity or a rubricEntity */
 		entity: Object,
-		_largeScreen: Boolean,
+		_largeScreen: {
+			type: Boolean,
+			value: true,
+			observer: '_largeScreenChanged',
+		},
 		assessmentHref: {
 			type: String,
 			value: null
@@ -441,4 +453,8 @@ Polymer({
 	_isStaticView: function() {
 		return this.readOnly || !this.assessmentHref;
 	},
+
+	_largeScreenChanged: function(largeScreen) {
+		this.classList.toggle('compact', !largeScreen);
+	}
 });

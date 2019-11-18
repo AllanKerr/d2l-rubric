@@ -72,12 +72,11 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 				};
 			}
 
-			@media (max-width: 614px) {
-				:host {
-					padding: 12px;
-					border: 1px solid gray;
-					border-radius: 6px;
-				}
+			:host(.compact),
+			:host([compact]) {
+				padding: 12px;
+				border: 1px solid gray;
+				border-radius: 6px;
 			}
 
 			.score-wrapper {
@@ -93,10 +92,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 				color: var(--d2l-color-celestine);
 				cursor: pointer;
 			}
-			@media screen and (min-width: 615px) {
-				.score-wrapper.assessable:hover {
-					padding: calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.6rem - 1px);
-				}
+			:host(:not(.compact)) .score-wrapper.assessable:hover,
+			:host(:not([compact])) .score-wrapper.assessable:hover {
+				padding: calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.6rem - 1px);
 			}
 			.score-wrapper.editing,
 			.score-wrapper.assessable.editing:hover {
@@ -162,11 +160,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 				text-align: left;
 				padding-left: 20px;
 			}
-			@media screen and (max-width: 614px) {
-				.out-of-container {
-					border: none;
-					margin-top: 0;
-				}
+			:host(.compact) .out-of-container,
+			:host([compact]) .out-of-container {
+				border: none;
+				margin-top: 0;
 			}
 			.overall-feedback-header {
 				@apply --d2l-label-text;
@@ -203,6 +200,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 			rubric-name="[[_getRubricName(entity)]]"
 			assessment-entity="[[assessmentEntity]]"
 			has-alerts="[[_hasAlerts]]"
+			compact="[[_showCompactView(_isMobile, compact)]]"
 			total-score=[[_]]>
 			<template is="dom-repeat" items="[[_alerts]]">
 				<d2l-alert slot="alerts" type="[[item.alertType]]" button-text="[[localize('refreshText')]]">
@@ -212,7 +210,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 			<div id="editor-save-status-container" hidden="[[readOnly]]">
 				<d2l-save-status aria-hidden="true" id="rubric-save-status" class="right"></d2l-save-status>
 			</div>
-			<slot hidden$=[[_isMobileDevice(_isMobile)]]></slot>
+			<slot hidden$=[[_showCompactView(_isMobile, compact)]]></slot>
 			<d2l-rubric-loading hidden$="[[_hideLoading(_showContent,_hasAlerts)]]"></d2l-rubric-loading>
 			<div hidden$="[[_hideLoading(_showContent,_hasAlerts)]]" class="out-of-loader"></div>
 			<div hidden$="[[_hideOutOf(_showContent,_hasAlerts)]]">
@@ -222,7 +220,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 					token="[[token]]"
 					rubric-type="[[rubricType]]"
 					read-only="[[readOnly]]"
-					telemetry-data="[[_telemetryData]]">
+					telemetry-data="[[_telemetryData]]"
+					compact="[[compact]]">
 					<div slot="total-score">
 						<div class="out-of-container" hidden="[[!_hasOutOf(entity)]]">
 						<div class="out-of-text" role="group" aria-labelledby="total-grouping-label">
@@ -260,7 +259,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 					href="[[_getOverallLevels(entity)]]"
 					assessment-href="[[assessmentHref]]"
 					token="[[token]]"
-					has-out-of="[[_hasOutOf(entity)]]">
+					has-out-of="[[_hasOutOf(entity)]]"
+					compact="[[compact]]">
 				</d2l-rubric-overall-score>
 			</template>
 			<div hidden$="[[!_hasOverallFeedback(_feedback)]]">
@@ -277,6 +277,10 @@ Polymer({
 	is: 'd2l-rubric',
 
 	properties: {
+		compact: {
+			type: Boolean,
+			default: false
+		},
 		readOnly: {
 			type: Boolean,
 			value: false,
@@ -537,7 +541,9 @@ Polymer({
 		return rubricEntity && rubricEntity.properties && rubricEntity.properties.name;
 	},
 
-	_isMobileDevice: function(isMobile) {
-		return !!isMobile;
+	_showCompactView: function(isMobile, compact) {
+		this.classList.toggle('compact', !!isMobile);
+
+		return compact || !!isMobile;
 	}
 });

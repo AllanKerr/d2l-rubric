@@ -23,7 +23,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups">
 		<d2l-rubric-loading hidden$="[[_showContent]]"></d2l-rubric-loading>
 
 		<iron-media-query query="(min-width: 615px)" query-matches="{{_largeScreen}}"></iron-media-query>
-		<template is="dom-if" if="[[isLargeScreen(_largeScreen)]]" restamp>
+		<template is="dom-if" if="[[!_showCompactView(_largeScreen, compact)]]" restamp>
 			<template is="dom-repeat" items="[[_groups]]">
 				<d2l-rubric-criteria-group
 					href="[[_getSelfLink(item)]]"
@@ -38,7 +38,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups">
 			<slot name="total-score"></slot>
 			<slot></slot>
 		</template>
-		<template is="dom-if" if="[[!isLargeScreen(_largeScreen)]]" restamp>
+		<template is="dom-if" if="[[_showCompactView(_largeScreen, compact)]]" restamp>
 			<slot name="total-score"></slot>
 			<template is="dom-repeat" items="[[_groups]]">
 				<d2l-rubric-criteria-group-mobile
@@ -62,13 +62,15 @@ Polymer({
 	is: 'd2l-rubric-criteria-groups',
 
 	properties: {
+		compact: {
+			type: Boolean,
+			value: false
+		},
 		_groups: {
 			type: Array,
 			value: function() { return []; }
 		},
-
 		_largeScreen: Boolean,
-
 		_showContent: {
 			type: Boolean,
 			value: false
@@ -106,7 +108,7 @@ Polymer({
 		return entity && (entity.getLinkByRel('self') || {}).href || '';
 	},
 
-	isLargeScreen: function(largeScreen) {
-		return !!largeScreen;
+	_showCompactView: function(largeScreen, compact) {
+		return compact || !largeScreen;
 	}
 });

@@ -37,7 +37,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				color: var(--d2l-color-galena);
 				outline: none;
 				flex: 1;
-				height: 20px;
+				height: 18px;
 				align-self: center;
 			}
 			.level:hover {
@@ -47,7 +47,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 			.level.selected {
 				background-color: var(--d2l-color-gypsum);
 				border: solid 1px var(--d2l-color-galena);
-				height: 32px;
+				height: 30px;
 				border-radius: 6px;
 			}
 			.level.assessed {

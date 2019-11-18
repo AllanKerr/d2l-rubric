@@ -63,10 +63,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 				display: block;
 			}
 
-			@media (max-width: 614px) {
-				.overall-level:not([data-achieved]) {
-					display: none;
-				}
+			:host(.compact) .overall-level:not([data-achieved]),
+			:host([compact]) .overall-level:not([data-achieved]) {
+				display: none;
 			}
 
 			.overall-level[data-clickable] {
@@ -148,13 +147,13 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 
 		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{_assessmentEntity}}"></rubric-siren-entity>
 		<iron-media-query query="(min-width: 615px)" query-matches="{{_largeScreen}}"></iron-media-query>
-		<template is="dom-if" if="[[_showOverallScore(_largeScreen, _overallLevel)]]">
+		<template is="dom-if" if="[[_showOverallScore(_largeScreen, compact, _overallLevel)]]">
 			<h3>
 				<span>[[localize('overallScore')]]</span>
 				<template is="dom-if" if="[[_showCompetencies(_competencies,readOnly)]]">
 					<d2l-rubric-competencies-icon
 						competency-names="[[_competencies]]"
-						mobile="[[!_largeScreen]]"
+						mobile="[[_isCompactView(_largeScreen, compact)]]"
 						tooltip-position="[[_competenciesIconTooltipPosition(_largeScreen)]]"
 					></d2l-rubric-competencies-icon>
 				</template>
@@ -173,7 +172,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 							<h4>
 								<span>[[level.properties.name]]</span>
 								<span hidden="[[!_showClearOverrideButton(level, _version)]]">&nbsp;*</span>
-								<template is="dom-if" if="[[!_isLargeScreen(_largeScreen)]]" restamp>
+								<template is="dom-if" if="[[!_showCompactView(_largeScreen, compact)]]" restamp>
 									<span class="overall-level-text">
 										<!-- <span>[[_localizePoints(level)]]</span>
 										<br hidden="[[!_scoreVisible(level)]]"> -->
@@ -182,7 +181,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 								</template>
 								<d2l-icon icon="d2l-tier1:check"></d2l-icon>
 							</h4>
-							<template is="dom-if" if="[[_isLargeScreen(_largeScreen)]]" restamp>
+							<template is="dom-if" if="[[_showCompactView(_largeScreen, compact)]]" restamp>
 								<span slot="overall-level" class="overall-level-text">
 									<span>[[_localizePoints(level)]]</span>
 									<br hidden="[[!_scoreVisible(level)]]">
@@ -210,10 +209,18 @@ Polymer({
 	is: 'd2l-rubric-overall-score',
 
 	properties: {
+		compact: {
+			type: Boolean,
+			reflectToAttribute: true
+		},
 		readOnly: Boolean,
 		_levels: Array,
 		_competencies: Array,
-		_largeScreen: Boolean,
+		_largeScreen: {
+			type: Boolean,
+			value: true,
+			observer: '_largeScreenChanged'
+		},
 		_assessmentEntity: {
 			type: Object,
 			value: null
@@ -391,7 +398,15 @@ Polymer({
 		return !!largeScreen;
 	},
 
-	_showOverallScore(largeScreen, overallLevel) {
-		return !!(largeScreen || overallLevel);
+	_showOverallScore: function(largeScreen, compact, overallLevel) {
+		return !compact || !!(largeScreen || overallLevel);
+	},
+
+	_isCompactView: function(largeScreen, compact) {
+		return compact || !largeScreen;
+	},
+
+	_largeScreenChanged: function(largeScreen) {
+		this.classList.toggle('compact', !largeScreen);
 	}
 });
