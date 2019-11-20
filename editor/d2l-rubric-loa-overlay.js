@@ -36,7 +36,8 @@ class RubricLoaOverlay extends mixinBehaviors([
             _resizeElement: Object,
             _rubricLevelOverrides: {
                 type: Object,
-                value: {}
+                value: {},
+                observer: '_onOverridesChanged'
             },
             _sliderLock: {
                 type: Boolean,
@@ -284,6 +285,47 @@ class RubricLoaOverlay extends mixinBehaviors([
         return dist;
             }
 
+    _getVisualLoaLevelMapping(rubricLevelOverrides) {
+        if (!this._loaLevels) {
+            return {};
+        }
+
+        const levelMap = {};
+
+        const lastLoaLevel = this._loaLevels[this._loaLevels.length - 1];
+        const lastRubricLevel = this._resolveRubricLevel(this._getRubricLevelLink(lastLoaLevel));
+
+        let currentLoa = null;
+        let currentRubric = lastRubricLevel;
+        let prevLoa = lastLoaLevel;
+        let prevRubric = null;
+        let newLevel = false;
+
+        while (currentRubric !== null) {
+            while (currentLoa === null || this._getSelfLink(currentRubric) === this._getSelfLink(prevRubric)) {
+                newLevel = true;
+                currentLoa = prevLoa;
+                prevLoa = this._getPrevLoaLevel(currentLoa);
+
+                const prevLoaLink = this._getSelfLink(prevLoa);
+                const prevRubricLink = rubricLevelOverrides[prevLoaLink] !== undefined
+                    ? rubricLevelOverrides[prevLoaLink]
+                    : this._getRubricLevelLink(prevLoa);
+                
+                prevRubric = this._resolveRubricLevel(prevRubricLink);
+            }
+            
+            levelMap[this._getSelfLink(currentRubric)] = {
+                loaLevel: this._getSelfLink(currentLoa),
+                isBound: newLevel
+            };
+            currentRubric = this._getPreviousRubicLevel(currentRubric);
+            newLevel = false;
+        }
+
+        return levelMap;
+    }
+
     _getVisualRubricLevel(loaLevel, rubricLevelOverrides) {
         const currentId = this._getSelfLink(loaLevel);
         return rubricLevelOverrides[currentId] !== undefined
@@ -469,6 +511,11 @@ class RubricLoaOverlay extends mixinBehaviors([
             }
             this._rubricLevelOverrides = overrides;
         }
+    }
+
+    _onOverridesChanged(overrides) {
+        const loaMapping = this._getVisualLoaLevelMapping(overrides);
+        this.fire('d2l-rubric-loa-overlay-level-mapping-changed', loaMapping);
     }
 
     _getNextLoaLevel(loaLevelEntity) {

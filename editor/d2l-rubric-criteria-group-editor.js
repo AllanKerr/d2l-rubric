@@ -97,14 +97,21 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 				the size of the editor
 				-->
 				<div class="stretch-child">
-					<d2l-rubric-criteria-editor href="[[_criteriaCollectionHref]]" token="[[token]]" rich-text-enabled="[[richTextEnabled]]" is-holistic="[[isHolistic]]" outcomes-title="[[outcomesTitle]]" browse-outcomes-text="[[browseOutcomesText]]" outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]">
+					<d2l-rubric-criteria-editor
+						href="[[_criteriaCollectionHref]]"
+						token="[[token]]"
+						rich-text-enabled="[[richTextEnabled]]"
+						is-holistic="[[isHolistic]]"
+						outcomes-title="[[outcomesTitle]]"
+						browse-outcomes-text="[[browseOutcomesText]]"
+						outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]"
+						rubric-level-loa-mapping="[[_rubricLevelLoaMapping]]"
+					>
 					</d2l-rubric-criteria-editor>
 				</div>
 			</div>
 		</d2l-scroll-wrapper>
 	</template>
-
-
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);
@@ -157,6 +164,10 @@ Polymer({
 		},
 		richTextEnabled: Boolean,
 		outcomesToolIntegrationEnabled: Boolean,
+		_rubricLevelLoaMapping: {
+			type: Object,
+			value: {}
+		}
 	},
 
 	behaviors: [
@@ -176,8 +187,12 @@ Polymer({
 		this.addEventListener('d2l-rubric-criterion-detail-width-changed', function() {
 			afterNextRender(this, function() {
 				this.$$('d2l-scroll-wrapper').notifyResize();
-			}.bind(this));
-		}.bind(this));
+			});
+		});
+
+		this.addEventListener('d2l-rubric-loa-overlay-level-mapping-changed', (e) => {
+			this._rubricLevelLoaMapping = e.detail;
+		});
 	},
 
 	_onEntityChanged: function(entity, oldEntity) {

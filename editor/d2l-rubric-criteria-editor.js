@@ -160,6 +160,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-edi
 							outcomes-title="[[outcomesTitle]]"
 							browse-outcomes-text="[[browseOutcomesText]]"
 							outcomes-tool-integration-enabled="[[outcomesToolIntegrationEnabled]]"
+							rubric-level-loa-mapping="[[rubricLevelLoaMapping]]"
 						>
 							<div slot="gutter-left">
 								<div class="reorder-offscreen" on-focusin="_onReorderGroupFocusIn" on-focusout="_onReorderGroupFocusOut" on-keydown="_onReorderGroupKeydown">
@@ -237,7 +238,8 @@ Polymer({
 			type: Boolean,
 			value: false
 		},
-		_rubricLevelsHref: String
+		_rubricLevelsHref: String,
+		rubricLevelLoaMapping: Object
 	},
 
 	behaviors: [
