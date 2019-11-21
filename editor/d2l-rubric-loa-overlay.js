@@ -3,6 +3,7 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 import 'd2l-hypermedia-constants/d2l-hypermedia-constants.js';
 import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
+import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
 import 'd2l-table/d2l-table-shared-styles.js';
 import './d2l-rubric-editor-cell-styles.js';
 import '../rubric-siren-entity.js';
@@ -11,7 +12,8 @@ const SLIDER_CENTER_OFFSET = 16;
 
 class RubricLoaOverlay extends mixinBehaviors([
     window.D2L.Hypermedia.HMConstantsBehavior,
-    D2L.PolymerBehaviors.Siren.EntityBehavior
+    D2L.PolymerBehaviors.Siren.EntityBehavior,
+    D2L.PolymerBehaviors.Siren.SirenActionBehavior
 ], PolymerElement) {
     static get properties() {
         return {
@@ -221,7 +223,7 @@ class RubricLoaOverlay extends mixinBehaviors([
 
         this._levels = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.level);
         this._sortedLevels = this._sortRubricLevels(this._levels);
-		this._loaMappingHref = this._getLoaMappingLink(entity);
+        this._loaMappingHref = this._getLoaMappingLink(entity);
     }
 
     _onLoaMappingEntityChanged(entity) {
@@ -261,8 +263,8 @@ class RubricLoaOverlay extends mixinBehaviors([
 
         if (this._getVisualRubricLevel(loaLevel, rubricLevelOverrides) === null) {
             if (this._getPrevLoaLevel(loaLevel) !== null) {
-            offset += 12;
-        }
+                offset += 12;
+            }
         } else if (colSpan === 0) {
             offset += 12;
         }
@@ -283,7 +285,7 @@ class RubricLoaOverlay extends mixinBehaviors([
 
         const dist = this._getRubricLevelDist(prevRubric, currentRubric);
         return dist;
-            }
+    }
 
     _getVisualLoaLevelMapping(rubricLevelOverrides) {
         if (!this._loaLevels) {
@@ -346,7 +348,7 @@ class RubricLoaOverlay extends mixinBehaviors([
     _getPrevLink(entity) {
 		var link = entity && entity.getLinkByRel('prev');
 		return link && link.href || '';
-	}
+    }
 
     _getNextLink(entity) {
 		var link = entity && entity.getLinkByRel('next');
@@ -372,7 +374,7 @@ class RubricLoaOverlay extends mixinBehaviors([
         this._activeSlider = e.target;
         this._activeSlider.classList.add('active');
         this._draggingLoaLevel = this._resolveLoaLevel(this._activeSlider.getAttribute('data-loa-level'));
-        
+
         this._draggingSlider = this.$$('#motion-slider');
         this._dragCursorOffset = e.offsetX;
         this._draggingSlider.style.backgroundColor = this._activeSlider.style.backgroundColor;
@@ -417,7 +419,7 @@ class RubricLoaOverlay extends mixinBehaviors([
     _getSliderPosition(mouseX) {
         const minBound = -SLIDER_CENTER_OFFSET;
         const maxBound = this._draggingSlider.parentNode.offsetWidth - SLIDER_CENTER_OFFSET;
-        
+
         const parentOffset = this._draggingSlider.parentNode.getBoundingClientRect().left;
         const position = mouseX - parentOffset - this._dragCursorOffset;
 
@@ -448,7 +450,7 @@ class RubricLoaOverlay extends mixinBehaviors([
     _resolveRubricLevel(rubricLevelHref) {
 		if (!this._levels || !this._levels.length) {
 			return null;
-		}
+        }
 
 		for (let i = 0; i < this._levels.length; i++) {
 			const rubricLevel = this._levels[i];
@@ -459,7 +461,7 @@ class RubricLoaOverlay extends mixinBehaviors([
 		}
 
 		return null;
-	}
+    }
 
     _getPreviousRubicLevel(rubricLevelEntity) {
         const previousHref = this._getPrevLink(rubricLevelEntity);
@@ -503,6 +505,27 @@ class RubricLoaOverlay extends mixinBehaviors([
 
             if (commit) {
                 console.log('COMMIT!');
+                
+                const action = loaLevelEntity.getActionByName('updateMapping');
+                if (action) {
+                    this._sliderLock = true;
+
+                    const fields = action.fields;
+                    const upperBoundField = fields.find(f => f.name === 'newUpperBound');
+                    if (upperBoundField) {
+                        upperBoundField.value = rubricLevelEntity ? rubricLevelEntity.properties.id : null;
+                    }
+
+                    this.performSirenAction(action, fields)
+                        .catch(() => {
+                            // Do nothing
+                        }).finally((() => {
+                            this._sliderLock = false;
+                            this._rubricLevelOverrides = {};
+                        }).bind(this));
+                } else {
+                    this._rubricLevelOverrides = {};
+                }
             }
         } else {
             const overrides = Object.assign({}, this._rubricLevelOverrides);
