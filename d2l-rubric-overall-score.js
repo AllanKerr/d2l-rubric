@@ -172,7 +172,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 							<h4>
 								<span>[[level.properties.name]]</span>
 								<span hidden="[[!_showClearOverrideButton(level, _version)]]">&nbsp;*</span>
-								<template is="dom-if" if="[[!_showCompactView(_largeScreen, compact)]]" restamp>
+								<template is="dom-if" if="[[!_isCompactView(_largeScreen, compact)]]" restamp>
 									<span class="overall-level-text">
 										<!-- <span>[[_localizePoints(level)]]</span>
 										<br hidden="[[!_scoreVisible(level)]]"> -->
@@ -181,7 +181,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 								</template>
 								<d2l-icon icon="d2l-tier1:check"></d2l-icon>
 							</h4>
-							<template is="dom-if" if="[[_showCompactView(_largeScreen, compact)]]" restamp>
+							<template is="dom-if" if="[[_isCompactView(_largeScreen, compact)]]" restamp>
 								<span slot="overall-level" class="overall-level-text">
 									<span>[[_localizePoints(level)]]</span>
 									<br hidden="[[!_scoreVisible(level)]]">

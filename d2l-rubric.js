@@ -71,7 +71,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 					margin: 2.33em 0;
 				};
 			}
-
 			:host(.compact),
 			:host([compact]) {
 				padding: 12px;
@@ -100,20 +99,30 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 			.score-wrapper.assessable.editing:hover {
 				padding: 0 0.5rem 0 0.6rem;
 			}
+			:host([compact]) .score-wrapper {
+				padding: 0;
+			}
+
 			.out-of-score-container {
-				margin-left: auto;
 				display: inline-flex;
 				align-items: center;
 			}
+
 			.clear-override-button {
 				flex-grow: 1;
 				flex-shrink: 1;
 			}
+
 			.out-of-container {
 				border: 1px solid var(--d2l-color-mica);
 				border-radius: 8px;
-				text-align: right;
 			}
+			:host(.compact)  .out-of-container,
+			:host([compact]) .out-of-container {
+				border: none;
+				margin-top: 0;
+			}
+
 			.out-of-text {
 				@apply --d2l-body-compact-text;
 				margin-right: 1rem;
@@ -121,7 +130,17 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 				margin-bottom: 0.5rem;
 				display: flex;
 				align-items: center;
+				justify-content: space-between;
+				padding-left: 20px;
+				padding-right: 20px;
 			}
+			:host([compact]) .out-of-text,
+			:host(.compact)  .out-of-text {
+				margin-right: 0;
+				padding-left: 0;
+				padding-right: 0;
+			}
+
 			.out-of-loader {
 				margin-top: 24px;
 				border: 1px solid var(--d2l-color-mica);
@@ -129,61 +148,38 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 				text-align: right;
 				height: 30px;
 			}
-			.left {
-				width: 100%;
-				text-align: left;
-				padding-left: 20px;
-			}
+
 			.total {
 				width: auto;
 				padding-top: 0.5rem;
 				padding-bottom: 0.5rem;
 			}
-			:dir(rtl) .left {
-				text-align: right;
-				padding-left: 0;
-				padding-right: 20px;
+			:host([compact]) .total {
+				padding: 0;
 			}
-			:host(:dir(rtl)) .left {
-				text-align: right;
-				padding-left: 0;
-				padding-right: 20px;
-			}
-			.right {
+
+			d2l-save-status {
 				text-align: right;
 			}
-			:dir(rtl) .right {
-				text-align: left;
-				padding-left: 20px;
-			}
-			:host(:dir(rtl)) .right {
-				text-align: left;
-				padding-left: 20px;
-			}
-			:host(.compact) .out-of-container,
-			:host([compact]) .out-of-container {
-				border: none;
-				margin-top: 0;
-			}
+
 			.overall-feedback-header {
 				@apply --d2l-label-text;
 				padding-top: 1.5rem;
 			}
+
 			.overall-feedback-text {
 				@apply --d2l-body-compact-text;
 				display: inline-block;
 			}
-			.quotation-mark-icon{
+
+			.quotation-mark-icon {
 				margin-right: 20px
 			}
+
 			#editor-save-status-container {
 				padding-right: 0.12rem
 			}
-
-			:dir(rtl) #editor-save-status-container {
-				padding-left: 0.12rem
-			}
-
+			:dir(rtl) #editor-save-status-container,
 			:host(:dir(rtl)) #editor-save-status-container {
 				padding-left: 0.12rem
 			}
@@ -208,7 +204,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 				</d2l-alert>
 			</template>
 			<div id="editor-save-status-container" hidden="[[readOnly]]">
-				<d2l-save-status aria-hidden="true" id="rubric-save-status" class="right"></d2l-save-status>
+				<d2l-save-status aria-hidden="true" id="rubric-save-status"></d2l-save-status>
 			</div>
 			<slot hidden$=[[_showCompactView(_isMobile, compact)]]></slot>
 			<d2l-rubric-loading hidden$="[[_hideLoading(_showContent,_hasAlerts)]]"></d2l-rubric-loading>
@@ -226,7 +222,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 						<div class="out-of-container" hidden="[[!_hasOutOf(entity)]]">
 						<div class="out-of-text" role="group" aria-labelledby="total-grouping-label">
 							<d2l-offscreen id="total-grouping-label">[[localize('totalScoreLabel')]]</d2l-offscreen>
-							<div class="left total">[[localize('total')]]</div>
+							<span>[[localize('total')]]</span>
 							<div class="out-of-score-container">
 								<d2l-button-subtle
 									class="clear-override-button"
@@ -279,7 +275,8 @@ Polymer({
 	properties: {
 		compact: {
 			type: Boolean,
-			default: false
+			default: false,
+			reflectToAttribute: true
 		},
 		readOnly: {
 			type: Boolean,
@@ -463,7 +460,7 @@ Polymer({
 	},
 
 	_getOutOfClassName: function(assessmentEntity, editingScore) {
-		var className = 'score-wrapper right';
+		var className = 'score-wrapper';
 		if (this._canEditScore(assessmentEntity)) {
 			className += ' assessable';
 		}

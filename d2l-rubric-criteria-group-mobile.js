@@ -16,6 +16,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-mobil
 			}
 			h3 {
 				@apply --d2l-heading-3;
+				margin-top: 0;
 				margin-bottom: 0.9rem;
 			}
 		</style>

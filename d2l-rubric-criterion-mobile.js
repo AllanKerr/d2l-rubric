@@ -100,12 +100,18 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 			.level-name {
 				display: flex;
 			}
+			:host([compact]) .level-name {
+				justify-content: space-between;
+			}
 			.level-text {
 				font-weight: bold;
 			}
 			.level-bullet.assessed,
 			.level-name.assessed {
 				color: var(--d2l-color-celestine-minus-1);
+			}
+			:host([compact]) .level-bullet {
+				display: none;
 			}
 			[hidden] {
 				display: none !important;
@@ -192,7 +198,11 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				<div id="level-description-panel[[index]]" class="criterion-middle" aria-labelledby$="level-tab[[index]]" role="tabpanel" hidden="[[!_isLevelSelected(index, _selected)]]">
 					<div class$="[[_getLevelNameClass(_levelEntities, _selected, _assessedLevelHref)]]">
 						<div class="level-text"> [[_getSelectedLevelText(_selected, _levelEntities)]] </div>
-						<d2l-icon hidden="[[!_showLevelBullet()]]" class$="[[_getLevelBulletClass(_levelEntities, _selected, _assessedLevelHref)]]" icon="d2l-tier1:bullet"></d2l-icon>
+						<d2l-icon
+							hidden="[[!_showLevelBullet()]]"
+							class$="[[_getLevelBulletClass(_levelEntities, _selected, _assessedLevelHref)]]"
+							icon="d2l-tier1:bullet">
+						</d2l-icon>
 						<div> [[_getSelectedNumberText(_selected, _levelEntities, criterionCell)]] </div>
 					</div>
 					<div hidden="[[!_hasDescription(criterionCell)]]" class="criterion-description">
@@ -424,6 +434,7 @@ Polymer({
 	},
 
 	_getCriterionCellText: function(criterionCell) {
+		/*
 		var descHtml = criterionCell.getSubEntityByClass(this.HypermediaClasses.text.description).properties.html;
 		if (descHtml) {
 			// Remove the margin of any paragraph elements in the description
@@ -431,6 +442,14 @@ Polymer({
 			return paragraphStyle + descHtml;
 		}
 		return descHtml;
+		*/
+/*
+		const descText = criterionCell
+			.getSubEntityByClass(this.HypermediaClasses.text.description).properties.text;
+
+		return descText;
+		*/
+		return '';
 	},
 
 	_isLevelSelected: function(levelIndex, selected) {
