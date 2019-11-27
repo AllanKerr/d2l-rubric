@@ -29,7 +29,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group-mobil
 			token="[[token]]"
 			is-holistic="[[_isHolistic]]"
 			is-numeric="[[_isNumeric]]"
-			read-only="[[readOnly]]">
+			read-only="[[readOnly]]"
+			compact="[[compact]]">
 		</d2l-rubric-criteria-mobile>
 	</template>
 
@@ -40,6 +41,11 @@ Polymer({
 	is: 'd2l-rubric-criteria-group-mobile',
 
 	properties: {
+		compact: {
+			type: Boolean,
+			value: false,
+			reflectToAttribute: true
+		},
 		_name: String,
 		_criteriaHref: String,
 		_levelsHref: String,

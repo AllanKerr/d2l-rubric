@@ -46,6 +46,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-groups">
 					assessment-href="[[assessmentHref]]"
 					token="[[token]]"
 					read-only="[[readOnly]]"
+					compact="[[_showCompactView(_largeScreen, compact)]]"
 					hidden$="[[!_showContent]]"
 					telemetry-data="[[telemetryData]]">
 				</d2l-rubric-criteria-group-mobile>
@@ -64,7 +65,8 @@ Polymer({
 	properties: {
 		compact: {
 			type: Boolean,
-			value: false
+			value: false,
+			reflectToAttribute: true
 		},
 		_groups: {
 			type: Array,

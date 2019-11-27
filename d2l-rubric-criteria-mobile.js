@@ -47,7 +47,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-mobile">
 				token="[[token]]"
 				is-holistic="[[isHolistic]]"
 				is-numeric="[[isNumeric]]"
-				read-only="[[readOnly]]">
+				read-only="[[readOnly]]"
+				compact="[[compact]]">
 			</d2l-rubric-criterion-mobile>
 			<d2l-button-subtle
 				class="add-feedback-button"

@@ -77,11 +77,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				flex-shrink: 1;
 			}
 
-			@media (max-width: 614px) {
-				.criterion-middle {
-					margin-left: 48px;
-					margin-right: 48px;
-				}
+			:host([compact]) .criterion-middle {
+				margin-left: 48px;
+				margin-right: 48px;
 			}
 
 			.criterion-prev-container,
@@ -248,7 +246,13 @@ Polymer({
 
 		_score: String,
 
-		readOnly: Boolean
+		readOnly: Boolean,
+
+		compact: {
+			type: Boolean,
+			value: false,
+			reflectToAttribute: true
+		}
 	},
 
 	behaviors: [

@@ -211,6 +211,7 @@ Polymer({
 	properties: {
 		compact: {
 			type: Boolean,
+			default: false,
 			reflectToAttribute: true
 		},
 		readOnly: Boolean,
