@@ -15,6 +15,7 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 			compact: Boolean,
 			hasAlerts: Boolean,
 			rubricName: String,
+			totalScore: String,
 			_isMobile: {
 				type: Boolean,
 				value: false,
@@ -42,14 +43,23 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 				}
 
 				.rubric-header-out-of-container {
-					height: 0.8rem;
+					height: 1.6rem;
+					font-size: 0.8rem;
+				}
+
+				d2l-accordion-collapse[opened] .rubric-header-out-of-text {
+					display: none;
 				}
 			</style>
 
 			<iron-media-query query="(max-width: 614px)" query-matches="{{_isMobile}}"></iron-media-query>
 			<slot name="alerts"></slot>
-			<template is="dom-if" if="[[!_hasAlerts(hasAlerts)]]">
-				<template is="dom-if" if="[[_showCompactView(_isMobile, compact)]]" restamp>
+			<div hidden$="[[_hasAlerts(hasAlerts)]]">
+				<template
+					is="dom-if"
+					id="compact-view-template"
+					if="[[_showCompactView(_isMobile, compact)]]"
+					restamp>
 					<d2l-accordion flex>
 						<d2l-accordion-collapse flex>
 							<div slot="header">
@@ -57,9 +67,11 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 									class="rubric-header-icon"
 									icon="[[_getRubricIcon(assessmentEntity)]]">
 								</d2l-icon>
-								<span class=rubric-header-title-container>
+								<span class="rubric-header-title-container">
 									<div class="rubric-header-title">[[rubricName]]</div>
-									<div class="rubric-header-out-of-container"></div>
+									<div class="rubric-header-out-of-container">
+										<span class="rubric-header-out-of-text">[[totalScore]]</span>
+									</div>
 								</span>
 							</div>
 							<slot></slot>
@@ -69,12 +81,55 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 				<template is="dom-if" if="[[!_showCompactView(_isMobile, compact)]]" restamp>
 					<slot></slot>
 				</template>
-			</template>
+			</div>
 		`;
 	}
 
+	connectedCallback() {
+		super.connectedCallback();
+
+		const domIf = this.shadowRoot.querySelector('#compact-view-template');
+
+		//if (domIf) {
+			domIf.addEventListener("dom-change", () => {
+				const accordion = this.shadowRoot.querySelector('d2l-accordion-collapse');
+
+				if (accordion) {
+					if (this.___accordionMutationObserver) {
+						return;
+					}
+
+					const el = this;
+					this.___accordionMutationObserver = new MutationObserver(function(mutationsList, observer) {
+						const lastMutation = mutationsList[mutationsList.length - 1];
+
+						const isOpened = lastMutation.target.attributes['opened'];
+
+						el.dispatchEvent(new CustomEvent('d2l-rubric-compact-view-accordion', {
+							detail: {
+								opened: !!isOpened,
+							},
+							bubbles: true,
+							composed: true,
+						}));
+					});
+
+					this.___accordionMutationObserver.observe(accordion, {
+						attributes: true,
+						attributeFilter: ['opened'],
+					});
+				} else if (this.___accordionMutationObserver) {
+					this.___accordionMutationObserver.disconnect();
+					this.___accordionMutationObserver = null;
+				}
+			});
+		//}
+	}
+
 	_showCompactView(mobile, compact) {
-		return compact || !!mobile;
+		const shouldShowCompactView = compact || !!mobile;
+
+		return shouldShowCompactView;
 	}
 
 	_hasAlerts(hasAlerts) {

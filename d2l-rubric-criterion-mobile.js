@@ -434,7 +434,6 @@ Polymer({
 	},
 
 	_getCriterionCellText: function(criterionCell) {
-		/*
 		var descHtml = criterionCell.getSubEntityByClass(this.HypermediaClasses.text.description).properties.html;
 		if (descHtml) {
 			// Remove the margin of any paragraph elements in the description
@@ -442,14 +441,6 @@ Polymer({
 			return paragraphStyle + descHtml;
 		}
 		return descHtml;
-		*/
-/*
-		const descText = criterionCell
-			.getSubEntityByClass(this.HypermediaClasses.text.description).properties.text;
-
-		return descText;
-		*/
-		return '';
 	},
 
 	_isLevelSelected: function(levelIndex, selected) {

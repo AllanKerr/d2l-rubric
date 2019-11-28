@@ -197,7 +197,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 			assessment-entity="[[assessmentEntity]]"
 			has-alerts="[[_hasAlerts]]"
 			compact="[[_showCompactView(_isMobile, compact)]]"
-			total-score=[[_]]>
+			total-score=[[_score]]>
 			<template is="dom-repeat" items="[[_alerts]]">
 				<d2l-alert slot="alerts" type="[[item.alertType]]" button-text="[[localize('refreshText')]]">
 					[[item.alertMessage]]
@@ -360,6 +360,12 @@ Polymer({
 
 	ready: function() {
 		this._updateOutcomesTitleText();
+
+		this.addEventListener('d2l-rubric-compact-view-accordion', (e) => {
+			e.detail.opened
+				? this.setAttribute('compact-expanded', '')
+				: this.removeAttribute('compact-expanded');
+		});
 	},
 
 	_onEntityChanged: function(entity) {
