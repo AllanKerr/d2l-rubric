@@ -71,29 +71,29 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 			.override-label {
 				display: none;
 			}
-			@media screen and (max-width: 614px) {
-				:host(.compact) .clear-override-button-mobile,
-				:host([compact]) .clear-override-button-mobile {
-					display: inline-flex;
-					padding: 6px 0;
-				}
-				:host(.compact) .override-label,
-				:host([compact]) .override-label {
-					margin-left: 12px;
-					padding: 6px 0;
-					display: inline-flex;
-					font-size: 15px;
-					font-weight: bold;
-					color: var(--d2l-color-ferrite) !important;
-					align-items : center;
-				}
-				.editing-component {
-				 	margin-right: 0;
-					display: inline-flex;
-					padding: 6px 12px 6px 0;
-					align-items : center;
-				}
+
+			:host(.compact) .clear-override-button-mobile,
+			:host([compact]) .clear-override-button-mobile {
+				display: inline-flex;
+				padding: 6px 0;
 			}
+			:host(.compact) .override-label,
+			:host([compact]) .override-label {
+				margin-left: 12px;
+				padding: 6px 0;
+				display: inline-flex;
+				font-size: 15px;
+				font-weight: bold;
+				color: var(--d2l-color-ferrite) !important;
+				align-items : center;
+			}
+			.editing-component {
+				margin-right: 0;
+				display: inline-flex;
+				padding: 6px 12px 6px 0;
+				align-items : center;
+			}
+
 			[hidden] {
 				display: none;
 			}

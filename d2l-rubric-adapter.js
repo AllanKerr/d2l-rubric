@@ -90,40 +90,37 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 
 		const domIf = this.shadowRoot.querySelector('#compact-view-template');
 
-		//if (domIf) {
-			domIf.addEventListener("dom-change", () => {
-				const accordion = this.shadowRoot.querySelector('d2l-accordion-collapse');
+		domIf.addEventListener("dom-change", () => {
+			const accordion = this.shadowRoot.querySelector('d2l-accordion-collapse');
 
-				if (accordion) {
-					if (this.___accordionMutationObserver) {
-						return;
-					}
-
-					const el = this;
-					this.___accordionMutationObserver = new MutationObserver(function(mutationsList, observer) {
-						const lastMutation = mutationsList[mutationsList.length - 1];
-
-						const isOpened = lastMutation.target.attributes['opened'];
-
-						el.dispatchEvent(new CustomEvent('d2l-rubric-compact-view-accordion', {
-							detail: {
-								opened: !!isOpened,
-							},
-							bubbles: true,
-							composed: true,
-						}));
-					});
-
-					this.___accordionMutationObserver.observe(accordion, {
-						attributes: true,
-						attributeFilter: ['opened'],
-					});
-				} else if (this.___accordionMutationObserver) {
-					this.___accordionMutationObserver.disconnect();
-					this.___accordionMutationObserver = null;
+			if (accordion) {
+				if (this.___accordionMutationObserver) {
+					return;
 				}
-			});
-		//}
+
+				const el = this;
+				this.___accordionMutationObserver = new MutationObserver(function(mutationsList, observer) {
+					const lastMutation = mutationsList[mutationsList.length - 1];
+					const isOpened = lastMutation.target.attributes['opened'];
+
+					el.dispatchEvent(new CustomEvent('d2l-rubric-compact-view-accordion', {
+						detail: {
+							opened: !!isOpened,
+						},
+						bubbles: true,
+						composed: true,
+					}));
+				});
+
+				this.___accordionMutationObserver.observe(accordion, {
+					attributes: true,
+					attributeFilter: ['opened'],
+				});
+			} else if (this.___accordionMutationObserver) {
+				this.___accordionMutationObserver.disconnect();
+				this.___accordionMutationObserver = null;
+			}
+		});
 	}
 
 	_showCompactView(mobile, compact) {
