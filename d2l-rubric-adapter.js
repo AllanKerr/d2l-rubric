@@ -112,7 +112,7 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 	_onConnected() {
 		const domIf = this.shadowRoot.querySelector('#compact-view-template');
 
-		domIf.addEventListener("dom-change", () => {
+		domIf.addEventListener('dom-change', () => {
 			const accordion = this.shadowRoot.querySelector('d2l-accordion-collapse');
 
 			if (accordion) {
@@ -131,7 +131,7 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 				}));
 
 				this.___accordionMutationObserver =
-					new MutationObserver(function (mutationsList) {
+					new MutationObserver(function(mutationsList) {
 						const lastMutation = mutationsList[mutationsList.length - 1];
 						const isOpened = lastMutation.target.attributes['opened'];
 

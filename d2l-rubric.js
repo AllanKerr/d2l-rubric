@@ -358,7 +358,7 @@ Polymer({
 		'd2l-alert-button-pressed': '_pageReload'
 	},
 
-	ready: function () {
+	ready: function() {
 		this._updateOutcomesTitleText();
 
 		this.addEventListener('d2l-rubric-compact-view-accordion', (e) => {
@@ -368,7 +368,7 @@ Polymer({
 		});
 	},
 
-	_onEntityChanged: function (entity) {
+	_onEntityChanged: function(entity) {
 		if (entity) {
 			this._telemetryData = {};
 			this._telemetryData.rubricMode = this.dataset.rubricMode;
@@ -380,20 +380,20 @@ Polymer({
 		}
 	},
 
-	_onEntitySave: function (e) {
+	_onEntitySave: function(e) {
 		var saveStateEl = this.$['rubric-save-status'];
 		({
-			'd2l-siren-entity-save-start': function () { saveStateEl.start(); },
-			'd2l-siren-entity-save-end': function () {
+			'd2l-siren-entity-save-start': function() { saveStateEl.start(); },
+			'd2l-siren-entity-save-end': function() {
 				// for Polymer 1 sometimes we aren't getting all end events so reset on end event
 				saveStateEl._saving = 1;
 				saveStateEl.end();
 			},
-			'd2l-siren-entity-save-error': function () { saveStateEl.error(); }
+			'd2l-siren-entity-save-error': function() { saveStateEl.error(); }
 		})[e.type]();
 	},
 
-	_onAssessmentEntityChanged: function (assessmentEntity) {
+	_onAssessmentEntityChanged: function(assessmentEntity) {
 		if (assessmentEntity) {
 			this._score = this._getScore(assessmentEntity);
 			var feedback = assessmentEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.overallFeedback);
@@ -401,18 +401,18 @@ Polymer({
 		}
 	},
 
-	_getHref: function (link) {
+	_getHref: function(link) {
 		return link.href;
 	},
 
-	_getScore: function (entity) {
+	_getScore: function(entity) {
 		var score = entity && entity.properties && entity.properties.score;
 		if (!!score || score === 0) {
 			return score.toString();
 		}
 	},
 
-	_findRubricType: function (entity) {
+	_findRubricType: function(entity) {
 		if (entity.hasClass(this.HypermediaClasses.rubrics.holistic)) {
 			return 'holistic';
 		} else if (entity.hasClass(this.HypermediaClasses.rubrics.analytic)) {
@@ -422,12 +422,12 @@ Polymer({
 		}
 	},
 
-	_hasOutOf: function (entity) {
+	_hasOutOf: function(entity) {
 		var outOf = entity && entity.properties && entity.properties.outOf;
 		return !!outOf || outOf === 0;
 	},
 
-	_hasOverallScore: function (entity, overallScoreFlag) {
+	_hasOverallScore: function(entity, overallScoreFlag) {
 		return (
 			overallScoreFlag &&
 			entity &&
@@ -436,36 +436,36 @@ Polymer({
 		);
 	},
 
-	_getOverallLevels: function (entity) {
+	_getOverallLevels: function(entity) {
 		return entity.getLink(this.HypermediaRels.Rubrics.overallLevels).href;
 	},
 
-	_localizeDashOutOf: function (entity) {
+	_localizeDashOutOf: function(entity) {
 		if (!this._hasOutOf(entity)) return;
 		return this.localize('dashOutOf', 'outOf', entity.properties.outOf.toString());
 	},
 
-	_localizeOutOf: function (entity, score) {
+	_localizeOutOf: function(entity, score) {
 		if (!this._hasOutOf(entity) || !score) return;
 		return this.localize('scoreOutOf', 'score', score, 'outOf', entity.properties.outOf.toString());
 	},
 
-	_hideLoading: function (showContent, hasAlerts) {
+	_hideLoading: function(showContent, hasAlerts) {
 		return showContent || hasAlerts;
 	},
-	_hideOutOf: function (showContent, hasAlerts) {
+	_hideOutOf: function(showContent, hasAlerts) {
 		return !showContent || hasAlerts;
 	},
 
-	_hasOverallFeedback: function (feedback) {
+	_hasOverallFeedback: function(feedback) {
 		return feedback !== null && feedback !== '';
 	},
 
-	_canEditScore: function (assessmentEntity) {
+	_canEditScore: function(assessmentEntity) {
 		return !this.readOnly && this.canOverrideTotal(assessmentEntity);
 	},
 
-	_getOutOfClassName: function (assessmentEntity, editingScore) {
+	_getOutOfClassName: function(assessmentEntity, editingScore) {
 		var className = 'score-wrapper';
 		if (this._canEditScore(assessmentEntity)) {
 			className += ' assessable';
@@ -476,20 +476,20 @@ Polymer({
 		return className;
 	},
 
-	_handleOverrideScore: function () {
+	_handleOverrideScore: function() {
 		if (this.readOnly) {
 			return;
 		}
 		this.editingScore = 1;
 	},
 
-	_handleScoreKeypress: function (event) {
+	_handleScoreKeypress: function(event) {
 		if (event.keyCode === 13) {
 			this._handleOverrideScore();
 		}
 	},
 
-	_handleError: function (e) {
+	_handleError: function(e) {
 		if (this._errored) {
 			return;
 		}
@@ -499,11 +499,11 @@ Polymer({
 		this._addAlert('error', e.detail.error.message, this.localize('errorText'));
 	},
 
-	_pageReload: function () {
+	_pageReload: function() {
 		window.location.reload();
 	},
 
-	_showClearTotalScoreButton: function (assessmentEntity) {
+	_showClearTotalScoreButton: function(assessmentEntity) {
 		if (this.readOnly) {
 			return false;
 		}
@@ -516,7 +516,7 @@ Polymer({
 		return this.isTotalScoreOverridden();
 	},
 
-	_updateOutcomesTitleText: function () {
+	_updateOutcomesTitleText: function() {
 		if (!this.outcomesTitleText
 			|| !this.outcomesTitleText.length > 0
 			|| !D2L
@@ -529,22 +529,22 @@ Polymer({
 		D2L.Custom.Outcomes.TermTitleText = this.outcomesTitleText;
 	},
 
-	_isStaticView: function () {
+	_isStaticView: function() {
 		return this.readOnly || !this.assessmentHref;
 	},
 
-	_handleTabIndex: function () {
+	_handleTabIndex: function() {
 		if (this._isStaticView()) {
 			return undefined;
 		}
 		return 0;
 	},
 
-	_getRubricName: function (rubricEntity) {
+	_getRubricName: function(rubricEntity) {
 		return rubricEntity && rubricEntity.properties && rubricEntity.properties.name;
 	},
 
-	_showCompactView: function (isMobile, compact) {
+	_showCompactView: function(isMobile, compact) {
 		this.classList.toggle('compact', !!isMobile);
 
 		return compact || !!isMobile;

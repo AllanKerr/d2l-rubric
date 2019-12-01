@@ -255,18 +255,18 @@ Polymer({
 		'_onAssessmentEntityChanged(_assessmentEntity)'
 	],
 
-	_onEntityChanged: function (entity) {
+	_onEntityChanged: function(entity) {
 		if (!entity) {
 			return;
 		}
 		this._levels = entity.getSubEntitiesByClass(this.HypermediaClasses.rubrics.overallLevel) || [];
 		this._version = (this._version || 0) + 1;
-		afterNextRender(this, function () {
+		afterNextRender(this, function() {
 			this.$$('d2l-scroll-wrapper').checkScrollbar();
 		}.bind(this));
 	},
 
-	_onAssessmentEntityChanged: function (assessmentEntity) {
+	_onAssessmentEntityChanged: function(assessmentEntity) {
 		this._assessmentMap = {};
 		this._competencies = [];
 
@@ -283,7 +283,7 @@ Polymer({
 			this._competencies = selector.properties.competencies;
 		}
 
-		selector.entities.forEach(function (assessmentLevel) {
+		selector.entities.forEach(function(assessmentLevel) {
 			if (assessmentLevel.hasClass(this.HypermediaClasses.rubrics.selected)) {
 				this._overallLevel = assessmentLevel.properties.name;
 			}
@@ -295,32 +295,32 @@ Polymer({
 		this._version = (this._version || 0) + 1;
 	},
 
-	_getAssessmentLevel: function (levelEntity) {
+	_getAssessmentLevel: function(levelEntity) {
 		return this._assessmentMap[levelEntity.getLinkByRel('self').href];
 	},
 
-	_isAchieved: function (levelEntity) {
+	_isAchieved: function(levelEntity) {
 		var assessmentLevel = this._getAssessmentLevel(levelEntity);
 		return assessmentLevel && assessmentLevel.hasClass(this.HypermediaClasses.rubrics.selected);
 	},
 
-	_showCompetencies: function (competencies, readOnly) {
+	_showCompetencies: function(competencies, readOnly) {
 		return competencies && competencies.length && !readOnly;
 	},
 
-	_competenciesIconTooltipPosition: function (largeScreen) {
+	_competenciesIconTooltipPosition: function(largeScreen) {
 		return largeScreen ? 'top' : 'left';
 	},
 
-	_getDescriptionHtml: function (levelEntity) {
+	_getDescriptionHtml: function(levelEntity) {
 		return levelEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.description).properties.html;
 	},
 
-	_localizePoints: function (levelEntity) {
+	_localizePoints: function(levelEntity) {
 		return this._scoreVisible(levelEntity) ? this.localize('pointsMinimum', 'number', levelEntity.properties.rangeStart.toString()) : '';
 	},
 
-	_scoreVisible: function (levelEntity) {
+	_scoreVisible: function(levelEntity) {
 		if (this.readOnly && this.assessmentHref) {
 			// Minimum points is not shown in graded view
 			return false;
@@ -329,7 +329,7 @@ Polymer({
 		return rangeStart !== null && rangeStart !== undefined;
 	},
 
-	_showClearOverrideButton: function (levelEntity) {
+	_showClearOverrideButton: function(levelEntity) {
 		// clear override button should not show up for text-only rubrics
 		if (!this.hasOutOf) {
 			return false;
@@ -338,7 +338,7 @@ Polymer({
 		return action && action.name === 'remove-overall-level-override';
 	},
 
-	_getOnClickAction: function (levelEntity) {
+	_getOnClickAction: function(levelEntity) {
 		if (this.readOnly || !this._assessmentEntity) {
 			return null;
 		}
@@ -354,18 +354,18 @@ Polymer({
 		);
 	},
 
-	_isClickable: function (levelEntity) {
+	_isClickable: function(levelEntity) {
 		return !!this._getOnClickAction(levelEntity);
 	},
 
-	_levelClicked: function (event) {
+	_levelClicked: function(event) {
 		var levelEntity = event.model.level;
 		if (!levelEntity) {
 			return;
 		}
 
 		window.D2L.Rubric.Assessment.promise = window.D2L.Rubric.Assessment.promise.then(
-			function () {
+			function() {
 				// Gets the most up-to-date version of the action
 				var action = this._getOnClickAction(levelEntity);
 				if (!action) {
@@ -377,37 +377,37 @@ Polymer({
 		).catch(console.error); // eslint-disable-line no-console
 	},
 
-	_handleKeypress: function (event) {
+	_handleKeypress: function(event) {
 		if (event.keyCode === 13) {
 			event.preventDefault();
 			this._levelClicked(event);
 		}
 	},
 
-	_overallLevelChanged: function (levelName) {
+	_overallLevelChanged: function(levelName) {
 		this.fire('d2l-rubric-overall-level-changed', { name: levelName });
 	},
 
-	_handleTabIndex: function () {
+	_handleTabIndex: function() {
 		if (this.readOnly || !this.assessmentHref) {
 			return undefined;
 		}
 		return 0;
 	},
 
-	_isLargeScreen: function (largeScreen) {
+	_isLargeScreen: function(largeScreen) {
 		return !!largeScreen;
 	},
 
-	_showOverallScore: function (largeScreen, compact, overallLevel) {
+	_showOverallScore: function(largeScreen, compact, overallLevel) {
 		return !compact || !!(largeScreen || overallLevel);
 	},
 
-	_isCompactView: function (largeScreen, compact) {
+	_isCompactView: function(largeScreen, compact) {
 		return compact || !largeScreen;
 	},
 
-	_largeScreenChanged: function (largeScreen) {
+	_largeScreenChanged: function(largeScreen) {
 		this.classList.toggle('compact', !largeScreen);
 	}
 });
