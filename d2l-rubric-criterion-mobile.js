@@ -131,7 +131,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 			}
 
 			.level-iterator {
-				position: absolute;
 				width: 24px;
 				height: 24px;
 				border: 1px solid;
@@ -178,6 +177,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				<div
 					class="level-iterator"
 					on-click="_handleTapLeft"
+					on-keydown="_handleLeftIteratorKeyDown"
 					tabindex="0"
 					hidden$="[[_hideIterator('left', _selected, _total)]]">
 					<d2l-icon
@@ -206,6 +206,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				<div
 					class="level-iterator"
 					on-click="_handleTapRight"
+					on-keydown="_handleRightIteratorKeyDown"
 					tabindex="0"
 					hidden$="[[_hideIterator('right', _selected, _total)]]">
 					<d2l-icon
@@ -384,22 +385,24 @@ Polymer({
 		this._handledDescriptionAnimation(newValue > oldValue ? 'slide-from-right' : 'slide-from-left', newValue);
 	},
 
-	_handleTapLeft: function () {
+	_moveIteratorLeft: function () {
 		if (this._selected > 0) {
 			this._selected--;
 		}
 	},
 
-	_handleTapRight: function () {
+	_moveIteratorRight: function () {
 		if (this._selected < this._total - 1) {
 			this._selected++;
 		}
 	},
 
-	_assessSelected: function () {
-		if (!this.readOnly) {
-			this.assessCriterionCell(this._getSelfLink(this._criterionCells[this._selected]));
-		}
+	_handleTapLeft: function () {
+		this._moveIteratorLeft();
+	},
+
+	_handleTapRight: function () {
+		this._moveIteratorRight();
 	},
 
 	_handledDescriptionAnimation: function (animation, selected) {
@@ -506,11 +509,21 @@ Polymer({
 	_showLevelBullet: function () {
 		return !!(this.isNumeric || this.isHolistic);
 	},
-	_hideIterator(which, selected, total) {
+	_hideIterator: function (which, selected, total) {
 		const shouldHide = which === 'left'
 			? selected === 0
 			: selected === (total - 1);
 
 		return shouldHide;
+	},
+	_handleLeftIteratorKeyDown: function (e) {
+		if (e.keyCode === 13) {
+			this._moveIteratorLeft();
+		}
+	},
+	_handleRightIteratorKeyDown: function (e) {
+		if (e.keyCode === 13) {
+			this._moveIteratorRight();
+		}
 	}
 });
