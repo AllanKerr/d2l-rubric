@@ -9,7 +9,7 @@ import './d2l-rubric-error-handling-behavior.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback-editor">
+$_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback-editor">
 	<template strip-whitespace="">
 		<style>
 			:host {
@@ -101,7 +101,7 @@ Polymer({
 		},
 		keyLinkRels: {
 			type: Array,
-			value: function() { return ['self']; }
+			value: function () { return ['self']; }
 		},
 		_key: {
 			type: String,
@@ -120,7 +120,7 @@ Polymer({
 		D2L.PolymerBehaviors.Rubric.ErrorHandlingBehavior
 	],
 
-	_onEntityChanged: function(entity, oldEntity) {
+	_onEntityChanged: function (entity, oldEntity) {
 		if (entity) {
 			var feedbackChanged = oldEntity ? this._getFeedback(entity) !== this._getFeedback(oldEntity) : true;
 			if (feedbackChanged) {
@@ -129,12 +129,12 @@ Polymer({
 		}
 	},
 
-	_getAriaLabel: function(langTerm, criterionName, properties) {
+	_getAriaLabel: function (langTerm, criterionName, properties) {
 		var levelName = properties && properties.levelName || properties && properties.name;
 		return this.localize(langTerm, 'criterionName', criterionName, 'levelName', levelName);
 	},
 
-	_getFeedback: function(entity) {
+	_getFeedback: function (entity) {
 		var action = this._getFeedbackAction(entity);
 		if (action) {
 			return action.getFieldByName('feedback').value;
@@ -142,7 +142,7 @@ Polymer({
 		return '';
 	},
 
-	_getFeedbackAction: function(entity) {
+	_getFeedbackAction: function (entity) {
 		var action;
 		var feedback = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.feedback);
 		if (feedback) {
@@ -151,29 +151,43 @@ Polymer({
 		return action;
 	},
 
-	_canEditFeedback: function(entity, updatingLevels) {
+	_canEditFeedback: function (entity, updatingLevels) {
 		var feedback = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.feedback);
 		return feedback && feedback.hasActionByName('update-feedback') && !updatingLevels;
 	},
 
-	_saveFeedback: function(e) {
+	_saveFeedback: function (e) {
 		var action = this._getFeedbackAction(this.entity);
 		if (action) {
 			this.toggleBubble('_feedbackInvalid', false, 'feedback-bubble');
+<<<<<<< HEAD
 			var fields = [{'name':'feedback', 'value':e.detail.value}];
 			this.performAutosaveAction(action, fields, '_pendingFeedbackSaves').then(function() {
 				this.fire('d2l-rubric-feedback-saved');
 				this._updateFeedback(this.entity);
 			}.bind(this)).catch(function(err) {
 				this.handleValidationError('feedback-bubble', '_feedbackInvalid', 'feedbackSaveFailed', err);
+=======
+			var fields = [{ 'name': 'feedback', 'value': e.detail.value }];
+			this._pendingFeedbackSaves++;
+			this.performSirenAction(action, fields).then(function () {
+				this.fire('d2l-rubric-feedback-saved');
+			}.bind(this)).catch(function (err) {
+				this.handleValidationError('feedback-bubble', '_feedbackInvalid', 'feedbackSaveFailed', err);
+			}.bind(this)).finally(function () {
+				this._pendingFeedbackSaves--;
+				if (!this._feedbackInvalid) {
+					this._updateFeedback(this.entity);
+				}
+>>>>>>> feat: level iterator styles
 			}.bind(this));
 		}
 	},
 
-	_constructKey: function(keyLinkRels, entity) {
+	_constructKey: function (keyLinkRels, entity) {
 		var constructed = '';
 		if (entity && entity.hasLinkByRel) {
-			keyLinkRels.forEach(function(rel) {
+			keyLinkRels.forEach(function (rel) {
 				if (entity.hasLinkByRel(rel)) {
 					constructed += entity.getLinkByRel(rel).href;
 					constructed += '|';
@@ -183,12 +197,12 @@ Polymer({
 		return constructed;
 	},
 
-	_richTextAndEditEnabled: function(entity, richTextEnabled, canEditFeedback) {
+	_richTextAndEditEnabled: function (entity, richTextEnabled, canEditFeedback) {
 		var feedback = entity && entity.getSubEntityByClass(this.HypermediaClasses.rubrics.feedback);
 		return richTextEnabled && canEditFeedback && feedback.hasClass(this.HypermediaClasses.text.richtext);
 	},
 
-	_updateFeedback: function(entity) {
+	_updateFeedback: function (entity) {
 		if (!this._feedbackChanging && !this._pendingFeedbackSaves) {
 			this.toggleBubble('_feedbackInvalid', false, 'feedback-bubble');
 			this._feedbackText = this._getFeedback(entity);

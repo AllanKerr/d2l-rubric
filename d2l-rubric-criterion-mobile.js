@@ -82,21 +82,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				margin-right: 48px;
 			}
 
-			.criterion-prev-container,
-			.criterion-next-container {
-				position: relative;
-				width: 34px;
-				flex: 0 0 34px;
-				cursor: pointer;
-			}
-			.criterion-prev-container {
-				margin-left: -7px;
-				margin-right: 22px;
-			}
-			.criterion-next-container {
-				margin-left: 22px;
-				margin-right: -7px;
-			}
 			.level-name {
 				display: flex;
 			}
@@ -126,18 +111,45 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 			}
 			.levels-row {
 				display: flex;
+				align-items: center;
 			}
-			.level-iterator {
+
+			.level-iterator > d2l-icon {
 				flex-grow: 0;
 				flex-shrink: 0;
 				width: 32px;
 				margin: 8px;
-				align-self: center;
 				user-select: none;
 			}
-			.level-iterator:hover {
-				outline: 1px solid blue;
+
+			.level-iterator-container {
+				width: 40px;
+				height: 40px;
+				display: flex;
+				align-items: center;
+				justify-content: space-around;
 			}
+
+			.level-iterator {
+				position: absolute;
+				width: 24px;
+				height: 24px;
+				border: 1px solid;
+				border-color: var(--d2l-color-ferrite);
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: space-around;
+			}
+			.level-iterator:hover,
+			.level-iterator:focus {
+				width: 32px;
+				height: 32px;
+				border: 2px solid;
+				border-color: var(--d2l-color-celestine);
+				outline: none;
+			}
+
 			d2l-rubric-levels-mobile {
 				flex-grow: 1;
 			}
@@ -162,14 +174,20 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 			<span>[[_name]]</span>
 		</div>
 		<div class="levels-row">
-			<d2l-icon
-				role="button"
-				class="level-iterator"
-				aria-label$="[[localize('selectNextLevel')]]"
-				id="left-chevron"
-				icon="d2l-tier1:chevron-left"
-				on-click="_handleTapLeft">
-			</d2l-icon>
+			<div class="level-iterator-container">
+				<div
+					class="level-iterator"
+					on-click="_handleTapLeft"
+					tabindex="0"
+					hidden$="[[_hideIterator('left', _selected, _total)]]">
+					<d2l-icon
+						role="button"
+						aria-label$="[[localize('selectNextLevel')]]"
+						id="left-chevron"
+						icon="d2l-tier1:chevron-left">
+					</d2l-icon>
+				</div>
+			</div>
 			<d2l-rubric-levels-mobile
 				href="[[levelsHref]]"
 				assessment-href="[[assessmentHref]]"
@@ -184,14 +202,20 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				criterion-cells="[[_criterionCells]]"
 				criterion-href="[[_getSelfLink(entity)]]">
 			</d2l-rubric-levels-mobile>
-			<d2l-icon
-				role="button"
-				class="level-iterator"
-				aria-label$="[[localize('selectPreviousLevel')]]"
-				id="right-chevron"
-				icon="d2l-tier1:chevron-right"
-				on-click="_handleTapRight">
-			</d2l-icon>
+			<div class="level-iterator-container">
+				<div
+					class="level-iterator"
+					on-click="_handleTapRight"
+					tabindex="0"
+					hidden$="[[_hideIterator('right', _selected, _total)]]">
+					<d2l-icon
+						role="button"
+						aria-label$="[[localize('selectPreviousLevel')]]"
+						id="right-chevron"
+						icon="d2l-tier1:chevron-right">
+					</d2l-icon>
+				</div>
+			</div>
 		</div>
 
 		<div id="description" class="criterion-description-container">
@@ -279,7 +303,7 @@ Polymer({
 		'_selectAssessedLevel(_levelEntities, _assessedLevelHref)'
 	],
 
-	_onEntityChanged: function(entity) {
+	_onEntityChanged: function (entity) {
 		if (!entity) {
 			return;
 		}
@@ -289,7 +313,7 @@ Polymer({
 		this._entity = entity;
 	},
 
-	_onAssessmentResultChanged: function(entity, assessmentResult) {
+	_onAssessmentResultChanged: function (entity, assessmentResult) {
 		if (!entity || !assessmentResult) {
 			return;
 		}
@@ -308,7 +332,7 @@ Polymer({
 		}
 	},
 
-	_selectAssessedLevel: function(levelEntities, assessedLevelHref) {
+	_selectAssessedLevel: function (levelEntities, assessedLevelHref) {
 		if (!levelEntities || !assessedLevelHref) {
 			return;
 		}
@@ -320,16 +344,16 @@ Polymer({
 		}
 	},
 
-	_hasDescription: function(criterionCell) {
+	_hasDescription: function (criterionCell) {
 		var description = criterionCell.getSubEntityByClass(this.HypermediaClasses.text.description);
 		return !!(description && description.properties && description.properties.html);
 	},
 
-	_showCompetencies: function(assessmentEntity, href, readOnly) {
+	_showCompetencies: function (assessmentEntity, href, readOnly) {
 		return !readOnly && !!this._getCompetencies(assessmentEntity, href).length;
 	},
 
-	_getCompetencies: function(assessmentEntity, href) {
+	_getCompetencies: function (assessmentEntity, href) {
 		if (!assessmentEntity || !assessmentEntity.entities || !href) {
 			return [];
 		}
@@ -352,7 +376,7 @@ Polymer({
 		return [];
 	},
 
-	_selectedChanged: function(newValue, oldValue) {
+	_selectedChanged: function (newValue, oldValue) {
 		if (oldValue === undefined || newValue === undefined || newValue === oldValue) {
 			return;
 		}
@@ -360,27 +384,25 @@ Polymer({
 		this._handledDescriptionAnimation(newValue > oldValue ? 'slide-from-right' : 'slide-from-left', newValue);
 	},
 
-	_handleTapLeft: function() {
+	_handleTapLeft: function () {
 		if (this._selected > 0) {
 			this._selected--;
-			this._assessSelected();
 		}
 	},
 
-	_handleTapRight: function() {
+	_handleTapRight: function () {
 		if (this._selected < this._total - 1) {
 			this._selected++;
-			this._assessSelected();
 		}
 	},
 
-	_assessSelected: function() {
+	_assessSelected: function () {
 		if (!this.readOnly) {
 			this.assessCriterionCell(this._getSelfLink(this._criterionCells[this._selected]));
 		}
 	},
 
-	_handledDescriptionAnimation: function(animation, selected) {
+	_handledDescriptionAnimation: function (animation, selected) {
 		var element = this.$.description.querySelector('#' + 'level-description-panel' + selected);
 		if (!element) {
 			return;
@@ -390,15 +412,15 @@ Polymer({
 		element.classList.add(animation);
 	},
 
-	_hideLeftChevron: function(selected) {
+	_hideLeftChevron: function (selected) {
 		return selected === 0 || selected === -1;
 	},
 
-	_hideRightChevron: function(selected) {
+	_hideRightChevron: function (selected) {
 		return selected === this._total - 1 || selected === -1;
 	},
 
-	_getPoints: function(selected, levels, criterionCell) {
+	_getPoints: function (selected, levels, criterionCell) {
 		// check for overrides
 		var points = levels[selected].properties.points;
 		if (criterionCell && criterionCell.hasClass(this.HypermediaClasses.rubrics.overridden)) {
@@ -407,7 +429,7 @@ Polymer({
 		return points;
 	},
 
-	_getSelectedLevelText: function(selected, levels) {
+	_getSelectedLevelText: function (selected, levels) {
 		if (!levels || !levels[selected]) {
 			return null;
 		}
@@ -416,7 +438,7 @@ Polymer({
 		return levelTitle;
 	},
 
-	_getSelectedNumberText: function(selected, levels, criterionCell) {
+	_getSelectedNumberText: function (selected, levels, criterionCell) {
 		if (!levels || !levels[selected]) {
 			return null;
 		}
@@ -434,7 +456,7 @@ Polymer({
 		}
 	},
 
-	_getCriterionCellText: function(criterionCell) {
+	_getCriterionCellText: function (criterionCell) {
 		var descHtml = criterionCell.getSubEntityByClass(this.HypermediaClasses.text.description).properties.html;
 		if (descHtml) {
 			// Remove the margin of any paragraph elements in the description
@@ -444,11 +466,11 @@ Polymer({
 		return descHtml;
 	},
 
-	_isLevelSelected: function(levelIndex, selected) {
+	_isLevelSelected: function (levelIndex, selected) {
 		return levelIndex === selected;
 	},
 
-	_getLevelNameClass: function(levelEntities, selected, assessedLevelHref) {
+	_getLevelNameClass: function (levelEntities, selected, assessedLevelHref) {
 		var className = 'level-name';
 		if (levelEntities && levelEntities[selected] && assessedLevelHref) {
 			if (this._getSelfLink(levelEntities[selected]) === assessedLevelHref) {
@@ -457,7 +479,7 @@ Polymer({
 		}
 		return className;
 	},
-	_getLevelBulletClass: function(levelEntities, selected, assessedLevelHref) {
+	_getLevelBulletClass: function (levelEntities, selected, assessedLevelHref) {
 		var className = 'level-bullet';
 		if (levelEntities && levelEntities[selected] && assessedLevelHref) {
 			if (this._getSelfLink(levelEntities[selected]) === assessedLevelHref) {
@@ -467,12 +489,12 @@ Polymer({
 		return className;
 	},
 
-	_getActivityLink: function(entity) {
+	_getActivityLink: function (entity) {
 		var link = entity && entity.getLinkByRel(this.HypermediaRels.Activities.activityUsage);
 		return link && link.href || '';
 	},
 
-	_getOutcomesTitleText: function() {
+	_getOutcomesTitleText: function () {
 		if (D2L
 			&& D2L.Custom
 			&& D2L.Custom.Outcomes
@@ -481,7 +503,14 @@ Polymer({
 			return D2L.Custom.Outcomes.TermTitleText;
 		}
 	},
-	_showLevelBullet: function() {
+	_showLevelBullet: function () {
 		return !!(this.isNumeric || this.isHolistic);
+	},
+	_hideIterator(which, selected, total) {
+		const shouldHide = which === 'left'
+			? selected === 0
+			: selected === (total - 1);
+
+		return shouldHide;
 	}
 });

@@ -88,39 +88,7 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 	connectedCallback() {
 		super.connectedCallback();
 
-		const domIf = this.shadowRoot.querySelector('#compact-view-template');
-
-		domIf.addEventListener("dom-change", () => {
-			const accordion = this.shadowRoot.querySelector('d2l-accordion-collapse');
-
-			if (accordion) {
-				if (this.___accordionMutationObserver) {
-					return;
-				}
-
-				const el = this;
-				this.___accordionMutationObserver = new MutationObserver(function(mutationsList, observer) {
-					const lastMutation = mutationsList[mutationsList.length - 1];
-					const isOpened = lastMutation.target.attributes['opened'];
-
-					el.dispatchEvent(new CustomEvent('d2l-rubric-compact-view-accordion', {
-						detail: {
-							opened: !!isOpened,
-						},
-						bubbles: true,
-						composed: true,
-					}));
-				});
-
-				this.___accordionMutationObserver.observe(accordion, {
-					attributes: true,
-					attributeFilter: ['opened'],
-				});
-			} else if (this.___accordionMutationObserver) {
-				this.___accordionMutationObserver.disconnect();
-				this.___accordionMutationObserver = null;
-			}
-		});
+		this._onConnected();
 	}
 
 	_showCompactView(mobile, compact) {
@@ -139,5 +107,54 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 			: 'd2l-tier3:rubric';
 
 		return icon;
+	}
+
+	_onConnected() {
+		const domIf = this.shadowRoot.querySelector('#compact-view-template');
+
+		domIf.addEventListener("dom-change", () => {
+			const accordion = this.shadowRoot.querySelector('d2l-accordion-collapse');
+
+			if (accordion) {
+				if (this.___accordionMutationObserver) {
+					return;
+				}
+
+				const el = this;
+
+				el.dispatchEvent(new CustomEvent('d2l-rubric-compact-view-accordion', {
+					detail: {
+						opened: !!el.hasAttribute('opened'),
+					},
+					bubbles: true,
+					composed: true,
+				}));
+
+				this.___accordionMutationObserver =
+					new MutationObserver(function (mutationsList) {
+						const lastMutation = mutationsList[mutationsList.length - 1];
+						const isOpened = lastMutation.target.attributes['opened'];
+
+						el.dispatchEvent(
+							new CustomEvent('d2l-rubric-compact-view-accordion', {
+								detail: {
+									opened: !!isOpened,
+								},
+								bubbles: true,
+								composed: true,
+							})
+						);
+					});
+
+				this.___accordionMutationObserver.observe(accordion, {
+					attributes: true,
+					attributeFilter: ['opened'],
+				});
+			} else if (this.___accordionMutationObserver) {
+				/* MutationObserver lifecycle is tied to DOM element,
+				   so will be garbage collected when DOM element is */
+				this.___accordionMutationObserver = null;
+			}
+		});
 	}
 });
