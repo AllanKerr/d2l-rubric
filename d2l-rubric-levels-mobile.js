@@ -109,6 +109,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				border-bottom-left-radius: 6px;
 			}
 			.out-of {
+				height: 100%;
 				border-radius: 6px;
 				border: solid 1px var(--d2l-color-mica);
 				min-width: 40px;

@@ -133,6 +133,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				width: 32px;
 				margin: 8px;
 				align-self: center;
+				user-select: none;
 			}
 			.level-iterator:hover {
 				outline: 1px solid blue;
