@@ -73,7 +73,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 			}
 			:host(.compact),
 			:host([compact]) {
-				padding: 12px;
+				padding: 8px;
 				border: 1px solid gray;
 				border-radius: 6px;
 			}

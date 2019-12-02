@@ -28,9 +28,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				display: inline-flex;
 				width: 100%;
 			}
+
 			.level {
 				border: solid 1px var(--d2l-color-mica);
-				border-right: none;
 				display: flex;
 				overflow: hidden;
 				text-align: center;
@@ -40,10 +40,33 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				height: 18px;
 				align-self: center;
 			}
+			:not(:dir(rtl)) .level:not(.selected) {
+				border-right: none;
+			}
+			:dir(rtl) .level:not(.selected) {
+				border-left: none;
+			}
 			.level:hover {
 				cursor: pointer;
 				background-color: var(--d2l-color-gypsum);
 			}
+
+			:not(:dir(rtl)) .level:first-of-type {
+				border-radius: 6px 0 0 6px;
+			}
+			:dir(rtl) .level:first-of-type {
+				border-radius: 0 6px 6px 0;
+			}
+
+			:not(:dir(rtl)) .level:last-of-type {
+				border-radius: 0 6px 6px 0;
+				border-right: solid 1px var(--d2l-color-mica);
+			}
+			:dir(rtl) .level:last-of-type {
+				border-radius: 6px 0 0 6px;
+				border-left: solid 1px var(--d2l-color-mica);
+			}
+
 			.level.selected {
 				background-color: var(--d2l-color-gypsum);
 				border: solid 1px var(--d2l-color-galena);
@@ -57,9 +80,13 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				background-color: var(--d2l-color-celestine-plus-2);
 				border: solid 1px var(--d2l-color-celestine);
 			}
-			.level.selected + .level:not(:focus) {
+			:not(:dir(rtl)) .level.selected + .level:not(:focus) {
 				border-left: none;
 			}
+			:dir(rtl) .level.selected + .level:not(:focus) {
+				border-right: none;
+			}
+
 			.level:focus {
 				background-color: var(--d2l-color-gypsum);
 				box-shadow: 0 0 0 4px rgb(178, 211, 235);
@@ -90,6 +117,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				font-weight: 700;
 				color: var(--d2l-color-ferrite);
 			}
+			/*
 			.level.last {
 				border-top-right-radius: 6px;
 				border-bottom-right-radius: 6px;
@@ -104,10 +132,20 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 			.level.last.selected:focus {
 				border: solid 1px rgba(0, 111, 191, 0.4);
 			}
-			div.level:first-of-type {
-				border-top-left-radius: 6px;
-				border-bottom-left-radius: 6px;
+			*/
+
+			.level:last-of-type:hover,
+			.level:last-of-type:focus {
+				border: solid 1px rgba(0, 111, 191, 0.4);
 			}
+			.level:last-of-type.selected {
+				border: solid 1px var(--d2l-color-galena);
+			}
+			.level:last-of-type.selected:hover,
+			.level:last-of-type.selected:focus {
+				border: solid 1px rgba(0, 111, 191, 0.4);
+			}
+
 			.out-of {
 				height: 100%;
 				border-radius: 6px;
@@ -168,21 +206,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 						<div hidden$="[[_isAssessedLevel(item, assessedLevelHref)]]" class$="[[_getLevelTextClassName(index, selected)]]">	</div>
 					</div>
 				</template>
-			</div>
-
-			<div hidden$="[[!_hasOutOf(outOf)]]" class$="[[_getOutOfClassName(editingScore)]]" tabindex="0" on-keypress="_handleOverrideScoreKeypress">
-				<d2l-rubric-editable-score
-					id="score-inner"
-					class$="[[_getScoreWrapperClassName(criterionHref, editingScore)]]"
-					criterion-href="[[criterionHref]]"
-					assessment-href="[[assessmentHref]]"
-					token="[[token]]"
-					read-only="[[readOnly]]"
-					editing-score="{{editingScore}}"
-					score-invalid="{{scoreInvalid}}"
-					overridden-styling="{{overriddenStyling}}"
-					on-click="_handleOverrideScore">
-				</d2l-rubric-editable-score>
 			</div>
 		</div>
 	</template>
@@ -328,9 +351,7 @@ Polymer({
 		if (this._isAssessedLevel(level, assessedLevelHref)) {
 			className += ' assessed';
 		}
-		if (index === this.total - 1) {
-			className += ' last';
-		}
+
 		return className;
 	},
 
@@ -384,14 +405,6 @@ Polymer({
 
 	_canEditScore: function(criterionHref) {
 		return !this.readOnly && this.canOverrideScore(criterionHref);
-	},
-
-	_getOutOfClassName: function(editingScore, scoreInvalid) {
-		var className = 'level out-of';
-		if (editingScore && editingScore !== -1 || scoreInvalid) {
-			className += ' editing';
-		}
-		return className;
 	},
 
 	_getScoreWrapperClassName: function(criterionHref, editingScore, scoreInvalid) {

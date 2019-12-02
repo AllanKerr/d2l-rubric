@@ -76,10 +76,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				flex-grow: 1;
 				flex-shrink: 1;
 			}
-
 			:host([compact]) .criterion-middle {
-				margin-left: 48px;
-				margin-right: 48px;
+				margin-left: 40px;
+				margin-right: 40px;
 			}
 
 			.level-name {
@@ -88,9 +87,11 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 			:host([compact]) .level-name {
 				justify-content: space-between;
 			}
+
 			.level-text {
 				font-weight: bold;
 			}
+
 			.level-bullet.assessed,
 			.level-name.assessed {
 				color: var(--d2l-color-celestine-minus-1);
@@ -98,17 +99,21 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 			:host([compact]) .level-bullet {
 				display: none;
 			}
+
 			[hidden] {
 				display: none !important;
 			}
+
 			d2l-rubric-competencies-icon {
 				margin-top: 3px;
 				float: right;
 			}
+
 			d2l-rubric-alignments-indicator {
 				margin-right: 5px;
 				float: right;
 			}
+
 			.levels-row {
 				display: flex;
 				align-items: center;
@@ -397,11 +402,15 @@ Polymer({
 		}
 	},
 
-	_handleTapLeft: function() {
+	_handleTapLeft: function(e) {
+		e.stopPropagation();
+
 		this._moveIteratorLeft();
 	},
 
-	_handleTapRight: function() {
+	_handleTapRight: function(e) {
+		e.stopPropagation();
+
 		this._moveIteratorRight();
 	},
 
