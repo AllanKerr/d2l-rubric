@@ -133,6 +133,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				display: flex;
 				align-items: center;
 				justify-content: space-around;
+				outline: none;
 			}
 
 			.level-iterator {
@@ -145,13 +146,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				align-items: center;
 				justify-content: space-around;
 			}
-			.level-iterator:hover,
-			.level-iterator:focus {
+			.level-iterator-container:hover .level-iterator,
+			.level-iterator-container:focus .level-iterator {
 				width: 32px;
 				height: 32px;
 				border: 2px solid;
 				border-color: var(--d2l-color-celestine);
-				outline: none;
 			}
 
 			d2l-rubric-levels-mobile {
@@ -178,19 +178,15 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 			<span>[[_name]]</span>
 		</div>
 		<div class="levels-row">
-			<div class="level-iterator-container">
-				<div
-					class="level-iterator"
-					on-click="_handleTapLeft"
-					on-keydown="_handleLeftIteratorKeyDown"
-					tabindex="0"
-					hidden$="[[_hideIterator('left', _selected, _total)]]">
-					<d2l-icon
-						role="button"
-						aria-label$="[[localize('selectNextLevel')]]"
-						id="left-chevron"
-						icon="d2l-tier1:chevron-left">
-					</d2l-icon>
+			<div
+				class="level-iterator-container"
+				role="button"
+				aria-label$="[[localize('selectNextLevel')]]"
+				on-click="_handleTapLeft"
+				on-keydown="_handleLeftIteratorKeyDown"
+				tabindex="0">
+				<div class="level-iterator" hidden$="[[_hideIterator('left', _selected, _total)]]">
+					<d2l-icon icon="d2l-tier1:chevron-left"></d2l-icon>
 				</div>
 			</div>
 			<d2l-rubric-levels-mobile
@@ -207,19 +203,15 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				criterion-cells="[[_criterionCells]]"
 				criterion-href="[[_getSelfLink(entity)]]">
 			</d2l-rubric-levels-mobile>
-			<div class="level-iterator-container">
-				<div
-					class="level-iterator"
-					on-click="_handleTapRight"
-					on-keydown="_handleRightIteratorKeyDown"
-					tabindex="0"
-					hidden$="[[_hideIterator('right', _selected, _total)]]">
-					<d2l-icon
-						role="button"
-						aria-label$="[[localize('selectPreviousLevel')]]"
-						id="right-chevron"
-						icon="d2l-tier1:chevron-right">
-					</d2l-icon>
+			<div
+				class="level-iterator-container"
+				role="button"
+				aria-label$="[[localize('selectPreviousLevel')]]"
+				on-click="_handleTapRight"
+				on-keydown="_handleRightIteratorKeyDown"
+				tabindex="0">
+				<div class="level-iterator" hidden$="[[_hideIterator('right', _selected, _total)]]">
+					<d2l-icon icon="d2l-tier1:chevron-right"></d2l-icon>
 				</div>
 			</div>
 		</div>

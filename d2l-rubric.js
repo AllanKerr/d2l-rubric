@@ -30,7 +30,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 			:host {
 				display: block;
 
-				--shtml-h1 : {
+				--shtml-h1: {
 					display: block;
 					font-weight: bold;
 					font-size: 2em;
@@ -74,7 +74,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 			:host(.compact),
 			:host([compact]) {
 				padding: 8px;
-				border: 1px solid gray;
+				border: 1px solid var(--d2l-color-galena);
 				border-radius: 6px;
 			}
 

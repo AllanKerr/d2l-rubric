@@ -117,22 +117,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				font-weight: 700;
 				color: var(--d2l-color-ferrite);
 			}
-			/*
-			.level.last {
-				border-top-right-radius: 6px;
-				border-bottom-right-radius: 6px;
-				border-right: solid 1px var(--d2l-color-mica);
-			}
-			.level.last:focus {
-				border: solid 1px rgba(0, 111, 191, 0.4);
-			}
-			.level.last.selected {
-				border: solid 1px var(--d2l-color-galena);
-			}
-			.level.last.selected:focus {
-				border: solid 1px rgba(0, 111, 191, 0.4);
-			}
-			*/
 
 			.level:last-of-type:hover,
 			.level:last-of-type:focus {
@@ -187,6 +171,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 			}
 		</style>
 		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
+		<span>[[_localizeSelectedScore(entity, selected, outOf)]]</span>
 		<div class="levels-container">
 			<div class="levels" role="tablist" hidden$="[[_isEditingScore(editingScore, scoreInvalid)]]">
 				<template is="dom-repeat" items="[[levelEntities]]">
@@ -366,10 +351,6 @@ Polymer({
 		this.selected = event.currentTarget.dataIndex;
 	},
 
-	_hasOutOf: function(outOf) {
-		return !!outOf || outOf === 0;
-	},
-
 	_hasScore: function(score) {
 		return !!score || score === 0;
 	},
@@ -433,6 +414,20 @@ Polymer({
 
 	_isEditingScore: function(editingScore, scoreInvalid) {
 		return editingScore && editingScore !== -1 || scoreInvalid;
+	},
+
+	_localizeSelectedScore(entity, selected, outOf) {
+		if (levelEntities[selected].hasClass('percentage')) {
+			return this.localize('percentage', levelEntities[selected].properties.points);
+		}
+
+		if (outOf != null) {
+			if (score != null) {
+				return this.localize('scoreOutOf', 'score', score, 'outOf', outOf.toString());
+			}
+
+			return this.localize('dashOutOf', 'outOf', outOf.toString());
+		}
 	}
 
 });
