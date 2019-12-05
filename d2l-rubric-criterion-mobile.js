@@ -456,7 +456,7 @@ Polymer({
 			return this.localize('numberAndPercentage', 'number', points.toString());
 		}
 		if (this.isNumeric) {
-			return this.localize('numberAndPoints', 'number', points.toString());
+			return this.localize('scoreOutOf', 'score', points.toString(), 'outOf', this._outOf.toString());
 		}
 	},
 

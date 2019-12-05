@@ -31,6 +31,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 
 			.level {
 				border: solid 1px var(--d2l-color-mica);
+				border-top-color: var(--d2l-color-celestine);
+				border-bottom-color: var(--d2l-color-celestine);
 				display: flex;
 				overflow: hidden;
 				text-align: center;
@@ -40,45 +42,19 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				height: 18px;
 				align-self: center;
 			}
-			:not(:dir(rtl)) .level:not(.selected) {
+			:not(:dir(rtl)) .level:not(:first-of-type):not(.selected) {
 				border-right: none;
 			}
-			:dir(rtl) .level:not(.selected) {
+			:dir(rtl) .level:not(:last-of-type):not(.selected) {
 				border-left: none;
 			}
-			.level:hover {
-				cursor: pointer;
-				background-color: var(--d2l-color-gypsum);
-			}
 
-			:not(:dir(rtl)) .level:first-of-type {
-				border-radius: 6px 0 0 6px;
-			}
-			:dir(rtl) .level:first-of-type {
-				border-radius: 0 6px 6px 0;
-			}
-
-			:not(:dir(rtl)) .level:last-of-type {
-				border-radius: 0 6px 6px 0;
-				border-right: solid 1px var(--d2l-color-mica);
-			}
-			:dir(rtl) .level:last-of-type {
-				border-radius: 6px 0 0 6px;
-				border-left: solid 1px var(--d2l-color-mica);
-			}
-
-			.level.selected {
-				background-color: var(--d2l-color-gypsum);
-				border: solid 1px var(--d2l-color-galena);
-				height: 30px;
-				border-radius: 6px;
-			}
 			.level.assessed {
 				background-color: var(--d2l-color-celestine-plus-2);
 			}
 			.level.selected.assessed {
 				background-color: var(--d2l-color-celestine-plus-2);
-				border: solid 1px var(--d2l-color-celestine);
+				border-color: var(--d2l-color-celestine);
 			}
 			:not(:dir(rtl)) .level.selected + .level:not(:focus) {
 				border-left: none;
@@ -87,13 +63,33 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				border-right: none;
 			}
 
-			.level:focus {
-				background-color: var(--d2l-color-gypsum);
-				box-shadow: 0 0 0 4px rgb(178, 211, 235);
-				z-index: 0;
-				border: solid 1px rgba(0, 111, 191, 0.4);
+			.level:last-of-type {
+				border-radius: 0 6px 6px 0;
+				border-right-color: var(--d2l-color-celestine);
 			}
-			.level.selected:focus {
+			.level:first-of-type,
+			:dir(rtl) .level:last-of-type {
+				border-radius: 6px 0 0 6px;
+				border-right-color: var(--d2l-color-gypsum);
+				border-left-color: var(--d2l-color-celestine);
+			}
+			:dir(rtl) .level:first-of-type {
+				border-radius: 0 6px 6px 0;
+				border-left-color: var(--d2l-color-gypsum);
+				border-right-color: var(--d2l-color-celestine);
+			}
+
+			.level.selected {
+				background-color: var(--d2l-color-gypsum);
+				border-color: var(--d2l-color-galena);
+				height: 30px;
+				border-radius: 6px !important;
+			}
+			.level:hover {
+				cursor: pointer;
+				background-color: var(--d2l-color-gypsum);
+			}
+			.level:focus {
 				background-color: var(--d2l-color-gypsum);
 				box-shadow: 0 0 0 4px rgb(178, 211, 235);
 				z-index: 0;
@@ -101,8 +97,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 			}
 			.level.selected.assessed:focus {
 				background-color: var(--d2l-color-celestine-plus-2);
-				box-shadow: 0 0 0 4px rgb(178, 211, 235);
-				z-index: 0;
 				border: solid 1px var(--d2l-color-celestine);
 			}
 			.level-name {
@@ -120,14 +114,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 
 			.level:last-of-type:hover,
 			.level:last-of-type:focus {
-				border: solid 1px rgba(0, 111, 191, 0.4);
+				border-color: rgba(0, 111, 191, 0.4);
 			}
 			.level:last-of-type.selected {
-				border: solid 1px var(--d2l-color-galena);
-			}
-			.level:last-of-type.selected:hover,
-			.level:last-of-type.selected:focus {
-				border: solid 1px rgba(0, 111, 191, 0.4);
+				border-color: var(--d2l-color-galena);
 			}
 
 			.out-of {
@@ -171,7 +161,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 			}
 		</style>
 		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
-		<span>[[_localizeSelectedScore(entity, selected, outOf)]]</span>
 		<div class="levels-container">
 			<div class="levels" role="tablist" hidden$="[[_isEditingScore(editingScore, scoreInvalid)]]">
 				<template is="dom-repeat" items="[[levelEntities]]">
@@ -293,26 +282,42 @@ Polymer({
 		RIGHT: 39
 	},
 
-	_onKeyDown: function(event) {
-		switch (event.keyCode) {
+	_onKeyDown: function(e) {
+		switch (e.keyCode) {
 			case this._keyCodes.ENTER:
-				this.selected = event.currentTarget.dataIndex;
+				this.selected = e.currentTarget.dataIndex;
 				if (!this.readOnly) {
-					this.assessCriterionCell(event.currentTarget.dataset.cellHref);
+					this.assessCriterionCell(e.currentTarget.dataset.cellHref);
 				}
 				break;
 			case this._keyCodes.LEFT:
-				if (event.currentTarget.dataIndex !== 0) {
-					event.currentTarget.previousSibling.focus();
-					event.preventDefault();
+				if (getComputedStyle(this).direction === 'rtl') {
+					this._focusNextLevel(e);
+				} else {
+					this._focusPrevLevel(e);
 				}
 				break;
 			case this._keyCodes.RIGHT:
-				if (event.currentTarget.dataIndex !== this.total - 1) {
-					event.currentTarget.nextSibling.focus();
-					event.preventDefault();
+				if (getComputedStyle(this).direction === 'rtl') {
+					this._focusPrevLevel(e);
+				} else {
+					this._focusNextLevel(e);
 				}
 				break;
+		}
+	},
+
+	_focusPrevLevel: function(e) {
+		if (e.currentTarget.dataIndex !== 0) {
+			e.currentTarget.previousSibling.focus();
+			e.preventDefault();
+		}
+	},
+
+	_focusNextLevel: function(e) {
+		if (e.currentTarget.dataIndex !== this.total - 1) {
+			e.currentTarget.nextSibling.focus();
+			e.preventDefault();
 		}
 	},
 
@@ -414,20 +419,5 @@ Polymer({
 
 	_isEditingScore: function(editingScore, scoreInvalid) {
 		return editingScore && editingScore !== -1 || scoreInvalid;
-	},
-
-	_localizeSelectedScore(entity, selected, outOf) {
-		if (levelEntities[selected].hasClass('percentage')) {
-			return this.localize('percentage', levelEntities[selected].properties.points);
-		}
-
-		if (outOf != null) {
-			if (score != null) {
-				return this.localize('scoreOutOf', 'score', score, 'outOf', outOf.toString());
-			}
-
-			return this.localize('dashOutOf', 'outOf', outOf.toString());
-		}
 	}
-
 });

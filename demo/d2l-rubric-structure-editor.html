@@ -15,7 +15,7 @@ import 'd2l-typography/d2l-typography.js';
 import 'd2l-fetch-siren-entity-behavior/d2l-fetch-siren-entity-behavior.js';
 import './fetch-siren-entity-whitelist.js';
 import '../editor/d2l-rubric-structure-editor.js';
-import '../d2l-rubric-title.js';
+
 window.d2lfetch = {
 	fetch: function(req) {
 		return window.fetch(req);
@@ -32,7 +32,6 @@ window.d2lfetch = {
 	<script type="module" src="../../d2l-fetch-siren-entity-behavior/d2l-fetch-siren-entity-behavior.js"></script>
 	<script type="module" src="./fetch-siren-entity-whitelist.js"></script>
 	<script type="module" src="../editor/d2l-rubric-structure-editor.js"></script>
-	<script type="module" src="../d2l-rubric-title.js"></script>
 
 	<!-- FIXME(polymer-modulizer):
 		These imperative modules that innerHTML your HTML are
@@ -58,9 +57,6 @@ $_documentContainer.innerHTML = `<custom-style include="d2l-typography">
 			html {
 				font-size: 20px;
 				font-family: 'Lato', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
-			}
-			.rubric-title {
-				@apply --d2l-heading-3;
 			}
 		</style>
 

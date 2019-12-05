@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" dir="rtl">
+<html lang="en">
 
 <head>
 	<meta charset="utf-8">
@@ -15,7 +15,6 @@
 		import 'd2l-fetch-siren-entity-behavior/d2l-fetch-siren-entity-behavior.js';
 		import './fetch-siren-entity-whitelist.js';
 		import '../d2l-rubric.js';
-		import '../d2l-rubric-title.js';
 		import 'd2l-typography/d2l-typography.js';
 		window.d2lfetch = {
 			fetch: function(req, opts) {
@@ -32,7 +31,6 @@
 	<script type="module" src="../../d2l-fetch-siren-entity-behavior/d2l-fetch-siren-entity-behavior.js"></script>
 	<script type="module" src="./fetch-siren-entity-whitelist.js"></script>
 	<script type="module" src="../d2l-rubric.js"></script>
-	<script type="module" src="../d2l-rubric-title.js"></script>
 	<script type="module" src="../../d2l-typography/d2l-typography.js"></script>
 
 	<!-- FIXME(polymer-modulizer):
@@ -58,9 +56,6 @@
 		<style is="custom-style" include="d2l-typography">
 			html {
 				font-size: 20px;
-			}
-			.rubric-title {
-				@apply --d2l-heading-3;
 			}
 		</style>
 
