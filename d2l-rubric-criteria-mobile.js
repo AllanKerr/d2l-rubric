@@ -54,6 +54,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-mobile">
 				read-only="[[readOnly]]"
 				compact="[[compact]]">
 			</d2l-rubric-criterion-mobile>
+			<!--
 			<d2l-button-subtle
 				class="add-feedback-button"
 				hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]"
@@ -61,8 +62,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-mobile">
 				on-click="_handleAddFeedback"
 				data-criterion$="[[criterionNum]]">
 			</d2l-button-subtle>
-			<template is="dom-if" if="[[_displayFeedback(_feedbackDisplay, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]">
-				<d2l-rubric-feedback
+			<template is="dom-if" if="[[_displayFeedback(_feedbackDisplay, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]">				<d2l-rubric-feedback
 					id="feedback[[criterionNum]]"
 					criterion-href="[[_getSelfLink(criterion)]]"
 					assessment-href="[[assessmentHref]]"

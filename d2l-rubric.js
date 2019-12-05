@@ -212,7 +212,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 			<div id="editor-save-status-container" hidden="[[readOnly]]">
 				<d2l-save-status aria-hidden="true" id="rubric-save-status"></d2l-save-status>
 			</div>
-			<slot hidden$=[[_showCompactView(_isMobile, compact)]]></slot>
+			<slot hidden$="[[_showCompactView(_isMobile, compact)]]"></slot>
 			<d2l-rubric-loading hidden$="[[_hideLoading(_showContent,_hasAlerts)]]"></d2l-rubric-loading>
 			<div hidden$="[[_hideLoading(_showContent,_hasAlerts)]]" class="out-of-loader"></div>
 			<div hidden$="[[_hideOutOf(_showContent,_hasAlerts)]]">
@@ -247,7 +247,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 										class$="[[_getOutOfClassName(assessmentEntity, editingScore)]]"
 										assessment-href="[[assessmentHref]]"
 										token="[[token]]"
-										read-only="[[readOnly]]"
+										read-only="[[!_canEditTotalScore(readOnly, compact, _isMobile)]]"
 										editing-score="{{editingScore}}"
 										total-score="[[_score]]"
 										entity="[[entity]]"
@@ -561,5 +561,9 @@ Polymer({
 		this.classList.toggle('compact', !!isMobile);
 
 		return compact || !!isMobile;
+	},
+
+	_canEditTotalScore: function(readOnly, compact, isMobile) {
+		return !readOnly && !compact &&!isMobile;
 	}
 });
