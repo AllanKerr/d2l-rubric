@@ -30,6 +30,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 			}
 
 			.level {
+				position: relative;
 				border: solid 1px var(--d2l-color-celestine);
 				display: flex;
 				overflow: hidden;
@@ -40,14 +41,16 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				height: 18px;
 				align-self: center;
 			}
-			.level:not(:last-of-type),
-			:dir(rtl) .level.selected + .level:not(:first-of-type):not(:focus) {
+			.level:not(.selected):not(:last-of-type),
+			:dir(rtl) .level.selected + .level:not(:first-of-type) {
 				border-right: none;
 			}
-			:dir(rtl) .level:not(:first-of-type),
-			.level.selected + .level:not(:last-of-type):not(:focus) {
-				border-right: border: solid 1px var(--d2l-color-celestine);
+			:dir(rtl) .level:not(.selected):not(:last-of-type),
+			.level.selected + .level {
 				border-left: none;
+			}
+			:dir(rtl) .level:not(.selected):not(:last-of-type) {
+				border-right: solid 1px var(--d2l-color-celestine);
 			}
 
 			.level.selected.assessed {
@@ -79,12 +82,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				cursor: pointer;
 				background-color: var(--d2l-color-gypsum);
 			}
-			.level:focus {
-				background-color: var(--d2l-color-gypsum);
-				box-shadow: 0 0 0 4px rgb(178, 211, 235);
-				z-index: 0;
-				border: solid 1px rgba(0, 111, 191, 0.4);
-			}
 			.level.selected.assessed:focus {
 				background-color: var(--d2l-color-celestine-plus-2);
 				border: solid 1px var(--d2l-color-celestine);
@@ -102,12 +99,29 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				color: var(--d2l-color-ferrite);
 			}
 
-			.level:last-of-type:hover,
-			.level:last-of-type:focus {
-				border-color: rgba(0, 111, 191, 0.4);
+			.level-tab-focus {
+				display: inline-flex;
+				width: 100%;
+				height: 100%;
+				justify-content: space-around;
+				align-items: center;
 			}
-			.level:last-of-type.selected {
-				border-color: var(--d2l-color-galena);
+			.level:focus .level-tab-focus {
+				border: 1px solid var(--d2l-color-celestine-minus-1);
+				margin: 2px;
+				height: 12px;
+			}
+			.level.selected:focus .level-tab-focus {
+				border-radius: 6px;
+				height: 24px;
+			}
+			.level:not(.selected):focus:last-of-type .level-tab-focus,
+			:dir(rtl) .level:not(.selected):focus:first-of-type .level-tab-focus {
+				border-radius: 0px 4px 4px 0px;
+			}
+			.level:not(.selected):focus:first-of-type .level-tab-focus,
+			:dir(rtl) .level:not(.selected):focus:last-of-type .level-tab-focus {
+				border-radius: 4px 0px 0px 4px;
 			}
 
 			.out-of {
@@ -133,8 +147,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 			}
 			.check-icon {
 				color: var(--d2l-color-celestine-minus-1);
-				text-align: center;
-				margin: auto;
 			}
 			.score-wrapper {
 				pointer-events: none;
@@ -166,8 +178,16 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 						aria-controls$="level-description-panel[[index]]"
 						aria-label$="[[_getLevelLabelName(item, assessedLevelHref)]]"
 						data-cell-href$="[[_getCriterionCellHref(criterionCells, index)]]">
-						<d2l-icon hidden$="[[!_isAssessedLevel(item, assessedLevelHref)]]" class="check-icon" icon="d2l-tier1:check"></d2l-icon>
-						<div hidden$="[[_isAssessedLevel(item, assessedLevelHref)]]" class$="[[_getLevelTextClassName(index, selected)]]">	</div>
+						<div class="level-tab-focus">
+							<d2l-icon
+								hidden$="[[!_isAssessedLevel(item, assessedLevelHref)]]"
+								class="check-icon"
+								icon="d2l-tier1:check">
+							</d2l-icon>
+							<!-- @TODO: What's the purpose of this?
+								<div hidden$="[[_isAssessedLevel(item, assessedLevelHref)]]" class$="[[_getLevelTextClassName(index, selected)]]"></div>
+							-->
+						</div>
 					</div>
 				</template>
 			</div>
