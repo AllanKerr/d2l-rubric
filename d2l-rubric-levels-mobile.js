@@ -30,8 +30,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 			}
 
 			.level {
-				border-top: solid 1px var(--d2l-color-celestine);
-				border-bottom: solid 1px var(--d2l-color-celestine);
+				border: solid 1px var(--d2l-color-celestine);
 				display: flex;
 				overflow: hidden;
 				text-align: center;
@@ -41,18 +40,16 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				height: 18px;
 				align-self: center;
 			}
-			.level:not(:first-of-type) {
-				border-left: none;
-				border-right: solid 1px var(--d2l-color-mica);
-			}
-			:dir(rtl) .level:not(:last-of-type) {
-				border-left: solid 1px var(--d2l-color-mica);
+			.level:not(:last-of-type),
+			:dir(rtl) .level.selected + .level:not(:first-of-type):not(:focus) {
 				border-right: none;
 			}
-
-			.level.assessed {
-				background-color: var(--d2l-color-celestine-plus-2);
+			:dir(rtl) .level:not(:first-of-type),
+			.level.selected + .level:not(:last-of-type):not(:focus) {
+				border-right: border: solid 1px var(--d2l-color-celestine);
+				border-left: none;
 			}
+
 			.level.selected.assessed {
 				background-color: var(--d2l-color-celestine-plus-2);
 				border-color: var(--d2l-color-celestine);
@@ -65,12 +62,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 			.level:first-of-type,
 			:dir(rtl) .level:last-of-type {
 				border-radius: 6px 0 0 6px;
-				border-right: 1px solid var(--d2l-color-gypsum);
 				border-left: 1px solid var(--d2l-color-celestine);
 			}
 			:dir(rtl) .level:first-of-type {
 				border-radius: 0 6px 6px 0;
-				border-left: 1px solid var(--d2l-color-gypsum);
 				border-right: 1px solid var(--d2l-color-celestine);
 			}
 

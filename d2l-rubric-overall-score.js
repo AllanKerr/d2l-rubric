@@ -160,7 +160,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 			</h3>
 			<d2l-scroll-wrapper show-actions="" role="group" aria-labelledby="overall-grouping-label">
 				<d2l-offscreen id="overall-grouping-label">[[localize('overallScore')]]</d2l-offscreen>
-				<div class="overall-levels" data-mobile$="[[!_isLargeScreen(_largeScreen)]]">
+				<div class="overall-levels" data-mobile$="[[!_isCompactView(_largeScreen, compact)]]">
 					<template is="dom-repeat" items="[[_levels]]" as="level">
 						<div
 							class="overall-level"
@@ -172,22 +172,20 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 							<h4>
 								<span>[[level.properties.name]]</span>
 								<span hidden="[[!_showClearOverrideButton(level, _version)]]">&nbsp;*</span>
-								<template is="dom-if" if="[[!_isCompactView(_largeScreen, compact)]]" restamp>
 									<span class="overall-level-text">
-										<!-- <span>[[_localizePoints(level)]]</span>
-										<br hidden="[[!_scoreVisible(level)]]"> -->
-										<s-html hidden="[[!_getDescriptionHtml(level)]]" html$="[[_getDescriptionHtml(level)]]"></s-html>
+										<span>[[_localizePoints(level)]]</span>
+										<template is="dom-if" if="[[!_isCompactView(_largeScreen, compact)]]">
+											<br hidden="[[!_scoreVisible(level)]]">
+											<s-html hidden="[[!_getDescriptionHtml(level)]]" html$="[[_getDescriptionHtml(level)]]"></s-html>
+										</template>
+										<template is="dom-if" if="[[_isCompactView(_largeScreen, compact)]]">
+											<d2l-icon icon="tier1:bullet"></d2l-icon>
+											<span>[[_getDescriptionText(level)]]</span>
+										</template>
 									</span>
-								</template>
+								</span>
 								<d2l-icon icon="d2l-tier1:check"></d2l-icon>
 							</h4>
-							<template is="dom-if" if="[[_isCompactView(_largeScreen, compact)]]" restamp>
-								<span slot="overall-level" class="overall-level-text">
-									<span>[[_localizePoints(level)]]</span>
-									<br hidden="[[!_scoreVisible(level)]]">
-									<s-html hidden="[[!_getDescriptionHtml(level)]]" html$="[[_getDescriptionHtml(level)]]"></s-html>
-								</span>
-							</template>
 							<span class="clear-override-label">
 								<d2l-button-subtle
 									class="clear-override-label"
@@ -314,6 +312,10 @@ Polymer({
 
 	_getDescriptionHtml: function(levelEntity) {
 		return levelEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.description).properties.html;
+	},
+
+	_getDescriptionText: function(levelEntity) {
+		return levelEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.description).properties.text;
 	},
 
 	_localizePoints: function(levelEntity) {
