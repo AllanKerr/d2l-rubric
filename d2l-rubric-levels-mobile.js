@@ -30,9 +30,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 			}
 
 			.level {
-				border: solid 1px var(--d2l-color-mica);
-				border-top-color: var(--d2l-color-celestine);
-				border-bottom-color: var(--d2l-color-celestine);
+				border-top: solid 1px var(--d2l-color-celestine);
+				border-bottom: solid 1px var(--d2l-color-celestine);
 				display: flex;
 				overflow: hidden;
 				text-align: center;
@@ -42,11 +41,13 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				height: 18px;
 				align-self: center;
 			}
-			:not(:dir(rtl)) .level:not(:first-of-type):not(.selected) {
-				border-right: none;
-			}
-			:dir(rtl) .level:not(:last-of-type):not(.selected) {
+			.level:not(:first-of-type) {
 				border-left: none;
+				border-right: solid 1px var(--d2l-color-mica);
+			}
+			:dir(rtl) .level:not(:last-of-type) {
+				border-left: solid 1px var(--d2l-color-mica);
+				border-right: none;
 			}
 
 			.level.assessed {
@@ -56,34 +57,28 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 				background-color: var(--d2l-color-celestine-plus-2);
 				border-color: var(--d2l-color-celestine);
 			}
-			:not(:dir(rtl)) .level.selected + .level:not(:focus) {
-				border-left: none;
-			}
-			:dir(rtl) .level.selected + .level:not(:focus) {
-				border-right: none;
-			}
 
 			.level:last-of-type {
 				border-radius: 0 6px 6px 0;
-				border-right-color: var(--d2l-color-celestine);
+				border-right: 1px solid var(--d2l-color-celestine);
 			}
 			.level:first-of-type,
 			:dir(rtl) .level:last-of-type {
 				border-radius: 6px 0 0 6px;
-				border-right-color: var(--d2l-color-gypsum);
-				border-left-color: var(--d2l-color-celestine);
+				border-right: 1px solid var(--d2l-color-gypsum);
+				border-left: 1px solid var(--d2l-color-celestine);
 			}
 			:dir(rtl) .level:first-of-type {
 				border-radius: 0 6px 6px 0;
-				border-left-color: var(--d2l-color-gypsum);
-				border-right-color: var(--d2l-color-celestine);
+				border-left: 1px solid var(--d2l-color-gypsum);
+				border-right: 1px solid var(--d2l-color-celestine);
 			}
 
 			.level.selected {
 				background-color: var(--d2l-color-gypsum);
-				border-color: var(--d2l-color-galena);
-				height: 30px;
+				border: 1px solid var(--d2l-color-galena);
 				border-radius: 6px !important;
+				height: 30px;
 			}
 			.level:hover {
 				cursor: pointer;
