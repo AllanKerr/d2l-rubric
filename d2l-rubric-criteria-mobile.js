@@ -23,15 +23,19 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-mobile">
 			:host {
 				display: block;
 			}
+
 			.line {
 				border: solid 0.5px var(--d2l-color-mica);
 			}
+			.line:last-of-type {
+				display: none;
+			}
+
 			.add-feedback-button {
 				margin-left:1.8rem;
 			}
 			d2l-rubric-feedback {
-				margin-left: 48px;
-				margin-right: 42px;
+				margin: 0 22px;
 			}
 			[hidden] {
 				display: none !important;
@@ -66,7 +70,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-mobile">
 					adding-feedback="[[_cellAddingFeedback(criterionNum, _addingFeedback)]]"
 					on-save-feedback="_handleSaveFeedback"
 					on-save-feedback-finished="_handleSaveFinished"
-					on-close-feedback="_closeFeedback">
+					on-close-feedback="_closeFeedback"
+					compact="">
 				</d2l-rubric-feedback>
 			</template>
 			<hr class="line">

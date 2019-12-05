@@ -257,7 +257,17 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 					</d2l-tr>
 					<template is="dom-if" if="[[_displayFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" restamp="true">
 						<d2l-tspan id="feedback[[criterionNum]]" role="cell" focused-styling$="[[_isFocusedStyling(_feedbackInvalid.*, criterionNum)]]">
-							<d2l-rubric-feedback id="feedback-inner[[criterionNum]]" class="feedback-wrapper" criterion-href="[[_getSelfLink(criterion)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" data-criterion$="[[criterionNum]]" on-save-feedback-start="_handleSaveStart" on-save-feedback-finished="_handleSaveFinished" on-close-feedback="_closeFeedback">
+							<d2l-rubric-feedback
+								id="feedback-inner[[criterionNum]]"
+								class="feedback-wrapper"
+								criterion-href="[[_getSelfLink(criterion)]]"
+								assessment-href="[[assessmentHref]]"
+								token="[[token]]"
+								read-only="[[readOnly]]"
+								data-criterion$="[[criterionNum]]"
+								on-save-feedback-start="_handleSaveFeedback"
+								on-save-feedback-finished="_handleSaveFinished"
+								on-close-feedback="_closeFeedback">
 							</d2l-rubric-feedback>
 						</d2l-tspan>
 					</template>

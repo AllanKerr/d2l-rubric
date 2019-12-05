@@ -16,14 +16,19 @@ import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 const $_documentContainer = document.createElement('template');
 
-$_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
+$_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 	<template strip-whitespace="">
 		<style>
 			:host {
 				display: block;
 			}
+<<<<<<< HEAD
 			:host([_feedback-invalid]) .feedback-wrapper[data-desktop]{	
 				border-color: var(--d2l-color-cinnabar);
+=======
+			:host([_feedback-invalid]) .feedback-wrapper[data-desktop]{
+				border: 1px solid var(--d2l-color-cinnabar);
+>>>>>>> feat: new "total score" title for compact + style fixes for compact
 			}
 			:host([_feedback-invalid]) .feedback-arrow {
 				border-bottom-color: var(--d2l-color-cinnabar);
@@ -121,8 +126,8 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 		<iron-media-query query="(min-width: 615px)" query-matches="{{_largeScreen}}"></iron-media-query>
 		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
 		<rubric-siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{criterionEntity}}"></rubric-siren-entity>
-		<div class="feedback-wrapper" data-desktop$="[[_largeScreen]]" on-mouseover="_addFocusStylingToFeedbackWrapper" on-mouseout="_removeFocusStylingFromFeedbackWrapper" on-focusin="_focusInHandler" on-focusout="_focusOutHandler" on-click="_handleTap">
-			<div class="feedback-arrow" data-mobile$="[[!_largeScreen]]">
+		<div class="feedback-wrapper" data-desktop$="[[!_showCompactView(_largeScreen, compact)]]" on-mouseover="_addFocusStylingToFeedbackWrapper" on-mouseout="_removeFocusStylingFromFeedbackWrapper" on-focusin="_focusInHandler" on-focusout="_focusOutHandler" on-click="_handleTap">
+			<div class="feedback-arrow" data-mobile$="[[_showCompactView(_largeScreen, compact)]]">
 				<div class="feedback-arrow-inner"></div>
 			</div>
 			<div hidden="[[!_canEditFeedback(criterionEntity, assessmentResult)]]">
@@ -133,7 +138,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 					<d2l-icon aria-hidden="true" id="clear-feedback" class="clear-feedback-button" tabindex="-1" icon="d2l-tier1:close-small" on-click="_clearFeedbackHandler" on-focusin="_handleVisibleFocusin"></d2l-icon>
 					<d2l-tooltip for="clear-feedback" force-show="[[_handleTooltip(_clearFeedbackInFocus)]]" position="bottom">[[localize('clearFeedback')]]</d2l-tooltip>
 				</div>
-				<d2l-input-textarea no-border$="[[_largeScreen]]" no-padding$="[[_largeScreen]]" id="text-area" value="{{_feedback}}" on-input="_handleInputChange" aria-invalid="[[isAriaInvalid(_feedbackInvalid)]]">
+				<d2l-input-textarea no-border$="[[!_showCompactView(_largeScreen, compact)]]" no-padding$="[[!_showCompactView(_largeScreen, compact)]]" id="text-area" value="{{_feedback}}" on-input="_handleInputChange" aria-invalid="[[isAriaInvalid(_feedbackInvalid)]]">
 				</d2l-input-textarea>
 				<template is="dom-if" if="[[_feedbackInvalid]]">
 					<d2l-tooltip id="feedback-bubble" hidden=[[!_feedbackInFocus]] class="is-error" for="text-area" position="top">
@@ -145,7 +150,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 				</d2l-offscreen>
 			</div>
 			<div hidden="[[_hasReadonlyFeedback(criterionEntity, assessmentResult)]]">
-				<div class="feedback-container" data-mobile$="[[!_largeScreen]]">
+				<div class="feedback-container" data-mobile$="[[_showCompactView(_largeScreen, compact)]]">
 					<div class="feedback-heading">[[localize('criterionFeedback')]]</div>
 					<div class="feedback-text">
 						<s-html style="white-space: pre-line;" html="[[getAssessmentFeedbackHtml(criterionEntity, assessmentResult)]]"></s-html>
@@ -154,8 +159,6 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-feedback">
 			</div>
 		</div>
 	</template>
-
-	
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);
@@ -208,7 +211,11 @@ Polymer({
 			value: false,
 			reflectToAttribute: true
 		},
-		_largeScreen: Boolean
+		_largeScreen: Boolean,
+		compact: {
+			type: Boolean,
+			value: false
+		}
 	},
 
 	behaviors: [
@@ -363,5 +370,9 @@ Polymer({
 
 	_handleTooltip: function(_clearFeedbackInFocus) {
 		return _clearFeedbackInFocus;
+	},
+
+	_showCompactView(largeScreen, compact) {
+		return !largeScreen || !!compact;
 	}
 });

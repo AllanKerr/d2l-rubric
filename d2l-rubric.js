@@ -121,6 +121,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 			:host([compact]) .out-of-container {
 				border: none;
 				margin-top: 0;
+				font-weight: bold;
 			}
 
 			.out-of-text {
@@ -139,6 +140,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 				margin-right: 0;
 				padding-left: 0;
 				padding-right: 0;
+				font-weight: bold;
 			}
 
 			.out-of-loader {
@@ -184,6 +186,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 				padding-left: 0.12rem
 			}
 
+			.compact-overall-score-divider {
+				border: solid 0.5px var(--d2l-color-mica);
+			}
+
 			/* Fix for Polymer 2 */
 			[hidden] {
 				display: none !important;
@@ -222,7 +228,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 						<div class="out-of-container" hidden="[[!_hasOutOf(entity)]]">
 							<div class="out-of-text" role="group" aria-labelledby="total-grouping-label">
 								<d2l-offscreen id="total-grouping-label">[[localize('totalScoreLabel')]]</d2l-offscreen>
-								<span>[[localize('total')]]</span>
+								<span hidden$="[[_showCompactView(_isMobile, compact)]]">
+									[[localize('total')]]
+								</span>
+								<span hidden$="[[!_showCompactView(_isMobile, compact)]]">
+									[[localize('totalMobile')]]
+								</span>
 								<div class="out-of-score-container">
 									<d2l-button-subtle
 										class="clear-override-button"
@@ -251,6 +262,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 				</d2l-rubric-criteria-groups>
 			</div>
 			<template is="dom-if" if="[[_hasOverallScore(entity, overallScoreFlag)]]">
+				<hr class="compact-overall-score-divider" hidden$="[[!_showCompactView(_isMobile, compact)]]"/>
 				<d2l-rubric-overall-score
 					read-only="[[readOnly]]"
 					href="[[_getOverallLevels(entity)]]"
