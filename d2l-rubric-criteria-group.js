@@ -247,7 +247,19 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 						</template>
 						<template is="dom-if" if="[[_hasOutOf(entity)]]">
 							<d2l-td class$="[[_getOutOfClassName(criterion, assessmentResult)]]">
-								<d2l-rubric-editable-score id="score-inner[[criterionNum]]"  tabindex$="[[_handleTabIndex()]]" on-click="_handleOverrideScore" on-keypress="_handleScoreKeypress" class="score-wrapper" criterion-href="[[_getSelfLink(criterion)]]" assessment-href="[[assessmentHref]]" token="[[token]]" read-only="[[readOnly]]" editing-score="{{editingScore}}" criterion-num="[[criterionNum]]" parent-cell="[[editableScoreContainer]]">
+								<d2l-rubric-editable-score
+									id="score-inner[[criterionNum]]"
+									tabindex$="[[_handleTabIndex()]]"
+									on-click="_handleOverrideScore"
+									on-keypress="_handleScoreKeypress"
+									class="score-wrapper"
+									criterion-href="[[_getSelfLink(criterion)]]"
+									assessment-href="[[assessmentHref]]"
+									token="[[token]]"
+									read-only="[[readOnly]]"
+									editing-score="{{editingScore}}"
+									criterion-num="[[criterionNum]]"
+									parent-cell="[[editableScoreContainer]]">
 								</d2l-rubric-editable-score>
 									<d2l-offscreen>
 										<d2l-button-subtle aria-label$="[[localize('addFeedback')]]" id="invisible-addFeedback[[_getRowIndex(criterionNum)]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]" hidden="[[!_showAddFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" on-focusin="_handleInvisibleFeedbackFocusin" on-focusout="_handleInvisibleFeedbackFocusout">
