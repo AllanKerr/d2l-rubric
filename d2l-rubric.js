@@ -564,6 +564,6 @@ Polymer({
 	},
 
 	_canEditTotalScore: function(readOnly, compact, isMobile) {
-		return !readOnly && !compact &&!isMobile;
+		return !readOnly && !compact && !isMobile;
 	}
 });

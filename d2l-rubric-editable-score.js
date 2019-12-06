@@ -118,7 +118,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 				</template>
 			</div>
 			<template is="dom-if" if="[[!_isEditingScore]]">
-				<div class$="[[_getOutOfClassName(scoreOverridden)]]" id="out-of-container">
+				<div class$="[[_getOutOfClassName(scoreOverridden, readOnly)]]" id="out-of-container">
 					[[_localizeOutOf(entity, _score)]]
 					<div class="star" id="score-overridden-star">*</div>
 				</div>
@@ -392,9 +392,9 @@ Polymer({
 		return this.localize('outOf', 'outOf', entity.properties.outOf.toString());
 	},
 
-	_getOutOfClassName: function(scoreOverridden) {
+	_getOutOfClassName: function(scoreOverridden, readOnly) {
 		var className = 'score-out-of';
-		if (scoreOverridden && !this.readOnly) {
+		if (scoreOverridden && !readOnly) {
 			className += ' overridden';
 		}
 		return className;
