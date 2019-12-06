@@ -71,7 +71,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-mobile">
 					on-save-feedback="_handleSaveFeedback"
 					on-save-feedback-finished="_handleSaveFinished"
 					on-close-feedback="_closeFeedback"
-					compact="">
+					compact=""
+					read-only="">
 				</d2l-rubric-feedback>
 			</template>
 			<hr class="line">

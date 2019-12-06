@@ -246,10 +246,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 							</d2l-td>
 						</template>
 						<template is="dom-if" if="[[_hasOutOf(entity)]]">
-							<d2l-td class$="[[_getOutOfClassName(criterion, assessmentResult)]]">
+							<d2l-td class$="[[_getOutOfClassName(criterion, assessmentResult, readOnly)]]">
 								<d2l-rubric-editable-score
 									id="score-inner[[criterionNum]]"
-									tabindex$="[[_handleTabIndex()]]"
 									on-click="_handleOverrideScore"
 									on-keypress="_handleScoreKeypress"
 									class="score-wrapper"
@@ -561,7 +560,7 @@ Polymer({
 		return !isBottomless;
 	},
 
-	_getCriteriaClassName: function(criterionCell, assessmentResult, noBottomCells, criterionNum, criteriaEntities, cellNum) {
+	_getCriteriaClassName: function(criterionCell, assessmentResult, noBottomCells, criterionNum, criteriaEntities, cellNum, readOnly) {
 		var className = 'criterion-cell';
 		var isLastCell = criterionNum === criteriaEntities.length - 1;
 		if (cellNum === 0 && this.rubricType === 'holistic') {
@@ -570,7 +569,7 @@ Polymer({
 		if (this._isSelected(criterionCell, assessmentResult)) {
 			className += ' selected';
 		}
-		if (!this.readOnly && this.canAssessCriterionCell(this._getSelfLink(criterionCell))) {
+		if (!readOnly && this.canAssessCriterionCell(this._getSelfLink(criterionCell))) {
 			className += ' assessable';
 		}
 		if (this._hasBottom(criterionCell, assessmentResult, noBottomCells, criterionNum, criteriaEntities)) {
@@ -582,9 +581,9 @@ Polymer({
 		return className;
 	},
 
-	_getOutOfClassName: function(criterionEntity, assessmentResult) {
+	_getOutOfClassName: function(criterionEntity, assessmentResult, readOnly) {
 		var className = 'out-of';
-		if (assessmentResult && this._canEditScore(criterionEntity)) {
+		if (!readOnly && assessmentResult && this._canEditScore(criterionEntity)) {
 			className += ' assessable';
 		}
 		return className;
@@ -686,13 +685,6 @@ Polymer({
 
 	_isStaticView: function() {
 		return this.readOnly || !this.assessmentHref;
-	},
-
-	_handleTabIndex: function() {
-		if (this._isStaticView()) {
-			return undefined;
-		}
-		return 0;
 	},
 
 	_handleInvisibleFeedbackFocusin: function(event) {

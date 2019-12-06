@@ -250,10 +250,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 										read-only="[[!_canEditTotalScore(readOnly, compact, _isMobile)]]"
 										editing-score="{{editingScore}}"
 										total-score="[[_score]]"
-										entity="[[entity]]"
-										on-click="_handleOverrideScore"
-										on-keypress="_handleScoreKeypress"
-										tabindex$="[[_handleTabIndex()]]">
+										entity="[[entity]]">
 									</d2l-rubric-editable-score>
 								</div>
 							</div>
@@ -489,19 +486,6 @@ Polymer({
 		return className;
 	},
 
-	_handleOverrideScore: function() {
-		if (this.readOnly) {
-			return;
-		}
-		this.editingScore = 1;
-	},
-
-	_handleScoreKeypress: function(event) {
-		if (event.keyCode === 13) {
-			this._handleOverrideScore();
-		}
-	},
-
 	_handleError: function(e) {
 		if (this._errored) {
 			return;
@@ -544,13 +528,6 @@ Polymer({
 
 	_isStaticView: function() {
 		return this.readOnly || !this.assessmentHref;
-	},
-
-	_handleTabIndex: function() {
-		if (this._isStaticView()) {
-			return undefined;
-		}
-		return 0;
 	},
 
 	_getRubricName: function(rubricEntity) {
