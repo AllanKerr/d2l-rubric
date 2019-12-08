@@ -184,7 +184,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				aria-label$="[[localize('selectNextLevel')]]"
 				on-click="_handleTapLeft"
 				on-keydown="_handleLeftIteratorKeyDown"
-				tabindex="0">
+				tabindex$="[[_getIteratorTabIndex('left', _selected, _total)]]">
 				<div class="level-iterator" hidden$="[[_hideIterator('left', _selected, _total)]]">
 					<d2l-icon icon="d2l-tier1:chevron-left"></d2l-icon>
 				</div>
@@ -209,7 +209,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				aria-label$="[[localize('selectPreviousLevel')]]"
 				on-click="_handleTapRight"
 				on-keydown="_handleRightIteratorKeyDown"
-				tabindex="0">
+				tabindex$="[[_getIteratorTabIndex('right', _selected, _total)]]">
 				<div class="level-iterator" hidden$="[[_hideIterator('right', _selected, _total)]]">
 					<d2l-icon icon="d2l-tier1:chevron-right"></d2l-icon>
 				</div>
@@ -516,6 +516,11 @@ Polymer({
 			: selected === (total - 1);
 
 		return shouldHide;
+	},
+	_getIteratorTabIndex: function(which, selected, total) {
+		const isHidden = this._hideIterator(which, selected, total);
+
+		return isHidden ?  undefined : '0';
 	},
 	_handleLeftIteratorKeyDown: function(e) {
 		if (e.keyCode === 13) {

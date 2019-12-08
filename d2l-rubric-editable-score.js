@@ -212,10 +212,6 @@ Polymer({
 		readOnly: {
 			type: Boolean,
 			value: true
-		},
-		parentCell: {
-			type: Object,
-			value: null
 		}
 	},
 
@@ -240,13 +236,13 @@ Polymer({
 
 		this.addEventListener('click', () => {
 			if (!this.readOnly && this.editingScore === -1) {
-				this.editingScore = 1;
+				this.editingScore = this.criterionNum;
 			}
 		});
 
 		this.addEventListener('keydown', () => {
 			if (!this.readOnly && this.editingScore === -1) {
-				this.editingScore = 1;
+				this.editingScore = this.criterionNum;
 			}
 		});
 	},
@@ -289,14 +285,15 @@ Polymer({
 		}
 	},
 
-	_handleKey: function(event) {
-		if (event.keyCode === 13) { // enter key
-			event.target.blur();
-			event.stopPropagation();
-			if (this.parentCell) {
-				setTimeout(function() { this.parentCell.focus(); }.bind(this), 0);
-			}
-			return;
+	_handleKey: function(e) {
+		if (e.key === 13) { // enter key
+			e.target.blur();
+			e.stopPropagation();
+
+			this.dispatchEvent(new CustomEvent('d2l-rubric-editable-score-commit', {
+				bubbles: true,
+				composed: true
+			}));
 		}
 	},
 

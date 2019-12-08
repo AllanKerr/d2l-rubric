@@ -249,16 +249,13 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 							<d2l-td class$="[[_getOutOfClassName(criterion, assessmentResult, readOnly)]]">
 								<d2l-rubric-editable-score
 									id="score-inner[[criterionNum]]"
-									on-click="_handleOverrideScore"
-									on-keypress="_handleScoreKeypress"
 									class="score-wrapper"
 									criterion-href="[[_getSelfLink(criterion)]]"
 									assessment-href="[[assessmentHref]]"
 									token="[[token]]"
 									read-only="[[readOnly]]"
 									editing-score="{{editingScore}}"
-									criterion-num="[[criterionNum]]"
-									parent-cell="[[editableScoreContainer]]">
+									criterion-num="[[criterionNum]]">
 								</d2l-rubric-editable-score>
 									<d2l-offscreen>
 										<d2l-button-subtle aria-label$="[[localize('addFeedback')]]" id="invisible-addFeedback[[_getRowIndex(criterionNum)]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]" hidden="[[!_showAddFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" on-focusin="_handleInvisibleFeedbackFocusin" on-focusout="_handleInvisibleFeedbackFocusout">
@@ -347,10 +344,6 @@ Polymer({
 		telemetryData: {
 			type: Object,
 			value: null
-		},
-		editableScoreContainer: {
-			type: Object,
-			value: null
 		}
 	},
 
@@ -367,6 +360,13 @@ Polymer({
 		'_onLevelsEntityChanged(_levelsEntity)',
 		'_onCriteriaCollectionEntityChanged(_criteriaCollectionEntity)'
 	],
+
+	attached: function() {
+		this.addEventListener('d2l-rubric-editable-score-commit', (e) => {
+			e.stopPropagation();
+			e.target.parentNode && e.target.parentNode.focus();
+		});
+	},
 
 	_rowHeaderDomChange: function() {
 		// set styling to have the criteria-row-header-container be the same height as the table cell in firefox
@@ -656,21 +656,6 @@ Polymer({
 
 	_canEditScore: function(criterionEntity) {
 		return !this.readOnly && this.canOverrideScore(this._getSelfLink(criterionEntity));
-	},
-
-	_handleOverrideScore: function(event) {
-		if (this.readOnly) {
-			return;
-		}
-		var criterionNum = event.model.get('criterionNum');
-		this.editingScore = criterionNum;
-		this.editableScoreContainer = event.currentTarget.parentNode;
-	},
-
-	_handleScoreKeypress: function(event) {
-		if (event.keyCode === 13) {
-			this._handleOverrideScore(event);
-		}
 	},
 
 	_getOutcomesTitleText: function() {
