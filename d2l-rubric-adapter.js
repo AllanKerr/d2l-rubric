@@ -52,13 +52,12 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 				}
 			</style>
 
-			<iron-media-query query="(max-width: 614px)" query-matches="{{_isMobile}}"></iron-media-query>
 			<slot name="alerts"></slot>
 			<div hidden$="[[_hasAlerts(hasAlerts)]]">
 				<template
 					is="dom-if"
 					id="compact-view-template"
-					if="[[_showCompactView(_isMobile, compact)]]"
+					if="[[compact]]"
 					restamp>
 					<d2l-accordion flex>
 						<d2l-accordion-collapse flex>
@@ -78,7 +77,7 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 						</d2l-accordion-collapse>
 					</d2l-accordion>
 				</template>
-				<template is="dom-if" if="[[!_showCompactView(_isMobile, compact)]]" restamp>
+				<template is="dom-if" if="[[!compact]]" restamp>
 					<slot></slot>
 				</template>
 			</div>
@@ -89,12 +88,6 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 		super.connectedCallback();
 
 		this._onConnected();
-	}
-
-	_showCompactView(mobile, compact) {
-		const shouldShowCompactView = compact || !!mobile;
-
-		return shouldShowCompactView;
 	}
 
 	_hasAlerts(hasAlerts) {
@@ -110,7 +103,7 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 	}
 
 	_onConnected() {
-		const domIf = this.shadowRoot.querySelector('#compact-view-template');
+		const domIf = this.$['compact-view-template'];
 
 		domIf.addEventListener('dom-change', () => {
 			const accordion = this.shadowRoot.querySelector('d2l-accordion-collapse');

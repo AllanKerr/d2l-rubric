@@ -23,13 +23,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 					border-radius: 0.3rem;
 					background-color: var(--d2l-color-celestine-plus-2);
 			}
-			:host(.compact:not([editor-styling])),
 			:host([compact]:not([editor-styling])) {
 				padding: 0.5rem 0.5rem 0.5rem 0.6rem;
 			}
-			:host(.compact:focus:not([editor-styling])),
 			:host([compact]:focus:not([editor-styling])),
-			:host(.compact:hover:not([editor-styling])),
 			:host([compact]:hover:not([editor-styling])) {
 				padding: calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.6rem - 1px);
 				border-radius: 0.3rem;
@@ -72,12 +69,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 				display: none;
 			}
 
-			:host(.compact) .clear-override-button-mobile,
 			:host([compact]) .clear-override-button-mobile {
 				display: inline-flex;
 				padding: 6px 0;
 			}
-			:host(.compact) .override-label,
 			:host([compact]) .override-label {
 				margin-left: 12px;
 				padding: 6px 0;
@@ -100,7 +95,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 		</style>
 		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
 		<rubric-siren-entity href="[[criterionHref]]" token="[[token]]" entity="{{entity}}"></rubric-siren-entity>
-		<iron-media-query query="(min-width: 615px)" query-matches="{{_largeScreen}}"></iron-media-query>
 		<div id="editable-container">
 			<div class$="[[_getContainerClassName(criterionHref)]]" hidden="[[!_isEditingScore]]">
 				<template is="dom-if" if="[[!totalScore]]">
@@ -141,11 +135,6 @@ Polymer({
 
 		/* Entity could be a criterionEntity or a rubricEntity */
 		entity: Object,
-		_largeScreen: {
-			type: Boolean,
-			value: true,
-			observer: '_largeScreenChanged',
-		},
 		assessmentHref: {
 			type: String,
 			value: null
@@ -228,22 +217,18 @@ Polymer({
 		'_updateStaticView(readOnly, assessmentHref)'
 	],
 	ready: function() {
-		if (this._largeScreen && this.criterionHref) {
+		if (!this.compact && this.criterionHref) {
 			this.$['override-tooltip'].setAttribute(
 				'boundary',
 				'{left: 0, right: 200}');
 		}
 
-		this.addEventListener('click', () => {
-			if (!this.readOnly && this.editingScore === -1) {
-				this.editingScore = this.criterionNum;
-			}
-		});
-
-		this.addEventListener('keydown', () => {
-			if (!this.readOnly && this.editingScore === -1) {
-				this.editingScore = this.criterionNum;
-			}
+		['click', 'keydown'].forEach((eventType) => {
+			this.addEventListener(eventType, () => {
+				if (!this.readOnly && this.editingScore === -1) {
+					this.editingScore = this.criterionNum;
+				}
+			});
 		});
 	},
 
@@ -272,7 +257,7 @@ Polymer({
 		var elem = this.$['text-area'];
 		elem.focus();
 		var inputElem = elem.$$('input');
-		if (inputElem && this._largeScreen) {
+		if (inputElem && !this.compact) {
 			elem.$$('input').select();
 		}
 	},
@@ -462,10 +447,6 @@ Polymer({
 
 	_isStaticView: function() {
 		return this.readOnly || !this.assessmentHref;
-	},
-
-	_largeScreenChanged: function(largeScreen) {
-		this.classList.toggle('compact', !largeScreen);
 	},
 
 	_updateStaticView(readOnly, assessmentHref) {

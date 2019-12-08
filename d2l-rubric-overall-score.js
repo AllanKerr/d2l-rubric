@@ -6,7 +6,6 @@ import './localize-behavior.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import './rubric-siren-entity.js';
 import 's-html/s-html.js';
-import '@polymer/iron-media-query/iron-media-query.js';
 import 'd2l-table/d2l-scroll-wrapper.js';
 import 'd2l-icons/tier1-icons.js';
 import 'd2l-offscreen/d2l-offscreen.js';
@@ -63,7 +62,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 				display: block;
 			}
 
-			:host(.compact) .overall-level:not([data-achieved]),
 			:host([compact]) .overall-level:not([data-achieved]) {
 				display: none;
 			}
@@ -146,21 +144,20 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 		</style>
 
 		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{_assessmentEntity}}"></rubric-siren-entity>
-		<iron-media-query query="(min-width: 615px)" query-matches="{{_largeScreen}}"></iron-media-query>
-		<template is="dom-if" if="[[_showOverallScore(_largeScreen, compact, _overallLevel)]]">
+		<template is="dom-if" if="[[_showOverallScore(compact, _overallLevel)]]">
 			<h3>
 				<span>[[localize('overallScore')]]</span>
 				<template is="dom-if" if="[[_showCompetencies(_competencies,readOnly)]]">
 					<d2l-rubric-competencies-icon
 						competency-names="[[_competencies]]"
-						mobile="[[_isCompactView(_largeScreen, compact)]]"
-						tooltip-position="[[_competenciesIconTooltipPosition(_largeScreen)]]"
+						mobile="[[compact]]"
+						tooltip-position="[[_competenciesIconTooltipPosition(compact)]]"
 					></d2l-rubric-competencies-icon>
 				</template>
 			</h3>
 			<d2l-scroll-wrapper show-actions="" role="group" aria-labelledby="overall-grouping-label">
 				<d2l-offscreen id="overall-grouping-label">[[localize('overallScore')]]</d2l-offscreen>
-				<div class="overall-levels" data-mobile$="[[!_isCompactView(_largeScreen, compact)]]">
+				<div class="overall-levels" data-mobile$="[[!compact]]">
 					<template is="dom-repeat" items="[[_levels]]" as="level">
 						<div
 							class="overall-level"
@@ -174,11 +171,11 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 								<span hidden="[[!_showClearOverrideButton(level, _version)]]">&nbsp;*</span>
 									<span class="overall-level-text">
 										<span>[[_localizePoints(level)]]</span>
-										<template is="dom-if" if="[[!_isCompactView(_largeScreen, compact)]]">
+										<template is="dom-if" if="[[!compact]]">
 											<br hidden="[[!_scoreVisible(level)]]">
 											<s-html hidden="[[!_getDescriptionHtml(level)]]" html$="[[_getDescriptionHtml(level)]]"></s-html>
 										</template>
-										<template is="dom-if" if="[[_isCompactView(_largeScreen, compact)]]">
+										<template is="dom-if" if="[[compact]]">
 											<d2l-icon icon="tier1:bullet"></d2l-icon>
 											<span>[[_getDescriptionText(level)]]</span>
 										</template>
@@ -215,11 +212,6 @@ Polymer({
 		readOnly: Boolean,
 		_levels: Array,
 		_competencies: Array,
-		_largeScreen: {
-			type: Boolean,
-			value: true,
-			observer: '_largeScreenChanged'
-		},
 		_assessmentEntity: {
 			type: Object,
 			value: null
@@ -306,8 +298,8 @@ Polymer({
 		return competencies && competencies.length && !readOnly;
 	},
 
-	_competenciesIconTooltipPosition: function(largeScreen) {
-		return largeScreen ? 'top' : 'left';
+	_competenciesIconTooltipPosition: function(compact) {
+		return compact ? 'left' : 'top';
 	},
 
 	_getDescriptionHtml: function(levelEntity) {
@@ -397,19 +389,11 @@ Polymer({
 		return 0;
 	},
 
-	_isLargeScreen: function(largeScreen) {
-		return !!largeScreen;
+	_showOverallScore: function(compact, overallLevel) {
+		return !compact || !!overallLevel;
 	},
 
-	_showOverallScore: function(largeScreen, compact, overallLevel) {
-		return !compact || !!(largeScreen || overallLevel);
+	_isCompactView: function(compact) {
+		return !!compact;
 	},
-
-	_isCompactView: function(largeScreen, compact) {
-		return compact || !largeScreen;
-	},
-
-	_largeScreenChanged: function(largeScreen) {
-		this.classList.toggle('compact', !largeScreen);
-	}
 });

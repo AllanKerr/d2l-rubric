@@ -134,13 +134,13 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 				align-items: center;
 				justify-content: space-around;
 				outline: none;
+				user-select: none;
 			}
 
 			.level-iterator {
 				width: 24px;
 				height: 24px;
-				border: 1px solid;
-				border-color: var(--d2l-color-ferrite);
+				border: 1px solid var(--d2l-color-ferrite);
 				border-radius: 50%;
 				display: flex;
 				align-items: center;
@@ -150,8 +150,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 			.level-iterator-container:focus .level-iterator {
 				width: 32px;
 				height: 32px;
-				border: 2px solid;
-				border-color: var(--d2l-color-celestine);
+				border: 2px solid var(--d2l-color-celestine);
 			}
 
 			d2l-rubric-levels-mobile {

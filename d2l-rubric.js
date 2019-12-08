@@ -71,7 +71,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 					margin: 2.33em 0;
 				};
 			}
-			:host(.compact),
 			:host([compact]) {
 				padding: 8px;
 				border: 1px solid var(--d2l-color-galena);
@@ -91,7 +90,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 				color: var(--d2l-color-celestine);
 				cursor: pointer;
 			}
-			:host(:not(.compact)) .score-wrapper.assessable:hover,
 			:host(:not([compact])) .score-wrapper.assessable:hover {
 				padding: calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.6rem - 1px);
 			}
@@ -117,7 +115,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 				border: 1px solid var(--d2l-color-mica);
 				border-radius: 8px;
 			}
-			:host(.compact)  .out-of-container,
 			:host([compact]) .out-of-container {
 				border: none;
 				margin-top: 0;
@@ -135,8 +132,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 				padding-left: 20px;
 				padding-right: 20px;
 			}
-			:host([compact]) .out-of-text,
-			:host(.compact)  .out-of-text {
+			:host([compact]) .out-of-text {
 				margin-right: 0;
 				padding-left: 0;
 				padding-right: 0;
@@ -202,7 +198,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 			rubric-name="[[_getRubricName(entity)]]"
 			assessment-entity="[[assessmentEntity]]"
 			has-alerts="[[_hasAlerts]]"
-			compact="[[_showCompactView(_isMobile, compact)]]"
+			compact="[[compact]]"
 			total-score=[[_score]]>
 			<template is="dom-repeat" items="[[_alerts]]">
 				<d2l-alert slot="alerts" type="[[item.alertType]]" button-text="[[localize('refreshText')]]">
@@ -212,7 +208,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 			<div id="editor-save-status-container" hidden="[[readOnly]]">
 				<d2l-save-status aria-hidden="true" id="rubric-save-status"></d2l-save-status>
 			</div>
-			<slot hidden$="[[_showCompactView(_isMobile, compact)]]"></slot>
+			<slot hidden$="[[compact]]"></slot>
 			<d2l-rubric-loading hidden$="[[_hideLoading(_showContent,_hasAlerts)]]"></d2l-rubric-loading>
 			<div hidden$="[[_hideLoading(_showContent,_hasAlerts)]]" class="out-of-loader"></div>
 			<div hidden$="[[_hideOutOf(_showContent,_hasAlerts)]]">
@@ -228,10 +224,10 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 						<div class="out-of-container" hidden="[[!_hasOutOf(entity)]]">
 							<div class="out-of-text" role="group" aria-labelledby="total-grouping-label">
 								<d2l-offscreen id="total-grouping-label">[[localize('totalScoreLabel')]]</d2l-offscreen>
-								<span hidden$="[[_showCompactView(_isMobile, compact)]]">
+								<span hidden$="[[compact]]">
 									[[localize('total')]]
 								</span>
-								<span hidden$="[[!_showCompactView(_isMobile, compact)]]">
+								<span hidden$="[[!compact]]">
 									[[localize('totalMobile')]]
 								</span>
 								<div class="out-of-score-container">
@@ -240,14 +236,14 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 										icon="d2l-tier1:close-small"
 										text="[[localize('clearOverride')]]"
 										on-click="clearTotalScoreOverride"
-										hidden$="[[!_showClearTotalScoreButton(assessmentEntity)]]">
+										hidden$="[[!_showClearTotalScoreButton(assessmentEntity, readOnly, compact)]]">
 									</d2l-button-subtle>
 									<d2l-rubric-editable-score
 										id="total-score-inner"
-										class$="[[_getOutOfClassName(assessmentEntity, editingScore)]]"
+										class$="[[_getOutOfClassName(assessmentEntity, editingScore, readOnly, compact)]]"
 										assessment-href="[[assessmentHref]]"
 										token="[[token]]"
-										read-only="[[!_canEditTotalScore(readOnly, compact, _isMobile)]]"
+										read-only="[[!_canEditTotalScore(readOnly, compact)]]"
 										editing-score="{{editingScore}}"
 										total-score="[[_score]]"
 										entity="[[entity]]">
@@ -259,7 +255,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 				</d2l-rubric-criteria-groups>
 			</div>
 			<template is="dom-if" if="[[_hasOverallScore(entity, overallScoreFlag)]]">
-				<hr class="compact-overall-score-divider" hidden$="[[!_showCompactView(_isMobile, compact)]]"/>
+				<hr class="compact-overall-score-divider" hidden$="[[!compact]]"/>
 				<d2l-rubric-overall-score
 					read-only="[[readOnly]]"
 					href="[[_getOverallLevels(entity)]]"
@@ -285,8 +281,12 @@ Polymer({
 	properties: {
 		compact: {
 			type: Boolean,
-			value: false,
+			computed: '_computeCompact(forceCompact, _isMobile)',
 			reflectToAttribute: true
+		},
+		forceCompact: {
+			type: Boolean,
+			value: false
 		},
 		readOnly: {
 			type: Boolean,
@@ -471,13 +471,13 @@ Polymer({
 		return feedback !== null && feedback !== '';
 	},
 
-	_canEditScore: function(assessmentEntity) {
-		return !this.readOnly && this.canOverrideTotal(assessmentEntity);
+	_canEditScore: function(assessmentEntity, readOnly, compact) {
+		return !readOnly && !compact && this.canOverrideTotal(assessmentEntity);
 	},
 
-	_getOutOfClassName: function(assessmentEntity, editingScore) {
+	_getOutOfClassName: function(assessmentEntity, editingScore, readOnly, compact) {
 		var className = 'score-wrapper';
-		if (this._canEditScore(assessmentEntity)) {
+		if (this._canEditScore(assessmentEntity, readOnly, compact)) {
 			className += ' assessable';
 		}
 		if (editingScore && editingScore !== -1) {
@@ -500,14 +500,14 @@ Polymer({
 		window.location.reload();
 	},
 
-	_showClearTotalScoreButton: function(assessmentEntity) {
-		if (this.readOnly) {
+	_showClearTotalScoreButton: function(assessmentEntity, readOnly, compact) {
+		if (readOnly) {
 			return false;
 		}
 		if (!assessmentEntity) {
 			return false;
 		}
-		if (!this._canEditScore(assessmentEntity)) {
+		if (!this._canEditScore(assessmentEntity, readOnly, compact)) {
 			return false;
 		}
 		return this.isTotalScoreOverridden();
@@ -534,13 +534,11 @@ Polymer({
 		return rubricEntity && rubricEntity.properties && rubricEntity.properties.name;
 	},
 
-	_showCompactView: function(isMobile, compact) {
-		this.classList.toggle('compact', !!isMobile);
-
-		return compact || !!isMobile;
+	_canEditTotalScore: function(readOnly, compact) {
+		return !readOnly && !compact;
 	},
 
-	_canEditTotalScore: function(readOnly, compact, isMobile) {
-		return !readOnly && !compact && !isMobile;
+	_computeCompact: function(forceCompact, _isMobile) {
+		return forceCompact || _isMobile;
 	}
 });
