@@ -449,7 +449,7 @@ Polymer({
 		return this.readOnly || !this.assessmentHref;
 	},
 
-	_updateStaticView(readOnly, assessmentHref) {
+	_updateStaticView: function(readOnly, assessmentHref) {
 		const isStaticView = readOnly || !assessmentHref;
 
 		isStaticView

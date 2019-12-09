@@ -160,26 +160,12 @@ Polymer({
 		var action = this._getFeedbackAction(this.entity);
 		if (action) {
 			this.toggleBubble('_feedbackInvalid', false, 'feedback-bubble');
-<<<<<<< HEAD
 			var fields = [{'name':'feedback', 'value':e.detail.value}];
 			this.performAutosaveAction(action, fields, '_pendingFeedbackSaves').then(function() {
 				this.fire('d2l-rubric-feedback-saved');
 				this._updateFeedback(this.entity);
 			}.bind(this)).catch(function(err) {
 				this.handleValidationError('feedback-bubble', '_feedbackInvalid', 'feedbackSaveFailed', err);
-=======
-			var fields = [{ 'name': 'feedback', 'value': e.detail.value }];
-			this._pendingFeedbackSaves++;
-			this.performSirenAction(action, fields).then(function() {
-				this.fire('d2l-rubric-feedback-saved');
-			}.bind(this)).catch(function(err) {
-				this.handleValidationError('feedback-bubble', '_feedbackInvalid', 'feedbackSaveFailed', err);
-			}.bind(this)).finally(function() {
-				this._pendingFeedbackSaves--;
-				if (!this._feedbackInvalid) {
-					this._updateFeedback(this.entity);
-				}
->>>>>>> feat: level iterator styles
 			}.bind(this));
 		}
 	},

@@ -22,14 +22,12 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 			:host {
 				display: block;
 			}
-<<<<<<< HEAD
-			:host([_feedback-invalid]) .feedback-wrapper[data-desktop]{	
-				border-color: var(--d2l-color-cinnabar);
-=======
+
 			:host([_feedback-invalid]) .feedback-wrapper[data-desktop]{
-				border: 1px solid var(--d2l-color-cinnabar);
->>>>>>> feat: new "total score" title for compact + style fixes for compact
+				border-color: var(--d2l-color-cinnabar);
+
 			}
+
 			:host([_feedback-invalid]) .feedback-arrow {
 				border-bottom-color: var(--d2l-color-cinnabar);
 			}

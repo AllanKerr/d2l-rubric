@@ -182,7 +182,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 				padding-left: 0.12rem
 			}
 
-			.compact-overall-score-divider {
+			.compact-divider {
 				border: solid 0.5px var(--d2l-color-mica);
 			}
 
@@ -250,12 +250,13 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 									</d2l-rubric-editable-score>
 								</div>
 							</div>
+							<hr class="compact-divider" hidden$="[[!compact]]"/>
 						</div>
 					</div>
 				</d2l-rubric-criteria-groups>
 			</div>
 			<template is="dom-if" if="[[_hasOverallScore(entity, overallScoreFlag)]]">
-				<hr class="compact-overall-score-divider" hidden$="[[!compact]]"/>
+				<hr class="compact-divider" hidden$="[[!compact]]"/>
 				<d2l-rubric-overall-score
 					read-only="[[readOnly]]"
 					href="[[_getOverallLevels(entity)]]"
