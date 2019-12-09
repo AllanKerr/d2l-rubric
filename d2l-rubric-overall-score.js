@@ -80,7 +80,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 				margin-bottom: 0.6rem;
 				min-width: 0;
 			}
-
 			.overall-level:last-child {
 				margin-right: 0;
 			}
@@ -88,11 +87,14 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 			.overall-level-text {
 				@apply --d2l-body-small-text;
 			}
+			:host(:not([compact])) .overall-level-text {
+				margin: 0;
+			}
 
-			h4 > d2l-icon {
+			h4 > d2l-icon[icon="d2l-tier1:check"] {
 				display: none;
-				float: right;
 				color: var(--d2l-color-celestine);
+				align-self: flex-start;
 			}
 
 			.clear-override-label {
@@ -103,8 +105,19 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 				width: 100%;
 			}
 
-			.clear-override-label[hidden] {
-				display:none;
+			.content-container {
+				display: inline-flex;
+				width: 100%;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			.info-container {
+				display: flex;
+				flex-direction: column;
+			}
+			:host([compact]) .info-container {
+				flex-direction: row;
 			}
 
 			d2l-scroll-wrapper {
@@ -157,18 +170,19 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 			</h3>
 			<d2l-scroll-wrapper show-actions="" role="group" aria-labelledby="overall-grouping-label">
 				<d2l-offscreen id="overall-grouping-label">[[localize('overallScore')]]</d2l-offscreen>
-				<div class="overall-levels" data-mobile$="[[!compact]]">
+				<div class="overall-levels" data-mobile$="[[compact]]">
 					<template is="dom-repeat" items="[[_levels]]" as="level">
 						<div
 							class="overall-level"
 							data-achieved$="[[_isAchieved(level, _version)]]"
-							data-clickable$="[[_isClickable(level, _version)]]"
+							data-clickable$="[[_isClickable(level, _version, compact)]]"
 							on-click="_levelClicked"
 							on-keypress="_handleKeypress"
 							tabindex$="[[_handleTabIndex()]]">
-							<h4>
-								<span>[[level.properties.name]]</span>
-								<span hidden="[[!_showClearOverrideButton(level, _version)]]">&nbsp;*</span>
+							<h4 class="content-container">
+								<div class="info-container">
+									<span>[[level.properties.name]]</span>
+									<span hidden="[[!_showClearOverrideButton(level, _version)]]">&nbsp;*</span>
 									<span class="overall-level-text">
 										<span>[[_localizePoints(level)]]</span>
 										<template is="dom-if" if="[[!compact]]">
@@ -180,7 +194,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-overall-score">
 											<span>[[_getDescriptionText(level)]]</span>
 										</template>
 									</span>
-								</span>
+								</div>
 								<d2l-icon icon="d2l-tier1:check"></d2l-icon>
 							</h4>
 							<span class="clear-override-label">
@@ -348,8 +362,8 @@ Polymer({
 		);
 	},
 
-	_isClickable: function(levelEntity) {
-		return !!this._getOnClickAction(levelEntity);
+	_isClickable: function(levelEntity, _version, compact) {
+		return !compact && !!this._getOnClickAction(levelEntity);
 	},
 
 	_levelClicked: function(event) {
@@ -391,9 +405,5 @@ Polymer({
 
 	_showOverallScore: function(compact, overallLevel) {
 		return !compact || !!overallLevel;
-	},
-
-	_isCompactView: function(compact) {
-		return !!compact;
-	},
+	}
 });
