@@ -25,7 +25,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 
 			:host([_feedback-invalid]) .feedback-wrapper[data-desktop]{
 				border-color: var(--d2l-color-cinnabar);
-
 			}
 
 			:host([_feedback-invalid]) .feedback-arrow {

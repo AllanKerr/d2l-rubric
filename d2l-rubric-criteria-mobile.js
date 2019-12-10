@@ -54,15 +54,15 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-mobile">
 				read-only="[[readOnly]]"
 				compact="[[compact]]">
 			</d2l-rubric-criterion-mobile>
-			<!--
 			<d2l-button-subtle
 				class="add-feedback-button"
-				hidden="[[!_addFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]"
+				hidden="[[!_showAddFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]"
 				text="[[localize('addFeedback')]]"
 				on-click="_handleAddFeedback"
 				data-criterion$="[[criterionNum]]">
 			</d2l-button-subtle>
-			<template is="dom-if" if="[[_displayFeedback(_feedbackDisplay, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]">				<d2l-rubric-feedback
+			<template is="dom-if" if="[[_displayFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]">
+				<d2l-rubric-feedback
 					id="feedback[[criterionNum]]"
 					criterion-href="[[_getSelfLink(criterion)]]"
 					assessment-href="[[assessmentHref]]"
@@ -71,14 +71,14 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-mobile">
 					on-save-feedback="_handleSaveFeedback"
 					on-save-feedback-finished="_handleSaveFinished"
 					on-close-feedback="_closeFeedback"
-					compact=""
-					read-only="">
+					read-only=[[readOnly]]
+					compact="">
 				</d2l-rubric-feedback>
 			</template>
 			<hr class="line">
 		</template>
 	</template>
-	
+
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);
