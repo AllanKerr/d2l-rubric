@@ -23,11 +23,11 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 					border-radius: 0.3rem;
 					background-color: var(--d2l-color-celestine-plus-2);
 			}
-			:host([compact]:not([editor-styling])) {
+			:host(:not([compact]):not([editor-styling])) {
 				padding: 0.5rem 0.5rem 0.5rem 0.6rem;
 			}
-			:host([compact]:focus:not([editor-styling])),
-			:host([compact]:hover:not([editor-styling])) {
+			:host(:not([compact]):focus:not([editor-styling])),
+			:host(:not([compact]):hover:not([editor-styling])) {
 				padding: calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.6rem - 1px);
 				border-radius: 0.3rem;
 				border: 1px solid var(--d2l-color-celestine);

@@ -184,9 +184,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-levels-mobile">
 								class="check-icon"
 								icon="d2l-tier1:check">
 							</d2l-icon>
-							<!-- @TODO: What's the purpose of this?
-								<div hidden$="[[_isAssessedLevel(item, assessedLevelHref)]]" class$="[[_getLevelTextClassName(index, selected)]]"></div>
-							-->
 						</div>
 					</div>
 				</template>
