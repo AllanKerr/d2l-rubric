@@ -367,17 +367,12 @@ Polymer({
 		'd2l-siren-entity-save-error': '_onEntitySave',
 		'd2l-siren-entity-save-end': '_onEntitySave',
 		'd2l-siren-entity-error': '_handleError',
-		'd2l-alert-button-pressed': '_pageReload'
+		'd2l-alert-button-pressed': '_pageReload',
+		'd2l-rubric-compact-view-accordion': '_onAccordionCollapseExpand'
 	},
 
 	ready: function() {
 		this._updateOutcomesTitleText();
-
-		this.addEventListener('d2l-rubric-compact-view-accordion', (e) => {
-			e.detail.opened
-				? this.setAttribute('compact-expanded', '')
-				: this.removeAttribute('compact-expanded');
-		});
 	},
 
 	_onEntityChanged: function(entity) {
@@ -411,6 +406,12 @@ Polymer({
 			var feedback = assessmentEntity.getSubEntityByClass(this.HypermediaClasses.rubrics.overallFeedback);
 			this._feedback = feedback && feedback.properties && feedback.properties.html || '';
 		}
+	},
+
+	_onAccordionCollapseExpand: function(e) {
+		e.detail.opened
+			? this.setAttribute('compact-expanded', '')
+			: this.removeAttribute('compact-expanded');
 	},
 
 	_getHref: function(link) {
