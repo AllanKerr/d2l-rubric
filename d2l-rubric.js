@@ -73,7 +73,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 			}
 			:host([compact]) {
 				padding: 8px;
-				border: 1px solid var(--d2l-color-galena);
+				border: 1px solid var(--d2l-color-chromite);
 				border-radius: 6px;
 			}
 
@@ -199,7 +199,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 			assessment-entity="[[assessmentEntity]]"
 			has-alerts="[[_hasAlerts]]"
 			compact="[[compact]]"
-			total-score=[[_score]]>
+			score-text="[[_localizeCompactScoreText(entity, _score)]]">
 			<template is="dom-repeat" items="[[_alerts]]">
 				<d2l-alert slot="alerts" type="[[item.alertType]]" button-text="[[localize('refreshText')]]">
 					[[item.alertMessage]]
@@ -460,6 +460,18 @@ Polymer({
 
 	_localizeOutOf: function(entity, score) {
 		if (!this._hasOutOf(entity) || !score) return;
+		return this.localize('scoreOutOf', 'score', score, 'outOf', entity.properties.outOf.toString());
+	},
+
+	_localizeCompactScoreText: function(entity, score) {
+		if (!this._hasOutOf(entity)) {
+			return;
+		}
+
+		if (score === null || score === undefined) {
+			return this.localize('dashOutOf', 'outOf', entity.properties.outOf.toString());
+		}
+
 		return this.localize('scoreOutOf', 'score', score, 'outOf', entity.properties.outOf.toString());
 	},
 

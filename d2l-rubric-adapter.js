@@ -15,7 +15,7 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 			compact: Boolean,
 			hasAlerts: Boolean,
 			rubricName: String,
-			totalScore: String,
+			scoreText: String,
 			_isMobile: {
 				type: Boolean,
 				value: false,
@@ -69,7 +69,9 @@ window.customElements.define('d2l-rubric-adapter', class RubricAdapter extends P
 								<span class="rubric-header-title-container">
 									<div class="rubric-header-title">[[rubricName]]</div>
 									<div class="rubric-header-out-of-container">
-										<span class="rubric-header-out-of-text">[[totalScore]]</span>
+										<span class="rubric-header-out-of-text">
+											[[scoreText]]
+										</span>
 									</div>
 								</span>
 							</div>
