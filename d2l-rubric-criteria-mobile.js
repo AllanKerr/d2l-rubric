@@ -42,7 +42,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-mobile">
 			}
 		</style>
 		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
-		<hr class="line">
 		<template is="dom-repeat" items="[[_criteria]]" as="criterion" index-as="criterionNum">
 			<d2l-rubric-criterion-mobile
 				href="[[_getSelfLink(criterion)]]"

@@ -250,13 +250,13 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 									</d2l-rubric-editable-score>
 								</div>
 							</div>
-							<hr class="compact-divider" hidden$="[[!compact]]"/>
 						</div>
+						<hr class="compact-divider" hidden$="[[!compact]]">
 					</div>
 				</d2l-rubric-criteria-groups>
 			</div>
 			<template is="dom-if" if="[[_hasOverallScore(entity, overallScoreFlag)]]">
-				<hr class="compact-divider" hidden$="[[!compact]]"/>
+				<hr class="compact-divider" hidden$="[[!compact]]">
 				<d2l-rubric-overall-score
 					read-only="[[readOnly]]"
 					href="[[_getOverallLevels(entity)]]"
