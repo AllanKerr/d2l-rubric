@@ -21,6 +21,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 		<style>
 			:host {
 				display: block;
+				word-wrap: break-word;
 			}
 
 			:host([_feedback-invalid]) .feedback-wrapper[data-desktop]{
@@ -116,7 +117,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-feedback">
 			}
 			.feedback-header-wrapper {
 				display: flex;
-				padding-top: 0.6rem;
+				padding: 18px
 			}
 
 		</style>
