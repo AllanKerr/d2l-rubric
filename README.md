@@ -25,6 +25,7 @@ Include the [webcomponents.js](http://webcomponents.org/polyfills/) "lite" polyf
 		</h3>
 	</d2l-rubric>
 </head>
+```
 
 #### Display a Rubric with an assessment:
 ```html

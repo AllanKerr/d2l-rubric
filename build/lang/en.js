@@ -140,13 +140,7 @@ D2L.PolymerBehaviors.Rubric.LocalizeBehavior.LangEnBehavior = {
 		'makeRubricAvailableHeader': 'Make rubric available to',
 		'rubricStatusPublished': 'Status: Published',
 		'rubricStatusArchived': 'Status: Archived',
-<<<<<<< HEAD
 		'rubricStatusDraft': 'Status: Draft',
 		'sharedAlertText': 'This rubric can only be edited from the org unit that shared it'
 	}
 };
-=======
-		'rubricStatusDraft': 'Status: Draft'
-}
-};
->>>>>>> feat: consistent score text; styling; header langterm
