@@ -15,6 +15,7 @@
 		import 'd2l-fetch-siren-entity-behavior/d2l-fetch-siren-entity-behavior.js';
 		import './fetch-siren-entity-whitelist.js';
 		import '../d2l-rubric.js';
+		import '../d2l-rubric-title.js';
 		import 'd2l-typography/d2l-typography.js';
 		window.d2lfetch = {
 			fetch: function(req, opts) {
@@ -31,6 +32,7 @@
 	<script type="module" src="../../d2l-fetch-siren-entity-behavior/d2l-fetch-siren-entity-behavior.js"></script>
 	<script type="module" src="./fetch-siren-entity-whitelist.js"></script>
 	<script type="module" src="../d2l-rubric.js"></script>
+	<script type="module" src="../d2l-rubric-title.js"></script>
 	<script type="module" src="../../d2l-typography/d2l-typography.js"></script>
 
 	<!-- FIXME(polymer-modulizer):
@@ -85,6 +87,14 @@
 			data-telemetry-endpoint="https://qa.telemetryservice.brightspace.com/api/events"
 			outcomes-title-text="Standards"
 		></d2l-rubric>
+	</demo-snippet>
+	<h3>Rubric with a title</h3>
+	<demo-snippet>
+		<d2l-rubric href="data/rubrics/organizations/default-rubric/197.json" token="foozleberries">
+			<h3 class="rubric-title">
+				<d2l-rubric-title href="data/rubrics/organizations/default-rubric/197.json" token="foozleberries">
+			</d2l-rubric-title></h3>
+		</d2l-rubric>
 	</demo-snippet>
 	<h3>Holistic Text only</h3>
 	<demo-snippet>

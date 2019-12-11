@@ -224,7 +224,11 @@ Polymer({
 		}
 
 		['click', 'keydown'].forEach((eventType) => {
-			this.addEventListener(eventType, () => {
+			this.addEventListener(eventType, (e) => {
+				if (eventType === 'keydown' && e.keyCode !== 13) {
+					return;
+				}
+
 				if (!this.readOnly && this.editingScore === -1) {
 					this.editingScore = this.criterionNum;
 				}

@@ -16,6 +16,7 @@
 		import 'd2l-fetch-siren-entity-behavior/d2l-fetch-siren-entity-behavior.js';
 		import './fetch-siren-entity-whitelist.js';
 		import '../editor/d2l-rubric-editor.js';
+		import '../d2l-rubric-title.js';
 	</script>
 	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 	<script type="module" src="../../@polymer/promise-polyfill/promise-polyfill.js"></script>
@@ -27,6 +28,7 @@
 	<script type="module" src="../../d2l-fetch-siren-entity-behavior/d2l-fetch-siren-entity-behavior.js"></script>
 	<script type="module" src="./fetch-siren-entity-whitelist.js"></script>
 	<script type="module" src="../editor/d2l-rubric-editor.js"></script>
+	<script type="module" src="../d2l-rubric-title.js"></script>
 
 	<!-- FIXME(polymer-modulizer):
 		These imperative modules that innerHTML your HTML are
@@ -52,6 +54,9 @@
 			html {
 				font-size: 20px;
 				font-family: 'Lato', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+			}
+			.rubric-title {
+				@apply --d2l-heading-3;
 			}
 		</style>
 
