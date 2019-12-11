@@ -1,5 +1,5 @@
 import '@polymer/polymer/polymer-legacy.js';
-import { PolymerElement, html } from '@polymer/polymer';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import 'd2l-tooltip/d2l-tooltip.js';
 import Icons from './icons.js';
 

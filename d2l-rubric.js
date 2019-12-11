@@ -283,6 +283,7 @@ Polymer({
 		compact: {
 			type: Boolean,
 			computed: '_computeCompact(forceCompact, _isMobile)',
+			readOnly: true,
 			reflectToAttribute: true
 		},
 		forceCompact: {

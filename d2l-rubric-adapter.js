@@ -1,4 +1,4 @@
-import { PolymerElement, html } from '@polymer/polymer';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-media-query/iron-media-query.js';
 import 'd2l-accordion/d2l-accordion.js';
 import 'd2l-accordion/d2l-accordion-collapse.js';
