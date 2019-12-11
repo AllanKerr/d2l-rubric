@@ -18,7 +18,7 @@
     "lang:build": "node langtools/build.js -c langtools/config.json",
     "lang:copy": "node langtools/copy.js -c langtools/config.json",
     "regenerate_data": "cd test/regen_api_data && node regenerate_api_data.js",
-    "serve": "polymer serve",
+    "serve": "polymer analyze > analysis.json && polymer serve",
     "test": "npm run test:lint && npm run test:wct",
     "test:lint": "npm run test:lint:wc && npm run test:lint:js",
     "test:lint:js": "eslint . --ext .js,.html test/**/*.js test/**/*.html demo/**/*.js demo/**/*.html",
