@@ -260,9 +260,10 @@ Polymer({
 	focus: function() {
 		var elem = this.$['text-area'];
 		elem.focus();
-		var inputElem = elem.$$('input');
-		if (inputElem && !this.compact) {
-			elem.$$('input').select();
+
+		var inputElem = elem.shadowRoot.querySelector('input');
+		if (inputElem && this._largeScreen) {
+			inputElem.select();
 		}
 	},
 
@@ -299,7 +300,8 @@ Polymer({
 		if (event.relatedTarget && event.relatedTarget.id === 'clear-button') {
 			return;
 		}
-		var innerInput = event.target.$$('input');
+		var innerInput = event.target.shadowRoot.querySelector('input');
+
 		if (!innerInput || !innerInput.checkValidity()) {
 			return;
 		}
