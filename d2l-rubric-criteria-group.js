@@ -26,7 +26,7 @@ import './d2l-rubric-editable-score.js';
 import './d2l-rubric-alignments-indicator';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
-import { beforeNextRender } from '@polymer/polymer/lib/utils/render-status.js';
+import { afterNextRender, beforeNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 import './d2l-rubric-competencies-icon.js';
 const $_documentContainer = document.createElement('template');
@@ -103,7 +103,6 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 				justify-content: center;
 			}
 			#loa-labels > .loa-heading {
-				flex-basis: 0px;
 				font-weight: bold;
 			}
 			#loa-labels .loa-label {
@@ -248,12 +247,12 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-gro
 						<d2l-th class="out-of"></d2l-th>
 					</template>
 				</d2l-tr>
-				<template is="dom-if" if="[[_hasLoaScale(_levelsEntity)]]">
+				<template is="dom-if" if="[[_hasLoaScale(_levelsEntity)]]" on-dom-change="_loaDomChange">
 					<d2l-tspan id="loa-container">
 						<d2l-resize-aware id="loa-labels" on-d2l-resize-aware-resized="_onLoaResize">
 							<div class="loa-label">[[_getLoaHeadingLangTerm()]]</div>
 							<template is="dom-repeat" items="[[_loaLevels]]" as="loaLevel">
-								<div class="loa-heading" style$="[[_getHeaderStyle(loaLevel, _sortedLevels, _loaLevels, _levelsReversed)]]">
+								<div class="loa-heading" style$="[[_getHeaderStyle(loaLevel, _sortedLevels, _loaLevels, _levelsReversed)]]" data-loa-level$="[[_getSelfLink(loaLevel)]]">
 									[[loaLevel.properties.name]]
 								</div>
 							</template>
@@ -425,6 +424,21 @@ Polymer({
 				el.style.height = '100%';
 			});
 		}
+	},
+
+	_loaDomChange: function() {
+		console.log('Dom Change');
+		
+		afterNextRender(this, () => {
+			const loaResizeElement = this.$$('#loa-labels');
+			console.log(loaResizeElement);
+
+			if (loaResizeElement) {
+				this._onLoaResize({
+					target: loaResizeElement
+				});
+			}
+		});
 	},
 
 	_onEntityChanged: function(entity) {
@@ -723,9 +737,7 @@ Polymer({
 		return [
 			`border-${side}-color: ${loaLevel.properties.color}`,
 			`border-${side}-width: 2px`,
-			`border-${hiddenSide}-style: hidden`,
-			'flex-basis: 0px;',
-			`flex-grow: ${colSpan}`
+			`border-${hiddenSide}-style: hidden`
 		].join(';');
 	},
 
@@ -934,16 +946,43 @@ Polymer({
 	},
 
 	_onLoaResize: function() {
-		const firstRow = this.root.querySelectorAll('.d2l-table-row-first')[0];
+		const firstRow = this.$$('.d2l-table-row-first');
+		const outcomesRow = this.$$('#loa-labels');
 
-		const widthStart = Math.floor(firstRow.firstChild.getBoundingClientRect().width);
-		const startLabel = this.root.querySelectorAll('.loa-label')[0];
-		startLabel.style.width = `${widthStart - 1}px`;
+		if (!firstRow || !outcomesRow) {
+			return;
+		}
 
-		const endLabel = this.root.querySelectorAll('.loa-end')[0];
-		if (endLabel) {
-			const widthEnd = Math.floor(firstRow.querySelectorAll('d2l-th.out-of')[0].getBoundingClientRect().width);
-			endLabel.style.width = `${widthEnd - 1}px`;
+		const outcomeHeaders = [...outcomesRow.children].filter(child => child.nodeName === 'DIV');
+		const levelHeaders = [...firstRow.children].filter(child => [ 'D2L-TD', 'D2L-TH' ].indexOf(child.nodeName) >= 0);
+		
+		for (let i = 0; i < outcomeHeaders.length; i++) {
+			const outcomeHeader = outcomeHeaders[i];
+			const loaLevelHref = outcomeHeader.getAttribute('data-loa-level');
+
+			if (!loaLevelHref) {
+				continue;
+			}
+
+			const loaLevelEntity = this._resolveLoaLevel(this._loaLevels, loaLevelHref);
+			const span = this._getLoaLevelSpan(loaLevelEntity, this._sortedLevels, this._loaLevels, this._levelsReversed);
+
+			let width = 0;
+			for (let j = i; j < i + span && j < levelHeaders.length; j++) {
+				width += levelHeaders[j].getBoundingClientRect().width;
+			}
+
+			outcomeHeader.style.width = `${width}px`;
+		}
+
+		if (levelHeaders.length && outcomeHeaders.length) {
+			const firstWidth = levelHeaders[0].getBoundingClientRect().width;
+			outcomeHeaders[0].style.width = `${firstWidth}px`;
+
+			const lastLevel = levelHeaders[levelHeaders.length - 1];
+			if (lastLevel && lastLevel.classList.indexOf('out-of') >= 0) {
+				outcomeHeaders[outcomeHeaders.length - 1] = `${lastLevel.getBoundingClientRect().width}px`;
+			}
 		}
 	},
 
