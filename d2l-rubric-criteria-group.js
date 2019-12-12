@@ -147,25 +147,25 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 				border-left-color: var(--d2l-color-celestine);
 				border-width: 2px;
 			}
-			
+
 			d2l-button-subtle {
 				margin-left: -13px;
 				margin-bottom: -2px;
 				padding: 1px 1px 1px 1px;
 				align-self: flex-start;
 			}
-			
+
 			d2l-button-subtle:hover {
 				padding: 0;
 				border-radius: 0.3rem;
 				border: 1px solid var(--d2l-color-celestine);
 			}
-			
+
 			d2l-rubric-alignments-indicator {
 				float: right;
 				margin-left: 8px;
 			}
-			
+
 			d2l-rubric-competencies-icon {
 				float: right;
 				margin-top: 3px;
@@ -216,8 +216,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 							<d2l-td class="criteria" role="rowheader">
 								<div class="criteria-row-header-container">
 									<div>
-										<d2l-rubric-alignments-indicator 
-											href="[[_getActivityLink(criterion)]]" 
+										<d2l-rubric-alignments-indicator
+											href="[[_getActivityLink(criterion)]]"
 											token="[[token]]"
 											outcomes-title-text="[[_getOutcomesTitleText()]]"
 										></d2l-rubric-alignments-indicator>
@@ -249,7 +249,6 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 							<d2l-td class$="[[_getOutOfClassName(criterion, assessmentResult, readOnly)]]">
 								<d2l-rubric-editable-score
 									id="score-inner[[criterionNum]]"
-									class="score-wrapper"
 									criterion-href="[[_getSelfLink(criterion)]]"
 									assessment-href="[[assessmentHref]]"
 									token="[[token]]"
@@ -257,9 +256,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 									editing-score="{{editingScore}}"
 									criterion-num="[[criterionNum]]">
 								</d2l-rubric-editable-score>
-									<d2l-offscreen>
-										<d2l-button-subtle aria-label$="[[localize('addFeedback')]]" id="invisible-addFeedback[[_getRowIndex(criterionNum)]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]" hidden="[[!_showAddFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" on-focusin="_handleInvisibleFeedbackFocusin" on-focusout="_handleInvisibleFeedbackFocusout">
-									</d2l-offscreen>	
+								<d2l-offscreen>
+									<d2l-button-subtle aria-label$="[[localize('addFeedback')]]" id="invisible-addFeedback[[_getRowIndex(criterionNum)]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]" hidden="[[!_showAddFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" on-focusin="_handleInvisibleFeedbackFocusin" on-focusout="_handleInvisibleFeedbackFocusout">
+								</d2l-offscreen>
 							</d2l-td>
 						</template>
 					</d2l-tr>
@@ -284,7 +283,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 		</d2l-table>
 	</template>
 
-	
+
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);

@@ -214,7 +214,7 @@ Polymer({
 		'_onAssessmentResultChanged(entity, assessmentResult)',
 		'_totalScoreChanged(totalScore, entity)',
 		'_editingState(entity, _isEditingScore)',
-		'_updateStaticView(readOnly, assessmentHref)'
+		'_updateAssessable(readOnly, assessmentHref)'
 	],
 	ready: function() {
 		if (!this.compact && this.criterionHref) {
@@ -234,6 +234,18 @@ Polymer({
 				}
 			});
 		});
+	},
+
+	_updateAssessable: function(readOnly, assessmentHref, editingScore) {
+		const isAssessable = !readOnly && assessmentHref;
+		const isEditing = editingScore !== -1;
+
+		this.classList.toggle('assessable', isAssessable);
+		this.classList.toggle('editing', isEditing);
+
+		isAssessable
+			? this.setAttribute('tabindex', '0')
+			: this.removeAttribute('tabindex');
 	},
 
 	_onAssessmentResultChanged: function(entity, assessmentResult) {
@@ -453,13 +465,5 @@ Polymer({
 
 	_isStaticView: function() {
 		return this.readOnly || !this.assessmentHref;
-	},
-
-	_updateStaticView: function(readOnly, assessmentHref) {
-		const isStaticView = readOnly || !assessmentHref;
-
-		isStaticView
-			? this.removeAttribute('tabindex')
-			: this.setAttribute('tabindex', '0');
 	}
 });

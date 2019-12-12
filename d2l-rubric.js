@@ -77,27 +77,27 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 				border-radius: 6px;
 			}
 
-			.score-wrapper {
+			.out-of-score-container > d2l-rubric-editable-score {
 				pointer-events: none;
 				padding-top: 0.5rem;
 				padding-bottom: 0.5rem;
 				padding-left: 0.6rem;
 			}
-			.score-wrapper.assessable {
+			.out-of-score-container > d2l-rubric-editable-score.assessable {
 				pointer-events: auto;
 			}
-			.score-wrapper.assessable:hover {
+			.out-of-score-container > d2l-rubric-editable-score.assessable:hover {
 				color: var(--d2l-color-celestine);
 				cursor: pointer;
 			}
-			:host(:not([compact])) .score-wrapper.assessable:hover {
+			:host(:not([compact])) .out-of-score-container > d2l-rubric-editable-score.assessable:hover {
 				padding: calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.6rem - 1px);
 			}
-			.score-wrapper.editing,
-			.score-wrapper.assessable.editing:hover {
+			.out-of-score-container > d2l-rubric-editable-score.editing,
+			.out-of-score-container > d2l-rubric-editable-score.assessable.editing:hover {
 				padding: 0 0.5rem 0 0.6rem;
 			}
-			:host([compact]) .score-wrapper {
+			:host([compact]) .out-of-score-container > d2l-rubric-editable-score {
 				padding: 0;
 			}
 
@@ -240,10 +240,9 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric">
 									</d2l-button-subtle>
 									<d2l-rubric-editable-score
 										id="total-score-inner"
-										class$="[[_getOutOfClassName(assessmentEntity, editingScore, readOnly, compact)]]"
 										assessment-href="[[assessmentHref]]"
 										token="[[token]]"
-										read-only="[[!_canEditTotalScore(readOnly, compact)]]"
+										read-only="[[readOnly]]"
 										editing-score="{{editingScore}}"
 										total-score="[[_score]]"
 										entity="[[entity]]">
@@ -490,17 +489,6 @@ Polymer({
 		return !readOnly && !compact && this.canOverrideTotal(assessmentEntity);
 	},
 
-	_getOutOfClassName: function(assessmentEntity, editingScore, readOnly, compact) {
-		var className = 'score-wrapper';
-		if (this._canEditScore(assessmentEntity, readOnly, compact)) {
-			className += ' assessable';
-		}
-		if (editingScore && editingScore !== -1) {
-			className += ' editing';
-		}
-		return className;
-	},
-
 	_handleError: function(e) {
 		if (this._errored) {
 			return;
@@ -547,10 +535,6 @@ Polymer({
 
 	_getRubricName: function(rubricEntity) {
 		return rubricEntity && rubricEntity.properties && rubricEntity.properties.name;
-	},
-
-	_canEditTotalScore: function(readOnly, compact) {
-		return !readOnly && !compact;
 	},
 
 	_computeCompact: function(forceCompact, _isMobile) {
