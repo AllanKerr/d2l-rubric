@@ -329,7 +329,9 @@ Polymer({
 	},
 
 	_isSelected: function(index, selected) {
-		return index === selected;
+		return selected >= 0
+			? index === selected
+			: index === 0;
 	},
 
 	_onEntityChanged: function(entity) {
