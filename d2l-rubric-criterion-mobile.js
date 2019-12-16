@@ -318,7 +318,8 @@ Polymer({
 		this._assessedLevelHref = this.getAssessedLevelHref(entity, assessmentResult);
 		if (!this._assessedLevelHref && !this.readOnly) {
 			this._assessedLevelHref = null; /* hack for Polymer 1 */
-			this._selected = -1;
+			// @TODO(AP): why ever set as "unselected"?
+			//this._selected = 0;
 		}
 
 		var score = this.getAssessedScore(entity, assessmentResult);
@@ -470,7 +471,8 @@ Polymer({
 	},
 
 	_isLevelSelected: function(levelIndex, selected) {
-		return levelIndex === selected;
+		return levelIndex === selected
+			|| (!(selected >= 0) && levelIndex === 0);
 	},
 
 	_getLevelNameClass: function(levelEntities, selected, assessedLevelHref) {

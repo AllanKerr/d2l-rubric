@@ -344,7 +344,7 @@ Polymer({
 
 	_getLevelClassName: function(index, selected, level, assessedLevelHref) {
 		var className = 'level';
-		if (index === selected) {
+		if (this._isSelected(index, selected)) {
 			className += ' selected';
 		}
 		if (this._isAssessedLevel(level, assessedLevelHref)) {
