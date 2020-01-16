@@ -48,6 +48,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-mobile">
 				levels-href="[[levelsHref]]"
 				assessment-href="[[assessmentHref]]"
 				token="[[token]]"
+				criterion-num=[[criterionNum]]
 				is-holistic="[[isHolistic]]"
 				is-numeric="[[isNumeric]]"
 				read-only="[[readOnly]]"

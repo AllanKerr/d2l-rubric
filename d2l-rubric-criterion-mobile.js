@@ -225,7 +225,16 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 							class$="[[_getLevelBulletClass(_levelEntities, _selected, _assessedLevelHref)]]"
 							icon="d2l-tier1:bullet">
 						</d2l-icon>
-						<div> [[_getSelectedNumberText(_selected, _levelEntities, criterionCell)]] </div>
+						<d2l-rubric-editable-score
+							assessment-href="[[assessmentHref]]"
+							assessed-level-href="[[_assessedLevelHref]]"
+							criterion-href="[[href]]"
+							token="[[token]]"
+							read-only="[[readOnly]]"
+							editing-score="{{_editingScore}}"
+							criterion-num="[[criterionNum]]"
+							criterion-level-default-points="[[_getPoints(index, _levelEntities, criterionCell)]]">
+						</d2l-rubric-editable-score>
 					</div>
 					<div hidden="[[!_hasDescription(criterionCell)]]" class="criterion-description">
 						<s-html class="criterion-description-html" html="[[_getCriterionCellText(criterionCell)]]"></s-html>
@@ -284,6 +293,16 @@ Polymer({
 			type: Boolean,
 			value: false,
 			reflectToAttribute: true
+		},
+
+		criterionNum: {
+			type: Number,
+			value: 1
+		},
+
+		_editingScore: {
+			type: Number,
+			value: -1
 		}
 	},
 
@@ -423,6 +442,9 @@ Polymer({
 	},
 
 	_getPoints: function(selected, levels, criterionCell) {
+		if (!levels || !levels[selected]) {
+			return;
+		}
 		// check for overrides
 		var points = levels[selected].properties.points;
 		if (criterionCell && criterionCell.hasClass(this.HypermediaClasses.rubrics.overridden)) {

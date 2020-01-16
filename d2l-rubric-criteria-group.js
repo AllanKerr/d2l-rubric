@@ -293,7 +293,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 							</d2l-td>
 						</template>
 						<template is="dom-repeat" items="[[_getCriterionCells(criterion)]]" as="criterionCell" index-as="cellNum">
-							<d2l-td 
+							<d2l-td
 								class$="[[_getCriteriaClassName(criterionCell, assessmentResult, noBottomCells, criterionNum, _criteriaEntities, cellNum)]]"
 								style$="[[_getCriteriaStyle(criterionCell, criterionNum, cellNum, _levels, _loaLevels, _levelsReversed)]]"
 								on-click="handleTap"
@@ -317,8 +317,8 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 									editing-score="{{editingScore}}"
 									criterion-num="[[criterionNum]]">
 								</d2l-rubric-editable-score>
-									<d2l-offscreen>
-										<d2l-button-subtle aria-label$="[[localize('addFeedback')]]" id="invisible-addFeedback[[_getRowIndex(criterionNum)]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]" hidden="[[!_showAddFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" on-focusin="_handleInvisibleFeedbackFocusin" on-focusout="_handleInvisibleFeedbackFocusout">
+								<d2l-offscreen>
+									<d2l-button-subtle aria-label$="[[localize('addFeedback')]]" id="invisible-addFeedback[[_getRowIndex(criterionNum)]]" on-click="_handleAddFeedback" data-criterion$="[[criterionNum]]" hidden="[[!_showAddFeedback(criterion, assessmentResult, criterionNum, _addingFeedback, _savingFeedback.*, _feedbackInvalid.*)]]" on-focusin="_handleInvisibleFeedbackFocusin" on-focusout="_handleInvisibleFeedbackFocusout">
 								</d2l-offscreen>
 							</d2l-td>
 						</template>

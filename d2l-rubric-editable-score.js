@@ -119,7 +119,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 			</div>
 			<template is="dom-if" if="[[!_isEditingScore]]">
 				<div class$="[[_getOutOfClassName(scoreOverridden, readOnly)]]" id="out-of-container">
-					[[_localizeOutOf(entity, _score)]]
+					[[_localizeOutOf(entity, _score, criterionLevelDefaultPoints)]]
 					<div class="star" id="score-overridden-star">*</div>
 				</div>
 			</template>
@@ -145,6 +145,11 @@ Polymer({
 			type: String,
 			value: null
 		},
+		/*
+		* If being used in the context of criterion, the default points to be shown
+		* Used in mobile context to show the points for a level
+		**/
+		criterionLevelDefaultPoints: Number,
 		token: String,
 
 		/* For desktop criteria, this will be the criterion number.
@@ -398,13 +403,15 @@ Polymer({
 		return this.getAssessedScore(entity, assessmentResult);
 	},
 
-	_localizeOutOf: function(entity, score) {
+	_localizeOutOf: function(entity, score, criterionLevelDefaultPoints) {
 		if (!entity || !entity.properties || !entity.properties.outOf) {
 			return null;
 		}
 
-		if (score || score === 0) {
-			return this.localize('scoreOutOf', 'score', score.toString(), 'outOf', entity.properties.outOf.toString());
+		const displayScore = score || criterionLevelDefaultPoints;
+
+		if (displayScore || displayScore === 0) {
+			return this.localize('scoreOutOf', 'score', displayScore.toString(), 'outOf', entity.properties.outOf.toString());
 		}
 		return this.localize('outOf', 'outOf', entity.properties.outOf.toString());
 	},
