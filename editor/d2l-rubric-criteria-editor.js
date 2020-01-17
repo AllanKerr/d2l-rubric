@@ -120,7 +120,7 @@ $_documentContainer.innerHTML = /*html*/`<dom-module id="d2l-rubric-criteria-edi
 				letter-spacing: 0.02rem;
 				margin: 0;
 				margin-left: auto;
-				   margin-right: auto;
+				margin-right: auto;
 				border-radius: 0.3rem;
 				box-sizing: border-box;
 				cursor: pointer;

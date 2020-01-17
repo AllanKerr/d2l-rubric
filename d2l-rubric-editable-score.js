@@ -20,14 +20,14 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-editable-score">
 				display: block;
 			}
 			:host([overridden-styling]) {
-					border-radius: 0.3rem;
-					background-color: var(--d2l-color-celestine-plus-2);
+				border-radius: 0.3rem;
+				background-color: var(--d2l-color-celestine-plus-2);
 			}
-			:host(:not([compact]):not([editor-styling])) {
+			:host([assessable]):not([editor-styling])) {
 				padding: 0.5rem 0.5rem 0.5rem 0.6rem;
 			}
-			:host(:not([compact]):focus:not([editor-styling])),
-			:host(:not([compact]):hover:not([editor-styling])) {
+			:host([assessable]):focus:not([editor-styling])),
+			:host([assessable]):hover:not([editor-styling])) {
 				padding: calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.5rem - 1px) calc(0.6rem - 1px);
 				border-radius: 0.3rem;
 				border: 1px solid var(--d2l-color-celestine);
@@ -211,7 +211,8 @@ Polymer({
 		},
 		readOnly: {
 			type: Boolean,
-			value: true
+			value: true,
+			reflectToAttribute: true
 		}
 	},
 
@@ -240,7 +241,7 @@ Polymer({
 					return;
 				}
 
-				if (!this.readOnly && this.editingScore === -1) {
+				if (!this._isStaticView() && this.editingScore === -1) {
 					this.editingScore = this.criterionNum;
 				}
 			});

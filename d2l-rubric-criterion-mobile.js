@@ -86,6 +86,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 			}
 			:host([compact]) .level-name {
 				justify-content: space-between;
+				align-items: center;
 			}
 
 			.level-text {
@@ -155,6 +156,13 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 
 			d2l-rubric-levels-mobile {
 				flex-grow: 1;
+			}
+
+			d2l-rubric-editable-score {
+				margin: -10px 0px;
+			}
+			d2l-rubric-editable-score[editor-styling] {
+				margin: -18px 0px;
 			}
 		</style>
 		<rubric-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></rubric-siren-entity>
