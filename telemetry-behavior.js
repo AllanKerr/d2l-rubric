@@ -78,12 +78,12 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 		}, telemetryData);
 	},
 
-	_logEvent: function(eventBody, { endpoint }) {
-		if (!eventBody || !endpoint) {
+	_logEvent: function(eventBody, { endpoint, enabled }) {
+		if (!eventBody || !endpoint || !enabled) {
 			return;
 		}
 
-		const client = new window.d2lTelemetryBrowserClient.Client({ endpoint: endpoint });
+		const client = new window.d2lTelemetryBrowserClient.Client({ endpoint });
 
 		const event = new window.d2lTelemetryBrowserClient.TelemetryEvent()
 			.setDate(new Date())
