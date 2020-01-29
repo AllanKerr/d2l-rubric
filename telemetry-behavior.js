@@ -83,7 +83,7 @@ D2L.PolymerBehaviors.Rubric.TelemetryBehaviorImpl = {
 			return;
 		}
 
-		const client = new window.d2lTelemetryBrowserClient.Client({ endpoint });
+		const client = new window.d2lTelemetryBrowserClient.Client({ endpoint: endpoint });
 
 		const event = new window.d2lTelemetryBrowserClient.TelemetryEvent()
 			.setDate(new Date())

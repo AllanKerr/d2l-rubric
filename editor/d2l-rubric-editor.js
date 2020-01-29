@@ -635,7 +635,7 @@ Polymer({
 			makeRubricAvailableElem.addEventListener('d2l-siren-entity-save-error', this._onShareRubricSaveError.bind(this));
 		}
 
-		this.telemetryData = { 
+		this.telemetryData = {
 			endpoint: this.dataset.telemetryEndpoint,
 			enabled: this.performanceTelemetryFlag
 		};
