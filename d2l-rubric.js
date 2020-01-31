@@ -393,7 +393,7 @@ Polymer({
 				rubricMode: this.dataset.rubricMode,
 				originTool: this.dataset.originTool,
 				endpoint: this.dataset.telemetryEndpoint,
-				enabled: this.performanceTelemetryFlag
+				performanceTelemetryEnabled: this.performanceTelemetryFlag
 			};
 
 			if (this._showContent === false) {

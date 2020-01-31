@@ -637,7 +637,7 @@ Polymer({
 
 		this.telemetryData = {
 			endpoint: this.dataset.telemetryEndpoint,
-			enabled: this.performanceTelemetryFlag
+			performanceTelemetryEnabled: this.performanceTelemetryFlag
 		};
 	},
 	attached: function() {
