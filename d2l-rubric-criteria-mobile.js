@@ -47,7 +47,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-mobile">
 				assessment-criterion-href="[[_getCriterionAssessmentHref(criterion, criterionResultMap)]]"
 				cell-assessment-map="[[cellAssessmentMap]]"
 				token="[[token]]"
-				is-holistic="[[isHolistic]]"
+				is-percentage="[[isPercentage]]"
 				is-numeric="[[isNumeric]]"
 				read-only="[[readOnly]]"
 				compact="[[compact]]">
@@ -95,7 +95,7 @@ Polymer({
 		assessmentEntity: Object,
 		criterionResultMap: Object,
 		cellAssessmentMap: Object,
-		isHolistic: Boolean,
+		isPercentage: Boolean,
 		isNumeric: Boolean,
 		readOnly: Boolean,
 		_addingFeedback: {

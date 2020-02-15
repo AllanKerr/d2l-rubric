@@ -239,7 +239,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criteria-group">
 							<div>
 								<div class="level-name">[[level.properties.name]]</div>
 								<div hidden="[[!_isNumeric(entity, level)]]">[[_localizeLevelOutOf('points', level.properties.points)]]</div>
-								<div hidden="[[!_isHolistic(entity, level)]]">[[_localizeLevelOutOf('percentage', level.properties.points)]]</div>
+								<div hidden="[[!_isPercentage(entity, level)]]">[[_localizeLevelOutOf('percentage', level.properties.points)]]</div>
 							</div>
 						</d2l-th>
 					</template>
@@ -643,10 +643,10 @@ Polymer({
 		return rubricType !== 'holistic';
 	},
 
-	_isHolistic: function(entity, level) {
+	_isPercentage: function(entity, level) {
 		var hasPoints = level.properties.points !== null;
-		var isHolistic = entity && entity.hasClass(this.HypermediaClasses.rubrics.percentage);
-		return hasPoints && isHolistic;
+		var isPercentage = entity && entity.hasClass(this.HypermediaClasses.rubrics.percentage);
+		return hasPoints && isPercentage;
 	},
 
 	_isNumeric: function(entity, level) {

@@ -166,7 +166,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-rubric-criterion-mobile">
 					mobile
 				></d2l-rubric-competencies-icon>
 			</template>
-			<template is="dom-if" if="[[!isHolistic]]" restamp>
+			<template is="dom-if" if="[[isNumeric]]" restamp>
 				<d2l-rubric-alignments-indicator
 					href="[[_getActivityLink(entity)]]"
 					token="[[token]]"
@@ -254,7 +254,7 @@ Polymer({
 
 		_levelEntities: Object,
 
-		isHolistic: Boolean,
+		isPercentage: Boolean,
 
 		isNumeric: Boolean,
 
@@ -397,7 +397,7 @@ Polymer({
 			return null;
 		}
 
-		if (this.isHolistic) {
+		if (this.isScoredHolistic) {
 			return this.localize('numberAndPercentage', 'number', points.toString());
 		}
 		if (this.isNumeric) {
@@ -455,8 +455,8 @@ Polymer({
 			return D2L.Custom.Outcomes.TermTitleText;
 		}
 	},
-	_showLevelBullet: function(isNumeric, isHolistic) {
-		return !isNumeric && !isHolistic;
+	_showLevelBullet: function(isNumeric, isScoredHolistic) {
+		return !isNumeric && !isScoredHolistic;
 	},
 	_hideIterator: function(which, selected, criterionCells) {
 		const shouldHide = which === 'left'
